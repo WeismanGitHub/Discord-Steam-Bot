@@ -7,7 +7,8 @@
 /coverage
 
 # production
-/client/build/*
+/src/client/build/*
+/dist/*
 
 # misc
 .env
