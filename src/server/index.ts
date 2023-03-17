@@ -1,5 +1,5 @@
 import express, { Application, Request, Response } from 'express';
-import { GatewayIntentBits } from 'discord.js';
+import { ActivityType, GatewayIntentBits } from 'discord.js';
 import { CustomClient } from './custom-client';
 
 const client: CustomClient = new CustomClient({
@@ -19,6 +19,7 @@ app.get('/', (req: Request, res: Response): void => {
 
 client.on('ready', () => {
 	console.log('bot is ready...')
+    client.setPresence(ActivityType.Playing, 'on Steam')
 })
 
 app.listen(port, (): void => console.log(`listening on port ${port}...`));
