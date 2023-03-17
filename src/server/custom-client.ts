@@ -17,10 +17,13 @@ export class CustomClient extends Client {
     constructor(clientOptions: ClientOptions) {
         super(clientOptions);
 
-        this.commands = new Collection()
-        this.loadCommands()
         this.token = String(process.env.TOKEN)
+        this.commands = new Collection()
+        
         this.login(this.token)
+        .then((res) => {
+            this.loadCommands()
+        })
     }
     
     private loadCommands() {
@@ -76,7 +79,7 @@ export class CustomClient extends Client {
     public setPresence(
         type: Exclude<ActivityType, ActivityType.Custom>,
         name: string,
-        url: string
+        url?: string
     ): Presence | undefined {
         return this.user?.setPresence({
             activities: [{
