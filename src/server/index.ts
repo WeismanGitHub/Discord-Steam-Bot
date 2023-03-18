@@ -1,7 +1,8 @@
-import express, { Application, Request, Response } from 'express';
 import { ActivityType, GatewayIntentBits } from 'discord.js';
+import express, { Application } from 'express';
 import { CustomClient } from './custom-client';
 import rateLimit from 'express-rate-limit'
+import authRouter from './routers/auth';
 import compression from 'compression'
 require('express-async-errors')
 import helmet from 'helmet'
@@ -18,10 +19,6 @@ const max = 15
 
 const app: Application = express();
 app.set('discordClient', client);
-
-app.get('/', (req: Request, res: Response): void => {
-    res.status(200).send('hello world!');
-})
 
 client.on('ready', () => {
 	console.log('bot is ready...')
@@ -53,5 +50,7 @@ app.use(compression())
 app.use(cors({ origin: ['http://localhost:5000'] }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+
+app.use('/api/v1/auth', authRouter)
 
 app.listen(port, (): void => console.log(`listening on port ${port}...`));
