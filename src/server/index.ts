@@ -1,5 +1,5 @@
+import express, { Application, Request, Response } from 'express';
 import { ActivityType, GatewayIntentBits } from 'discord.js';
-import express, { Application } from 'express';
 import { CustomClient } from './custom-client';
 import rateLimit from 'express-rate-limit'
 import authRouter from './routers/auth';
@@ -52,5 +52,15 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use('/api/v1/auth', authRouter)
+
+app.get('auth/links/discord', (req: Request, res: Response): void => {
+	const redirectURL = process.env.DISCORD_OAUTH_URL
+
+	if (!redirectURL) {
+		throw new Error('')
+	}
+
+	res.status(200).redirect(redirectURL)
+})
 
 app.listen(port, (): void => console.log(`listening on port ${port}...`));
