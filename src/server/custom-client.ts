@@ -21,44 +21,60 @@ export class CustomClient extends Client {
         this.commands = new Collection()
         
         this.login(this.token)
-        .then((res) => {
+        .then(async () => {
+            await this.deleteCommands()
             this.loadCommands()
         })
     }
     
-    private loadCommands() {
-        const commandsPath = join(__dirname, 'commands')
-        const commandFiles = readdirSync(commandsPath).filter(file => file.endsWith('.js'));
-        const commands = [];
+    private async deleteCommands() {
+        try {
+            const rest = new REST({ version: '10' }).setToken(this.token);
+            const clientId = this?.application?.id
 
-        for (const file of commandFiles) {
-            const command = require(`./commands/${file}`);
-
-            commands.push(command.default.data.toJSON());
-            this.commands.set(command.default.data.name, command.default);
-        }
-
-        const rest = new REST({ version: '10' }).setToken(this.token);
-
-        (async () => {
-            try {
-                console.log(`Started refreshing ${commands.length} application (/) commands.`);
-                const clientId = this?.application?.id
-
-                if (!clientId) {
-                    throw new Error('Client Id is invalid.')
-                }
-
-                await rest.put(
-                    Routes.applicationCommands(clientId),
-                    { body: commands },
-                );
-
-                console.log(`Successfully reloaded ${commands.length} application (/) commands.`);
-            } catch (err) {
-                console.error(err);
+            if (!clientId) {
+                throw new Error('Client Id is invalid.')
             }
-        })();
+
+            await rest.put(Routes.applicationCommands(clientId), { body: [] })
+
+            console.log('Successfully deleted all application commands.')
+        } catch (err) {
+            console.error(err);
+        }
+    }
+    
+    private async loadCommands() {
+        try {
+            const commandsPath = join(__dirname, 'commands')
+            const commandFiles = readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+            const commands = [];
+
+            for (const file of commandFiles) {
+                const command = require(`./commands/${file}`);
+
+                commands.push(command.default.data.toJSON());
+                this.commands.set(command.default.data.name, command.default);
+            }
+
+            const rest = new REST({ version: '10' }).setToken(this.token);
+
+            console.log(`Started refreshing ${commands.length} application (/) commands.`);
+            const clientId = this?.application?.id
+
+            if (!clientId) {
+                throw new Error('Client Id is invalid.')
+            }
+
+            await rest.put(
+                Routes.applicationCommands(clientId),
+                { body: commands },
+            );
+
+            console.log(`Successfully reloaded ${commands.length} application (/) commands.`);
+        } catch (err) {
+            console.error(err);
+        }
 
         this.on('interactionCreate', async interaction => {
             if (!interaction.isCommand()) return;
