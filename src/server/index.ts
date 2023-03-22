@@ -15,12 +15,12 @@ const client: CustomClient = new CustomClient({
 });
 
 const port: number = Number(process.env.PORT) || 5000;
-const max = 15
+const max: number = 15
 
 const app: Application = express();
 app.set('discordClient', client);
 
-client.on('ready', () => {
+client.on('ready', (): void => {
 	console.log('bot is ready...')
     client.setPresence(ActivityType.Playing, 'on Steam')
 })
@@ -54,10 +54,10 @@ app.use(express.json())
 app.use('/api/v1/auth', authRouter)
 
 app.get('auth/links/discord', (req: Request, res: Response): void => {
-	const redirectURL = process.env.DISCORD_OAUTH_URL
+	const redirectURL: string | undefined = process.env.DISCORD_OAUTH_URL
 
-	if (!redirectURL) {
-		throw new Error('')
+	if (redirectURL === undefined) {
+		throw new Error('Discord OAuth URL is undefined.')
 	}
 
 	res.status(200).redirect(redirectURL)
