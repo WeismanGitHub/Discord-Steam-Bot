@@ -2,7 +2,8 @@ import express, { Application, Request, Response } from 'express';
 import { ActivityType, GatewayIntentBits } from 'discord.js';
 import InternalServerError from './errors/internal-server';
 import { CustomClient } from './custom-client';
-import rateLimit from 'express-rate-limit'
+import rateLimit from 'express-rate-limit';
+import fetchMetadata from 'fetch-metadata';
 import authRouter from './routers/auth';
 import compression from 'compression'
 require('express-async-errors')
@@ -45,6 +46,19 @@ app.use(helmet({
 	},
 	crossOriginEmbedderPolicy: false
 }))
+
+app.use(
+	fetchMetadata({
+	  allowedFetchSites: ['same-origin', 'same-site', 'none'],
+	  disallowedNavigationRequests: ['frame', 'iframe'],
+	  errorStatusCode: 403,
+	  allowedPaths: [],
+	  onError: (request, response, next, options) => {
+		response.statusCode = options.errorStatusCode
+		response.end()
+	  },
+	})
+)
 
 app.use(limiter)
 app.use(compression())
