@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from 'express';
 import { ActivityType, GatewayIntentBits } from 'discord.js';
+import InternalServerError from './errors/internal-server';
 import { CustomClient } from './custom-client';
 import rateLimit from 'express-rate-limit'
 import authRouter from './routers/auth';
@@ -53,11 +54,11 @@ app.use(express.json())
 
 app.use('/api/v1/auth', authRouter)
 
-app.get('auth/links/discord', (req: Request, res: Response): void => {
+app.get('/links/discord', (req: Request, res: Response): void => {
 	const redirectURL: string | undefined = process.env.DISCORD_OAUTH_URL
 
-	if (redirectURL === undefined) {
-		throw new Error('Discord OAuth URL is undefined.')
+	if (!redirectURL) {
+		throw new InternalServerError('Discord OAuth URL is undefined.')
 	}
 
 	res.status(200).redirect(redirectURL)
