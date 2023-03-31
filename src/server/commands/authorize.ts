@@ -20,7 +20,7 @@ export default {
 			throw new InternalServerError('OAuth URL is undefined.')
 		}
 
-		const row = new ActionRowBuilder()
+		const row = new ActionRowBuilder<ButtonBuilder>()
 		.addComponents([
 			new ButtonBuilder()
 			.setLabel('Authorization Link')
