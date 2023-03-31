@@ -4,6 +4,7 @@ export default {
 	data: new SlashCommandBuilder()
 		.setName('wishlist')
 		.setDescription("Get someone's Steam wish list.")
+        .setDMPermission(false)
         .addUserOption(option => option
             .setName('user')
             .setRequired(true)
