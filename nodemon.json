@@ -1,7 +1,6 @@
 {
     "ignore": [
-        "src/client/build/*",
-        "src/client/src/*",
-        "src/client/public/*"
+        "src",
+        "dist/client"
     ]
 }
