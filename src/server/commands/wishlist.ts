@@ -6,6 +6,7 @@ export default {
 		.setDescription("Get someone's Steam wish list.")
         .setDMPermission(false)
         .addUserOption(option => option
+            .setDescription("The user you want to target.")
             .setName('user')
             .setRequired(true)
         )
