@@ -8,9 +8,9 @@ import fetchMetadata from 'fetch-metadata';
 import authRouter from './routers/auth';
 import compression from 'compression'
 require('express-async-errors')
+import { resolve } from 'path'
 import helmet from 'helmet'
 import cors from 'cors'
-import path from 'path'
 
 const client: CustomClient = new CustomClient({
     intents: [
@@ -59,6 +59,7 @@ app.use(limiter)
 app.use(compression())
 app.use(cors({ origin: ['http://localhost:5000'] }))
 app.use(express.urlencoded({ extended: true }))
+app.use(express.static(resolve(__dirname, '../client/build')))
 app.use(express.json())
 
 app.use('/api/v1/auth', authRouter)
@@ -67,8 +68,8 @@ app.use('/api/*', (req: Request, res: Response, next: NextFunction): void => {
 	throw new NotFoundError('Route does not exist.')
 })
 
-app.get('/*', (req, res) => {
-	res.status(200).sendFile(path.resolve(__dirname, '../client/build/index.html'))
+app.get('/*', (req: Request, res: Response): void => {
+	res.status(200).sendFile(resolve(__dirname, '../client/build/index.html'))
 })
 
 app.get('/links/discord', (req: Request, res: Response): void => {
