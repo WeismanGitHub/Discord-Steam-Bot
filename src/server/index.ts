@@ -44,18 +44,16 @@ app.use(helmet({
 	crossOriginEmbedderPolicy: false
 }))
 
-app.use(
-	fetchMetadata({
-	  allowedFetchSites: ['same-origin', 'same-site', 'none'],
-	  disallowedNavigationRequests: ['frame', 'iframe'],
-	  errorStatusCode: 403,
-	  allowedPaths: [],
-	  onError: (request, response, next, options) => {
+app.use(fetchMetadata({
+	allowedFetchSites: ['same-origin', 'same-site', 'none'],
+	disallowedNavigationRequests: ['frame', 'iframe'],
+	errorStatusCode: 403,
+	allowedPaths: [],
+	onError: (request, response, next, options) => {
 		response.statusCode = options.errorStatusCode
 		response.end()
-	  },
-	})
-)
+	}
+}))
 
 app.use(limiter)
 app.use(compression())
