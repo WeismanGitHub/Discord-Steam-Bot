@@ -8,8 +8,13 @@ import {
 
 import DiscordAuth from './components/discord-auth';
 import NotFound from './components/not-found';
+import Home from './components/home';
 
 const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <Home/>
+    },
     {
         path: '/auth/discord',
         element: <DiscordAuth/>
@@ -20,4 +25,8 @@ const router = createBrowserRouter([
     }
 ]);
 
-createRoot(document.getElementById('root')).render(<RouterProvider router={ router }/>)
+createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
