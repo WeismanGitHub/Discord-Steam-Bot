@@ -6,9 +6,9 @@ import {
     RouterProvider,
 } from "react-router-dom";
 
-import DiscordAuth from './components/discord-auth';
-import NotFound from './components/not-found';
-import Home from './components/home';
+import DiscordAuth from './elements/discord-auth';
+import NotFound from './elements/not-found';
+import Home from './elements/home';
 
 const router = createBrowserRouter([
     {
