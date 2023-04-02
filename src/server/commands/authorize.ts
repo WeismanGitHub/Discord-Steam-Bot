@@ -14,23 +14,23 @@ export default {
 		.setDescription('Authorize this bot to see your connected Steam account.')
 	,
 	async execute(interaction: CommandInteraction): Promise<void> {
-		const oauthURL: string | undefined = process.env.DISCORD_OAUTH_URL
+		const redirectURI: string | undefined = process.env.REDIRECT_URI
 
-		if (!oauthURL) {
-			throw new InternalServerError('OAuth URL is undefined.')
+		if (!redirectURI) {
+			throw new InternalServerError('Redirect URI is undefined.')
 		}
 
 		const row = new ActionRowBuilder<ButtonBuilder>()
 		.addComponents([
 			new ButtonBuilder()
 			.setLabel('Authorization Link')
-			.setURL(oauthURL)
+			.setURL(redirectURI + '/auth/discord')
 			.setStyle(ButtonStyle.Link),
 		])
 	
 		const embed: EmbedBuilder = new EmbedBuilder()
 		.setColor('#8F00FF') // Purple
-		.setDescription("Click the link to allow this bot to save your Steam connection. Use the unauthorize command to remove the connection.")
+		.setDescription("Click the link to allow this bot to save your Steam connection. Use the `unauthorize` command to delete all your data stored by the bot.")
 		.addFields({ name: 'Contact the Creator:', value: `<@${process.env.MAIN_ACCOUNT_ID}>` })
 	
 		interaction.reply({
