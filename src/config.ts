@@ -6,7 +6,7 @@ const discordToken = process.env.DISCORD_TOKEN
 const testGuildID = process.env.TEST_GUILD_ID
 const discordClientID = process.env.DISCORD_CLIENT_ID
 const discordClientSecret = process.env.DISCORD_CLIENT_SECRET
-const mainAccountID = process.env.MAIN_ACCONT_ID
+const mainAccountID = process.env.DISCORD_MAIN_ACCOUNT_ID
 const discordOAuthURL = process.env.DISCORD_OAUTH_URL
 
 // App
@@ -40,7 +40,7 @@ const config = {
 
 for (const entry of Object.entries(config)) {
     const [key, value] = entry
-    
+
     if (Number.isNaN(value) || value == undefined) {
         throw new InternalServerError(`${key} is missing.`)
     }
