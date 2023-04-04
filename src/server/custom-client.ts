@@ -8,16 +8,15 @@ import {
     Presence
 } from 'discord.js';
 
+import { config } from '../config';
 import { readdirSync } from 'fs';
 import { join } from 'path';
-import dotenv from 'dotenv';
-dotenv.config();
 
 export class CustomClient extends Client {
     constructor(clientOptions: ClientOptions) {
         super(clientOptions);
 
-        this.token = String(process.env.TOKEN)
+        this.token = config.discordToken!
         this.commands = new Collection()
         
         this.login(this.token)
@@ -30,13 +29,8 @@ export class CustomClient extends Client {
     private async deleteCommands() {
         try {
             const rest = new REST({ version: '10' }).setToken(this.token);
-            const clientId = this?.application?.id
 
-            if (!clientId) {
-                throw new Error('Client Id is invalid.')
-            }
-
-            await rest.put(Routes.applicationCommands(clientId), { body: [] })
+            await rest.put(Routes.applicationCommands(config.discordClientID!), { body: [] })
 
             console.log('Successfully deleted all application commands.')
         } catch (err) {
@@ -60,14 +54,9 @@ export class CustomClient extends Client {
             const rest = new REST({ version: '10' }).setToken(this.token);
 
             console.log(`Started refreshing ${commands.length} application (/) commands.`);
-            const clientId = this?.application?.id
-
-            if (!clientId) {
-                throw new Error('Client Id is invalid.')
-            }
 
             await rest.put(
-                Routes.applicationCommands(clientId),
+                Routes.applicationCommands(config.discordClientID!),
                 { body: commands },
             );
 
