@@ -1,41 +1,34 @@
 import InternalServerError from "./server/errors/internal-server";
 require("dotenv").config();
 
-// Discord
-const discordToken = process.env.DISCORD_TOKEN
-const testGuildID = process.env.TEST_GUILD_ID
-const discordClientID = process.env.DISCORD_CLIENT_ID
-const discordClientSecret = process.env.DISCORD_CLIENT_SECRET
-const mainAccountID = process.env.DISCORD_MAIN_ACCOUNT_ID
-const discordOAuthURL = process.env.DISCORD_OAUTH_URL
+const config: configuration = {
+    // Discord
+    discordToken: process.env.DISCORD_TOKEN,
+    testGuildID: process.env.TEST_GUILD_ID,
+    discordClientID: process.env.DISCORD_CLIENT_ID,
+    discordClientSecret: process.env.DISCORD_CLIENT_SECRET,
+    mainAccountID: process.env.DISCORD_MAIN_ACCOUNT_ID,
+    discordOAuthURL: process.env.DISCORD_OAUTH_URL,
+    discordStatus: 'something',
 
-// App
-const appPort = 5000
-const jwtSecret = process.env.JWT_SECRET
-const jwtLifetime = '14d'
-const redirectURI = process.env.REDIRECT_URI
+    // App
+    appPort: 5000,
+    jwtSecret: process.env.JWT_SECRET,
+    jwtLifetime: '14d',
+    redirectURI: process.env.REDIRECT_URI,
 
-// POSTGRESQL
-const postgresPassword = process.env.POSTGRES_PASSWORD
-const postgresPort = 5432
-const postgresUser = process.env.POSTGRES_USER
-const postgresHost = process.env.POSTGRES_HOST
+    // Postgres
+    postgresPassword: process.env.POSTGRES_PASSWORD,
+    postgresPort: 5432,
+    postgresUser: process.env.POSTGRES_USER,
+    postgresHost: process.env.POSTGRES_HOST,
 
-const config = {
-    discordToken,
-    testGuildID,
-    discordClientID,
-    discordClientSecret,
-    mainAccountID,
-    discordOAuthURL,
-    appPort,
-    jwtSecret,
-    jwtLifetime,
-    redirectURI,
-    postgresPassword,
-    postgresPort,
-    postgresUser,
-    postgresHost,
+    // Rate Limiter
+    windowMs: 1000,
+    max: 15,
+    message: 'Rate Limit: 15 requests per second',
+    standardHeaders: true,
+    legacyHeaders: false,
 }
 
 for (const entry of Object.entries(config)) {
@@ -46,19 +39,4 @@ for (const entry of Object.entries(config)) {
     }
 }
 
-export {
-    discordToken,
-    testGuildID,
-    discordClientID,
-    discordClientSecret,
-    mainAccountID,
-    discordOAuthURL,
-    appPort,
-    jwtSecret,
-    jwtLifetime,
-    redirectURI,
-    postgresPassword,
-    postgresPort,
-    postgresUser,
-    postgresHost,
-}
+export { config }
