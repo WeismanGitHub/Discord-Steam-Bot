@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 import fetchMetadata from 'fetch-metadata';
 import authRouter from './routers/auth';
 import compression from 'compression'
+import { config } from '../config'
 require('express-async-errors')
 import { resolve } from 'path'
 import helmet from 'helmet'
@@ -20,15 +21,12 @@ const client: CustomClient = new CustomClient({
 const app: Application = express();
 app.set('discordClient', client);
 
-const port: number = Number(process.env.PORT) || 5000;
-const max: number = 15
-
 const limiter = rateLimit({
-    windowMs: 1000,
-	max: max,
+    windowMs: config.windowMs,
+	max: config.max,
 	standardHeaders: true,
 	legacyHeaders: false,
-	message: `Rate Limit: ${max} requests per second`
+	message: config.message
 })
 
 app.use(helmet({
@@ -39,8 +37,7 @@ app.use(helmet({
 			'media-src': ["'self'"],
 			"default-src": ["'self'"]
 		},
-	},
-	crossOriginEmbedderPolicy: false
+	}
 }))
 
 app.use(fetchMetadata({
@@ -56,7 +53,7 @@ app.use(fetchMetadata({
 
 app.use(limiter)
 app.use(compression())
-app.use(cors({ origin: ['http://localhost:5000'] }))
+app.use(cors({ origin: [`http://localhost:${config.appPort}`] }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(resolve(__dirname, '../client/build')))
 app.use(express.json())
@@ -78,7 +75,7 @@ app.use((err: CustomError, req: Request, res: Response, next: NextFunction): voi
 
 client.on('ready', (): void => {
 	console.log('bot is ready...')
-    client.setPresence(ActivityType.Playing, 'something')
+    client.setPresence(ActivityType.Playing, config.discordStatus)
 })
 
-app.listen(port, (): void => console.log(`listening on port ${port}...`));
+app.listen(config.appPort, (): void => console.log(`listening on port ${config.appPort}...`));
