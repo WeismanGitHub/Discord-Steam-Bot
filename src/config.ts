@@ -16,7 +16,7 @@ const jwtLifetime = '14d'
 const redirectURI = process.env.REDIRECT_URI
 
 // POSTGRESQL
-const postgresPassword = process.env.POSTGRESPASSWORD
+const postgresPassword = process.env.POSTGRES_PASSWORD
 const postgresPort = 5432
 const postgresUser = process.env.POSTGRES_USER
 const postgresHost = process.env.POSTGRES_HOST
@@ -40,6 +40,7 @@ const config = {
 
 for (const entry of Object.entries(config)) {
     const [key, value] = entry
+    console.log(Number.isNaN(value), value)
 
     if (Number.isNaN(value) || value == undefined) {
         throw new InternalServerError(`${key} is missing.`)
