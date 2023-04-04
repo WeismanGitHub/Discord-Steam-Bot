@@ -1,4 +1,4 @@
-import InternalServerError from '../errors/internal-server'
+import { config } from '../../config'
 import {
 	SlashCommandBuilder,
 	CommandInteraction,
@@ -14,17 +14,12 @@ export default {
 		.setDescription('Authorize this bot to see your connected Steam account.')
 	,
 	async execute(interaction: CommandInteraction): Promise<void> {
-		const redirectURI: string | undefined = process.env.REDIRECT_URI
-
-		if (!redirectURI) {
-			throw new InternalServerError('Redirect URI is undefined.')
-		}
 
 		const row = new ActionRowBuilder<ButtonBuilder>()
 		.addComponents([
 			new ButtonBuilder()
 			.setLabel('Authorization Link')
-			.setURL(redirectURI + '/auth/discord')
+			.setURL(config.redirectURI + '/auth/discord')
 			.setStyle(ButtonStyle.Link),
 		])
 	

@@ -34,7 +34,7 @@ const config: configuration = {
 for (const entry of Object.entries(config)) {
     const [key, value] = entry
 
-    if (Number.isNaN(value) || value == undefined) {
+    if (Number.isNaN(value) || value === undefined) {
         throw new InternalServerError(`${key} is missing.`)
     }
 }
