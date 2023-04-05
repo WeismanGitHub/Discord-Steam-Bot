@@ -22,6 +22,8 @@ const config: configuration = {
     postgresPort: 5432,
     postgresUser: process.env.POSTGRES_USER,
     postgresHost: process.env.POSTGRES_HOST,
+    postgresMax: 20,
+    postgresConnectionTimeoutMillis: 30000,
 
     // Rate Limiter
     windowMs: 1000,
