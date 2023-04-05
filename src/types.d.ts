@@ -19,6 +19,8 @@ interface configuration {
     postgresPort: number
     postgresUser: undefined | string
     postgresHost: undefined | string
+    postgresMax: undefined | number
+    postgresConnectionTimeoutMillis: undefined | number
 
     // Rate Limiter
     windowMs: number
