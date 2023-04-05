@@ -7,7 +7,6 @@
 /coverage
 
 # production
-/src/client/build/*
 /dist/*
 
 # misc
