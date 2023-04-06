@@ -1,4 +1,4 @@
-import InternalServerError from "./server/errors/internal-server";
+import { InternalServerError } from "./server/errors";
 require("dotenv").config();
 
 const config: configuration = {
