@@ -15,17 +15,14 @@ interface configuration {
     redirectURI: undefined | string
     
     // POSTGRESQL
-    postgresPassword: undefined | string
-    postgresPort: number
-    postgresUser: undefined | string
-    postgresHost: undefined | string
-    postgresMax: undefined | number
-    postgresConnectionTimeoutMillis: undefined | number
+    mongoURI: string | undefined
+    mongoMaxPoolSize: number
+    mongoWtimeoutMS: number
 
     // Rate Limiter
-    windowMs: number
-    max: number
-    message: string
-    standardHeaders: boolean
-    legacyHeaders: boolean,
+    limiterWindowMs: number
+    limiterMax: number
+    limiterMessage: string
+    limiterStandardHeaders: boolean
+    limiterLegacyHeaders: boolean,
 }
