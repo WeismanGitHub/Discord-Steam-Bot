@@ -32,7 +32,7 @@ export class CustomClient extends Client {
 
             await rest.put(Routes.applicationCommands(config.discordClientID!), { body: [] })
 
-            console.log('Successfully deleted all application commands.')
+            console.log('deleted all commands...')
         } catch (err) {
             console.error(err);
         }
@@ -53,14 +53,12 @@ export class CustomClient extends Client {
 
             const rest = new REST({ version: '10' }).setToken(this.token);
 
-            console.log(`Started refreshing ${commands.length} application (/) commands.`);
-
             await rest.put(
                 Routes.applicationCommands(config.discordClientID!),
                 { body: commands },
             );
 
-            console.log(`Successfully reloaded ${commands.length} application (/) commands.`);
+            console.log(`reloaded ${commands.length} commands...`);
         } catch (err) {
             console.error(err);
         }
