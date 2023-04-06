@@ -19,7 +19,7 @@ export default {
 		.addComponents([
 			new ButtonBuilder()
 			.setLabel('Authorization Link')
-			.setURL(config.redirectURI + 'auth/discord')
+			.setURL(config.redirectURI!)
 			.setStyle(ButtonStyle.Link),
 		])
 	
