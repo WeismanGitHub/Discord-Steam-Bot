@@ -17,20 +17,17 @@ const config: configuration = {
     jwtLifetime: '14d',
     redirectURI: process.env.REDIRECT_URI,
 
-    // Postgres
-    postgresPassword: process.env.POSTGRES_PASSWORD,
-    postgresPort: 5432,
-    postgresUser: process.env.POSTGRES_USER,
-    postgresHost: process.env.POSTGRES_HOST,
-    postgresMax: 20,
-    postgresConnectionTimeoutMillis: 30000,
+    // Mongodb
+    mongoURI: process.env.MONGO_URI,
+    mongoMaxPoolSize: 50,
+    mongoWtimeoutMS: 2500,
 
     // Rate Limiter
-    windowMs: 1000,
-    max: 15,
-    message: 'Rate Limit: 15 requests per second',
-    standardHeaders: true,
-    legacyHeaders: false,
+    limiterWindowMs: 1000,
+    limiterMax: 15,
+    limiterMessage: 'Rate Limit: 15 requests per second',
+    limiterStandardHeaders: true,
+    limiterLegacyHeaders: false,
 }
 
 for (const entry of Object.entries(config)) {
