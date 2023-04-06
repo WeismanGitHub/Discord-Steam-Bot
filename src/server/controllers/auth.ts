@@ -1,7 +1,7 @@
 import { BadRequestError, NotFoundError, InternalServerError } from '../errors';
 const DiscordOauth2 = require("discord-oauth2");
 import { Request, Response } from 'express';
-// import { UserModel } from '../db/models'
+import { UserModel } from '../db/models'
 import { config } from '../../config'
 require('express-async-errors')
 
@@ -42,10 +42,16 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
         throw new NotFoundError('No Steam connection.')
     }
 
-    console.log(userId, steamConnection)
+    await UserModel.updateOne(
+        { _id: userId },
+        { steamID: steamConnection.id },
+        { upsert: true }
+    )
+    .catch(err => {
+        throw new InternalServerError("Error creating user.")
+    })
 
-
-    res.status(200).send('discord auth');
+    res.status(200).end()
 }
 
 export { steamAuth, discordAuth }
