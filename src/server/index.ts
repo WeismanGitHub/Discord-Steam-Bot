@@ -4,6 +4,7 @@ import { CustomError, NotFoundError } from './errors';
 import { CustomClient } from './custom-client';
 import rateLimit from 'express-rate-limit';
 import fetchMetadata from 'fetch-metadata';
+import { connectDB } from './db/connect';
 import authRouter from './routers/auth';
 import compression from 'compression'
 import { config } from '../config'
@@ -78,4 +79,5 @@ client.on('ready', (): void => {
     client.setPresence(ActivityType.Playing, config.discordStatus)
 })
 
+connectDB()
 app.listen(config.appPort, (): void => console.log(`listening on port ${config.appPort}...`));
