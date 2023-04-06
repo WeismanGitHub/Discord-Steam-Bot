@@ -22,11 +22,11 @@ const app: Application = express();
 app.set('discordClient', client);
 
 const limiter = rateLimit({
-    windowMs: config.windowMs,
-	max: config.max,
+    windowMs: config.limiterWindowMs,
+	max: config.limiterMax,
 	standardHeaders: true,
 	legacyHeaders: false,
-	message: config.message
+	message: config.limiterMessage
 })
 
 app.use(helmet({
