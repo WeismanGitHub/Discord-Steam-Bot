@@ -1,4 +1,4 @@
-import { BadRequestError, NotFoundError, InternalServerError } from '../errors';
+import { BadRequestError, InternalServerError } from '../errors';
 const DiscordOauth2 = require("discord-oauth2");
 import { Request, Response } from 'express';
 import { UserModel } from '../db/models'
@@ -39,7 +39,7 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
     const steamConnection: connection | undefined = connections.find((connection: connection) => connection.type == 'steam')
 
     if (!steamConnection) {
-        throw new NotFoundError('No Steam connection.')
+        throw new BadRequestError('No Steam connection.')
     }
 
     await UserModel.updateOne(
