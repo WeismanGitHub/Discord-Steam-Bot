@@ -26,3 +26,15 @@ interface configuration {
     limiterStandardHeaders: boolean
     limiterLegacyHeaders: boolean,
 }
+
+interface connection {
+    type: string
+    id: string
+    name: string
+    visibility: number
+    friend_sync: boolean
+    show_activity: boolean
+    verified: boolean
+    two_way_link: boolean
+    metadata_visibility: number
+}
