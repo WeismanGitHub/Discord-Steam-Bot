@@ -65,6 +65,8 @@ interface wishlistItem {
     deck_compat: string | undefined
     early_access: number | undefined
     win: number | undefined
+    mac: number | undefined
+    linux: number | undefined
 }
 
 interface wishlistSub {
