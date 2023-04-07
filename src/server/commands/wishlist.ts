@@ -32,9 +32,24 @@ export default {
             throw new InternalServerError('Error getting wishlist.')
         }
 
-        // const wishlistEmbeds: EmbedBuilder[] = Object.entries(res.data).map((entry) => {
+        const wishlistItems: wishlistItem[] = Object.values(res.data)
 
-        // })
-        // console.log(wishlistEmbeds)
+        if (!wishlistItems) {
+            throw new BadRequestError('User has empty wishlist.')
+        }
+
+        const wishlistEmbeds: EmbedBuilder[] = wishlistItems.map((item): EmbedBuilder => {
+            console.log(item?.subs)
+
+            return new EmbedBuilder()
+            .setTitle(item.name || 'Missing Title')
+            // .addFields({ name: 'Tags:', value: tags.join(', ') })
+            // .addFields({ name: 'ID:', value: `${quote._id}` })
+            // .setImage(quote.attachmentURL)
+            // .setTimestamp(quote.createdAt)
+            // .setFooter({ text: quote.attachmentURL ? 'image' : quote.type })
+        })
+
+        console.log(wishlistEmbeds)
 	},
 };
