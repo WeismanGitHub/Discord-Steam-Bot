@@ -26,6 +26,14 @@ export default {
 			.setLabel('Authorization')
 			.setURL(config.redirectURI!)
 			.setStyle(ButtonStyle.Link),
+			new ButtonBuilder()
+			.setLabel('Source Code')
+			.setURL(config.sourceCodeLink!)
+			.setStyle(ButtonStyle.Link),
+			new ButtonBuilder()
+			.setLabel('Buy Me a Coffee')
+			.setURL(config.buyMeACofeeLink!)
+			.setStyle(ButtonStyle.Link),
 		])
 
 		interaction.reply({
