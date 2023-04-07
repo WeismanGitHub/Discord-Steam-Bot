@@ -39,18 +39,13 @@ export default {
         }
 
         const wishlistEmbeds: EmbedBuilder[] = wishlistItems.map((item): EmbedBuilder => {
-            const embed = new EmbedBuilder()
+            return new EmbedBuilder()
             .setTitle(item.name || 'Missing Title')
-
-            if (item.capsule || item.background) {
-                embed.setImage(item.capsule || item.background || null)
-            }
-
-            return embed
+            .setImage(item.capsule || item.background || null)
+            .setFooter({ text: `Release: ${item.release_string || 'not found'}` })
 
             // .addFields({ name: 'Tags:', value: tags.join(', ') })
             // .addFields({ name: 'ID:', value: `${quote._id}` })
-            // .setTimestamp(quote.createdAt)
             // .setFooter({ text: quote.attachmentURL ? 'image' : quote.type })
         })
 
