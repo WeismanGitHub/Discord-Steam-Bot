@@ -39,13 +39,17 @@ export default {
         }
 
         const wishlistEmbeds: EmbedBuilder[] = wishlistItems.map((item): EmbedBuilder => {
-            // console.log(item)
-
-            return new EmbedBuilder()
+            const embed = new EmbedBuilder()
             .setTitle(item.name || 'Missing Title')
+
+            if (item.capsule || item.background) {
+                embed.setImage(item.capsule || item.background || null)
+            }
+
+            return embed
+
             // .addFields({ name: 'Tags:', value: tags.join(', ') })
             // .addFields({ name: 'ID:', value: `${quote._id}` })
-            // .setImage(quote.attachmentURL)
             // .setTimestamp(quote.createdAt)
             // .setFooter({ text: quote.attachmentURL ? 'image' : quote.type })
         })
@@ -67,3 +71,45 @@ export default {
         };
     },
 };
+
+//     capsule: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1206560/header_292x136.jpg?t=1659920810',
+//     review_score: 8,
+//     review_desc: 'Very Positive',
+//     reviews_total: '18,891',
+//     reviews_percent: 95,
+//     release_date: '1638466470',
+//     release_string: 'Dec 2, 2021',
+//     platform_icons: '<span class="platform_img win"></span><span class="platform_img mac"></span><span class="platform_img linux"></span>',
+//     subs: [
+//       {
+//         id: 416777,
+//         discount_block: '<div class="discount_block discount_block_large no_discount" data-price-final="1999"><div class="discount_prices"><div class="discount_final_price">$19.99</div></div></div>',
+//         discount_pct: 0,
+//         price: 1999
+//       }
+//     ],
+//     type: 'Game',
+//     screenshots: [
+//       'ss_c8308f959146715491fa734ade1a708392c080e8.jpg',
+//       'ss_54c925a46d6b769b22fdde20c88b61f7e4a4d426.jpg',
+//       'ss_323a5b3a7c389e16fa596d9ea079c0f72325cada.jpg',
+//       'ss_377d5bb3ed51434bb45ed673ae8074b3329a4a6a.jpg'
+//     ],
+//     review_css: 'positive',
+//     priority: 0,
+//     added: 1656043953,
+//     background: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1159290/page_bg_generated_v6b.jpg?t=1665335898',
+//     rank: 711,
+//     tags: [
+//       'Early Access',
+//       'God Game',
+//       'Sandbox',
+//       'Pixel Graphics',
+//       'Simulation'
+//     ],
+//     is_free_game: false,
+//     deck_compat: '3',
+//     early_access: 1,
+//     win: 1,
+//     mac: 1,
+//     linux: 1
