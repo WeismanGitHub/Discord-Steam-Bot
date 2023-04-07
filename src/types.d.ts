@@ -13,6 +13,8 @@ interface configuration {
     jwtSecret: undefined | string
     jwtLifetime: string
     redirectURI: undefined | string
+    buyMeACofeeLink: undefined | string
+    sourceCodeLink: undefined | string
     
     // POSTGRESQL
     mongoURI: string | undefined
