@@ -5,7 +5,8 @@ import {
     Routes,
     ClientOptions,
     ActivityType,
-    Presence
+    Presence,
+    EmbedBuilder
 } from 'discord.js';
 
 import { CustomError } from './errors';
@@ -76,10 +77,15 @@ export class CustomClient extends Client {
             } catch (err) {
                 console.error(err);
 
+                const embed: EmbedBuilder = new EmbedBuilder()
+                .setTitle("There's been an error!")
+                .setColor('#FF0000')
+
                 if (err instanceof CustomError) {
-                    interaction.reply({ content: err.message, ephemeral: true });
+                    embed.setDescription(err.message)
+                    interaction.reply({ embeds: [embed], ephemeral: true });
                 } else {
-                    interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+                    interaction.reply({ embeds: [embed], ephemeral: true });
                 }
             }
         });
