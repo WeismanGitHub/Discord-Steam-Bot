@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, CommandInteraction, User, EmbedBuilder } from 'discord.js'
+import { SlashCommandBuilder, CommandInteraction, User, EmbedBuilder, ChannelType } from 'discord.js'
 import { BadRequestError, InternalServerError } from '../errors';
 import { UserModel } from '../db/models';
 import axios, * as _ from 'axios'
@@ -39,7 +39,7 @@ export default {
         }
 
         const wishlistEmbeds: EmbedBuilder[] = wishlistItems.map((item): EmbedBuilder => {
-            console.log(item?.subs)
+            // console.log(item)
 
             return new EmbedBuilder()
             .setTitle(item.name || 'Missing Title')
@@ -50,6 +50,20 @@ export default {
             // .setFooter({ text: quote.attachmentURL ? 'image' : quote.type })
         })
 
-        console.log(wishlistEmbeds)
-	},
+        const embedGroups = [];
+
+        while (wishlistEmbeds.length > 0) {
+            embedGroups.push(wishlistEmbeds.splice(0, 10))
+        }
+
+        if (interaction.channel?.type !== ChannelType.GuildText) {
+            return
+        }
+
+        await interaction.reply({ embeds: embedGroups[0] })
+
+        for (let embedGroup of embedGroups.slice(1)) {
+            interaction.followUp({ embeds: embedGroup })
+        };
+    },
 };
