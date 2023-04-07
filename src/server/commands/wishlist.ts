@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, CommandInteraction, User, EmbedBuilder, ChannelType } from 'discord.js'
+import { SlashCommandBuilder, ChatInputCommandInteraction, User, EmbedBuilder, ChannelType } from 'discord.js'
 import { BadRequestError, InternalServerError } from '../errors';
 import { UserModel } from '../db/models';
 import axios, * as _ from 'axios'
@@ -34,7 +34,7 @@ export default {
             )
         )
 	,
-	async execute(interaction: CommandInteraction): Promise<void> {
+	async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         if (!interaction.isCommand()) return;
 
         const selectedUser: User = interaction.options.getUser('user')!
@@ -60,11 +60,8 @@ export default {
             throw new BadRequestError('User has empty wishlist.')
         }
 
-        // @ts-ignore
         const reviewsOption = interaction.options.getString('reviews')
-        // @ts-ignore
         const freeOption = interaction.options.getBoolean('free')
-        console.log(reviewsOption, freeOption)
 
         if (freeOption !== null) {
             console.log('a')
