@@ -8,6 +8,7 @@ import {
     Presence
 } from 'discord.js';
 
+import { CustomError } from './errors';
 import { config } from '../config';
 import { readdirSync } from 'fs';
 import { join } from 'path';
@@ -74,7 +75,12 @@ export class CustomClient extends Client {
                 await command.execute(interaction);
             } catch (err) {
                 console.error(err);
-                await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+
+                if (err instanceof CustomError) {
+                    interaction.reply({ content: err.message, ephemeral: true });
+                } else {
+                    interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+                }
             }
         });
     }
