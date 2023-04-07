@@ -16,6 +16,8 @@ const config: configuration = {
     jwtSecret: process.env.JWT_SECRET,
     jwtLifetime: '14d',
     redirectURI: process.env.REDIRECT_URI,
+    buyMeACofeeLink: process.env.BUY_ME_A_COFFEE_LINK,
+    sourceCodeLink: process.env.SOURCE_CODE_LINK,
 
     // Mongodb
     mongoURI: process.env.MONGO_URI,
