@@ -54,7 +54,7 @@ export default {
             throw new InternalServerError('Error getting wishlist.')
         }
 
-        const wishlistItems: wishlistItem[] = Object.values(res.data)
+        let wishlistItems: wishlistItem[] = Object.values(res.data)
 
         if (!wishlistItems) {
             throw new BadRequestError('User has empty wishlist.')
@@ -64,7 +64,7 @@ export default {
         const freeOption = interaction.options.getBoolean('free')
 
         if (freeOption !== null) {
-            console.log('a')
+            wishlistItems = wishlistItems.filter((item): boolean => Boolean(item.is_free_game) == freeOption)
         }
 
         if (reviewsOption) {
