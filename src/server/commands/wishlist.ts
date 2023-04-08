@@ -1,7 +1,16 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction, User, EmbedBuilder, ChannelType } from 'discord.js'
 import { BadRequestError, InternalServerError } from '../errors';
 import { UserModel } from '../db/models';
 import axios, * as _ from 'axios'
+import {
+    SlashCommandBuilder,
+    ChatInputCommandInteraction,
+    User,
+    EmbedBuilder,
+    ChannelType,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+} from 'discord.js'
 
 export default {
 	data: new SlashCommandBuilder()
@@ -110,8 +119,16 @@ export default {
 
         await interaction.reply({ embeds: embedGroups[0], ephemeral: true })
 
-        for (let embedGroup of embedGroups.slice(1)) {
-            interaction.followUp({ embeds: embedGroup, ephemeral: true })
-        };
+        await Promise.all(embedGroups.slice(1).map((embedGroup) => interaction.followUp({ embeds: embedGroup, ephemeral: true })))
+
+        const row = new ActionRowBuilder<ButtonBuilder>()
+        .addComponents(
+            new ButtonBuilder()
+            .setLabel(`Next Page ⏩`)
+            .setCustomId(JSON.stringify({ page: 0, discordId: interaction.user.id }))
+            .setStyle(ButtonStyle.Primary)
+        )
+
+        interaction.followUp({ components: [row], ephemeral: true })
     },
 };
