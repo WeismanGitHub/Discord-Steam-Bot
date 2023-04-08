@@ -1,7 +1,7 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
-import { ActivityType, GatewayIntentBits } from 'discord.js';
 import { CustomError, NotFoundError } from './errors';
 import { CustomClient } from './custom-client';
+import { GatewayIntentBits } from 'discord.js';
 import rateLimit from 'express-rate-limit';
 import fetchMetadata from 'fetch-metadata';
 import { connectDB } from './db/connect';
@@ -72,11 +72,6 @@ app.get('/*', (req: Request, res: Response): void => {
 app.use((err: CustomError, req: Request, res: Response, next: NextFunction): void => {
     console.error(err.message)
     res.status(err.statusCode || 500).send(err.message)
-})
-
-client.on('ready', (): void => {
-	console.log('bot is ready...')
-    client.setPresence(ActivityType.Playing, config.discordStatus)
 })
 
 connectDB()
