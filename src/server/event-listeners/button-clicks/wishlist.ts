@@ -90,7 +90,7 @@ export default {
             new ButtonBuilder()
             .setLabel(`Next Page ⏩`)
             .setCustomId(JSON.stringify({
-                page: 0,
+                page: page + 1,
                 steamID: steamID,
                 type: 'wishlist',
                 filters: {
