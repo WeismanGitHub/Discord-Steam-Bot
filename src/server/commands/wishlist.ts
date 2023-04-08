@@ -125,7 +125,7 @@ export default {
         .addComponents(
             new ButtonBuilder()
             .setLabel(`Next Page ⏩`)
-            .setCustomId(JSON.stringify({ page: 0, discordId: interaction.user.id }))
+            .setCustomId(JSON.stringify({ page: 0, steamID: user.steamID, type: 'wishlist' }))
             .setStyle(ButtonStyle.Primary)
         )
 
