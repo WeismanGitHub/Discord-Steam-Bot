@@ -22,7 +22,7 @@ export default {
         )
         .addUserOption(option => option
             .setDescription("The second user you want to target.")
-            .setName('user_1')
+            .setName('user_2')
             .setRequired(true)
         )
 	,
