@@ -2,7 +2,7 @@ const { Events, ActivityType } = require('discord.js');
 import { CustomClient } from "../custom-client";
 import { config } from '../../config'
 
-module.exports = {
+export default {
 	name: Events.ClientReady,
 	once: true,
 	execute(client: CustomClient) {
