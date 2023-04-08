@@ -13,7 +13,7 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
     const oauth = new DiscordOauth2();
     const { code } = req.body
     let connections: connection[];
-    let userId: string;
+    let userID: string;
 
     if (!code) {
         throw new BadRequestError('Missing Code')
@@ -31,7 +31,7 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
         })).access_token
 
         connections = await oauth.getUserConnections(token)
-        userId = (await oauth.getUser(token)).id
+        userID = (await oauth.getUser(token)).id
     } catch(err) {
         throw new InternalServerError('Something went wrong getting your connections.')
     }
@@ -43,7 +43,7 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
     }
 
     await UserModel.updateOne(
-        { _id: userId },
+        { _id: userID },
         { steamID: steamConnection.id },
         { upsert: true }
     )
