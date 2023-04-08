@@ -1,5 +1,5 @@
-import { BadRequestError, InternalServerError } from "../../errors"
 import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, ChannelType, EmbedBuilder, Events } from "discord.js"
+import { InternalServerError } from "../../errors"
 import axios, * as _ from 'axios'
 
 export default {
@@ -26,14 +26,20 @@ export default {
         })
 
         if (!res?.data) {
-            console.log('sdfs')
             throw new InternalServerError('Error getting wishlist.')
         }
 
         let wishlistItems: wishlistItem[] = Object.values(res.data)
 
         if (!wishlistItems.length) {
-            throw new BadRequestError('User has empty wishlist.')
+            return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setTitle('No more items in wishlist.')
+                    .setColor('#8F00FF') // Purple
+                ],
+                ephemeral: true
+            })
         }
 
         if (filters?.free !== null) {
@@ -68,7 +74,14 @@ export default {
         })
 
         if (!wishlistEmbeds.length) {
-            throw new BadRequestError('No wishlist items found.')
+            return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setTitle('No more items in wishlist.')
+                    .setColor('#8F00FF') // Purple
+                ],
+                ephemeral: true
+            })
         }
 
         const embedGroups = [];
