@@ -68,7 +68,7 @@ export default {
         }
 
         if (reviewsOption) {
-            console.log('b')
+            wishlistItems = wishlistItems.filter((item): boolean => item.review_desc == reviewsOption)
         }
 
         const wishlistEmbeds: EmbedBuilder[] = wishlistItems.map((item): EmbedBuilder => {
@@ -93,6 +93,10 @@ export default {
                 inline: false
             })
         })
+
+        if (!wishlistEmbeds.length) {
+            throw new BadRequestError('No wishlist items found.')
+        }
 
         const embedGroups = [];
 
