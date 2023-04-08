@@ -127,8 +127,7 @@ export default {
             .setLabel(`Next Page ⏩`)
             .setCustomId(JSON.stringify({
                 page: 0,
-                steamID:
-                user.steamID,
+                steamID: user.steamID,
                 type: 'wishlist',
                 filters: {
                     free: freeOption,
