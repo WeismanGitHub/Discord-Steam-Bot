@@ -9,10 +9,31 @@ import {
     EmbedBuilder
 } from 'discord.js';
 
+import { readdirSync, statSync } from 'fs';
 import { CustomError } from './errors';
 import { config } from '../config';
-import { readdirSync } from 'fs';
 import { join } from 'path';
+
+function getPaths(dir: string): string[] {
+    const paths = readdirSync(dir)
+    const filePaths: string[] = []
+
+    function recursiveLoop(paths: string[]) {
+        for (let path of paths) {
+            const fileStat = statSync(path)
+            
+            if (fileStat.isFile()) {
+                filePaths.push(path)
+            } else if (fileStat.isDirectory()) {
+                recursiveLoop(readdirSync(path).map(subPath => join(path, subPath)))
+            }
+        }
+    }
+    
+    recursiveLoop(paths.map(path => join(dir, path)))
+    
+    return filePaths
+}
 
 export class CustomClient extends Client {
     constructor(clientOptions: ClientOptions) {
@@ -42,13 +63,17 @@ export class CustomClient extends Client {
     
     private async loadCommands() {
         try {
-            const commandsPath = join(__dirname, 'commands')
-            const commandFiles = readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+            const commandsPaths: string[] = getPaths(join(__dirname, 'commands')).filter(file => file.endsWith('.js'))
             const commands = [];
 
-            for (const file of commandFiles) {
-                const command = require(`./commands/${file}`);
-
+            for (const path of commandsPaths) {
+                const command = require(path);
+        
+                if (!command.default.data) {
+                    console.log(`malformed command file...`)
+                    continue
+                }
+        
                 commands.push(command.default.data.toJSON());
                 this.commands.set(command.default.data.name, command.default);
             }
