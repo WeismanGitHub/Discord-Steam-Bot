@@ -65,7 +65,7 @@ export default {
 
         let wishlistItems: wishlistItem[] = Object.values(res.data)
 
-        if (!wishlistItems) {
+        if (!wishlistItems.length) {
             throw new BadRequestError('User has empty wishlist.')
         }
 
