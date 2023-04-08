@@ -16,7 +16,7 @@ export default {
             return
         }
 
-        if (!page || !steamID) {
+        if (!Number.isInteger(page) || !steamID) {
             throw new InternalServerError('The server messed up this button.')
         }
 
