@@ -44,7 +44,7 @@ export class CustomClient extends Client {
         
         this.login(this.token)
         .then(async () => {
-            this.loadEventHandlers()
+            this.loadEventListeners()
             await this.deleteCommands()
             this.loadCommands()
         })
@@ -117,8 +117,8 @@ export class CustomClient extends Client {
         });
     }
 
-    private async loadEventHandlers() {
-        const eventsPaths = getPaths(join(__dirname, 'event-handlers')).filter(file => file.endsWith('.js'))
+    private async loadEventListeners() {
+        const eventsPaths = getPaths(join(__dirname, 'event-listeners')).filter(file => file.endsWith('.js'))
         
         for (const eventPath of eventsPaths) {
             const event = require(eventPath);
@@ -145,7 +145,7 @@ export class CustomClient extends Client {
             });
         }
     
-        console.log(`loaded ${eventsPaths.length} events...`);
+        console.log(`loaded ${eventsPaths.length} event listeners...`);
     }
 
     public setPresence(
