@@ -6,7 +6,8 @@ import {
     ClientOptions,
     ActivityType,
     Presence,
-    EmbedBuilder
+    EmbedBuilder,
+    Events
 } from 'discord.js';
 
 import { readdirSync, statSync } from 'fs';
@@ -91,7 +92,7 @@ export class CustomClient extends Client {
             console.error(err);
         }
 
-        this.on('interactionCreate', async interaction => {
+        this.on(Events.InteractionCreate, async interaction => {
             if (!interaction.isCommand()) return;
         
             const command = this.commands.get(interaction.commandName);
@@ -119,32 +120,37 @@ export class CustomClient extends Client {
 
     private async loadEventListeners() {
         const eventsPaths = getPaths(join(__dirname, 'event-listeners')).filter(file => file.endsWith('.js'))
-        
+
         for (const eventPath of eventsPaths) {
             const event = require(eventPath);
 
-            this.on(event.name, (...args) => {
-                event.execute(...args)
-                .catch((err: Error) => {
-                    if (event.name == 'interactionCreate') {
-                        const interaction = args[0]
-                        console.error(err);
+            if (event.default.once) {
+                this.once(event.default.name, (...args) => event.default.execute(...args))
+            } else {
+                this.on(event.default.name, (...args) => {
+                    event.default.execute(...args)
+                    .catch((err: Error) => {
+                        console.log(err)
 
-                        const embed: EmbedBuilder = new EmbedBuilder()
-                        .setTitle("There's been an error!")
-                        .setColor('#FF0000')
-        
-                        if (err instanceof CustomError) {
-                            embed.setDescription(err.message)
-                            interaction.reply({ embeds: [embed], ephemeral: true });
-                        } else {
-                            interaction.reply({ embeds: [embed], ephemeral: true });
-                        }
-                    }
-                })
-            });
-        }
+                        if (event.default.name == Events.InteractionCreate) {
+                            const interaction = args[0]
     
+                            const embed: EmbedBuilder = new EmbedBuilder()
+                            .setTitle("There's been an error!")
+                            .setColor('#FF0000')
+            
+                            if (err instanceof CustomError) {
+                                embed.setDescription(err.message)
+                                interaction.reply({ embeds: [embed], ephemeral: true })!;
+                            } else {
+                                interaction.reply({ embeds: [embed], ephemeral: true });
+                            }
+                        }
+                    })
+                });
+            }
+        }
+
         console.log(`loaded ${eventsPaths.length} event listeners...`);
     }
 
