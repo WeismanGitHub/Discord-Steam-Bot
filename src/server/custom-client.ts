@@ -44,6 +44,7 @@ export class CustomClient extends Client {
         
         this.login(this.token)
         .then(async () => {
+            this.loadEventHandlers()
             await this.deleteCommands()
             this.loadCommands()
         })
@@ -114,6 +115,37 @@ export class CustomClient extends Client {
                 }
             }
         });
+    }
+
+    private async loadEventHandlers() {
+        const eventsPaths = getPaths(join(__dirname, 'event-handlers')).filter(file => file.endsWith('.js'))
+        
+        for (const eventPath of eventsPaths) {
+            const event = require(eventPath);
+
+            this.on(event.name, (...args) => {
+                event.execute(...args)
+                .catch((err: Error) => {
+                    if (event.name == 'interactionCreate') {
+                        const interaction = args[0]
+                        console.error(err);
+
+                        const embed: EmbedBuilder = new EmbedBuilder()
+                        .setTitle("There's been an error!")
+                        .setColor('#FF0000')
+        
+                        if (err instanceof CustomError) {
+                            embed.setDescription(err.message)
+                            interaction.reply({ embeds: [embed], ephemeral: true });
+                        } else {
+                            interaction.reply({ embeds: [embed], ephemeral: true });
+                        }
+                    }
+                })
+            });
+        }
+    
+        console.log(`loaded ${eventsPaths.length} events...`);
     }
 
     public setPresence(
