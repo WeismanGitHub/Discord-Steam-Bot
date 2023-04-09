@@ -1,26 +1,58 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction, User, Role, APIRole } from 'discord.js'
+import { SlashCommandBuilder, ChatInputCommandInteraction, User, EmbedBuilder } from 'discord.js'
 import { BadRequestError } from '../errors';
+import { UserModel } from '../db/models';
+import { config } from '../../config'
+const steamWeb = require('steam-web')
 
 export default {
 	data: new SlashCommandBuilder()
 		.setName('level')
-		.setDescription("Get the Steam level of a user or all user's with a role.")
+		.setDescription("Get the Steam level of a user.")
         .setDMPermission(false)
         .addUserOption(option => option
             .setDescription("The user you want to target.")
             .setName('user')
-        )
-        .addRoleOption(option => option
-            .setDescription("The role you want to target.")
-            .setName('role')
+            .setRequired(true)
         )
 	,
 	async execute(interaction: ChatInputCommandInteraction): Promise<void> {
-        const role: Role | APIRole | null = interaction.options.getRole('role')
-        const user: User | null = interaction.options.getUser('user')
+        const user: User = interaction.options.getUser('user')!
 
-        if ((!role && !user) || (role && user)) {
-            throw new BadRequestError('Choose a role or a user.')
+        const steamID = (await UserModel.findById(user.id).select('-_id steamID').lean())?.steamID
+
+        if (!steamID) {
+            throw new BadRequestError('User is not in database.')
         }
+
+        const steam = new steamWeb({
+            apiKey: config.steamAPIKey,
+            format: 'json'
+        });
+
+        steam.getSteamLevel({
+            steamid: steamID,
+            callback: (err: Error, data: { response: { player_level: number } }) => {
+                if (err) {
+                    return interaction.reply({
+                        embeds: [
+                            new EmbedBuilder()
+                            .setTitle("There's been an error!")
+                            .setDescription('Could not get level.')
+                            .setColor('#FF0000')
+                        ],
+                        ephemeral: true
+                    });
+                }
+
+                interaction.reply({
+                    embeds: [
+                        new EmbedBuilder()
+                        .setTitle(`Level: ${data.response.player_level}`)
+                        .setColor('#8F00FF') // Purple
+                    ],
+                    ephemeral: true
+                })
+            }
+        })
 	},
 };
