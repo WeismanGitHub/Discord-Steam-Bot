@@ -18,6 +18,7 @@ const config: configuration = {
     redirectURI: process.env.REDIRECT_URI,
     buyMeACofeeLink: process.env.BUY_ME_A_COFFEE_LINK,
     sourceCodeLink: process.env.SOURCE_CODE_LINK,
+    steamAPIKey: process.env.STEAM_API_KEY,
 
     // Mongodb
     mongoURI: process.env.MONGO_URI,
