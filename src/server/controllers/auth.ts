@@ -5,10 +5,6 @@ import { UserModel } from '../db/models'
 import { config } from '../../config'
 require('express-async-errors')
 
-async function steamAuth(req: Request, res: Response): Promise<void> {
-    res.status(200).send('steam auth');
-}
-
 async function discordAuth(req: Request, res: Response): Promise<void> {
     const oauth = new DiscordOauth2();
     const { code } = req.body
@@ -54,4 +50,4 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
     res.status(200).end()
 }
 
-export { steamAuth, discordAuth }
+export { discordAuth }
