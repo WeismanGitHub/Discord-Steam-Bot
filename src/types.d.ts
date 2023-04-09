@@ -15,6 +15,7 @@ interface configuration {
     redirectURI: undefined | string
     buyMeACofeeLink: undefined | string
     sourceCodeLink: undefined | string
+    steamAPIKey: undefined | string
     
     // POSTGRESQL
     mongoURI: string | undefined
