@@ -1,6 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, ChannelType, EmbedBuilder, Events } from "discord.js"
 import { InternalServerError } from "../../errors"
 import axios, * as _ from 'axios'
+import { titleEmbed } from "../../utils/embeds"
 
 export default {
 	name: Events.InteractionCreate,
@@ -34,11 +35,7 @@ export default {
 
         if (!wishlistItems.length) {
             return interaction.reply({
-                embeds: [
-                    new EmbedBuilder()
-                    .setTitle('No more items in wishlist.')
-                    .setColor('#8F00FF') // Purple
-                ],
+                embeds: [titleEmbed('No more items in wishlist.')],
                 ephemeral: true
             })
         }
