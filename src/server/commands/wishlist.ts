@@ -126,12 +126,14 @@ export default {
             new ButtonBuilder()
             .setLabel(`Next Page ⏩`)
             .setCustomId(JSON.stringify({
-                page: 0,
-                steamID: user.steamID,
                 type: 'wishlist',
-                filters: {
-                    free: freeOption,
-                    reviews: reviewsOption
+                data: {
+                    page: 0,
+                    steamID: user.steamID,
+                    filters: {
+                        free: freeOption,
+                        reviews: reviewsOption
+                    }
                 }
             }))
             .setStyle(ButtonStyle.Primary)

@@ -10,7 +10,8 @@ export default {
             return
         }
 
-        const { page, steamID, type, filters } = JSON.parse(interaction.customId)
+        const { type, data } = JSON.parse(interaction.customId)
+        const { page, steamID, filters } = data
 
         if (type !== 'wishlist') {
             return
