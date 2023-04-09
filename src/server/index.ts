@@ -1,4 +1,3 @@
-import express, { Application, NextFunction, Request, Response } from 'express';
 import { CustomError, NotFoundError } from './errors';
 import { CustomClient } from './custom-client';
 import { GatewayIntentBits } from 'discord.js';
@@ -12,6 +11,12 @@ require('express-async-errors')
 import { resolve } from 'path'
 import helmet from 'helmet'
 import cors from 'cors'
+import express, {
+	Application,
+	NextFunction,
+	Request,
+	Response
+} from 'express';
 
 const client: CustomClient = new CustomClient({
     intents: [
