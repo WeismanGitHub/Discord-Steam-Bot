@@ -1,4 +1,5 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction, User, EmbedBuilder } from 'discord.js'
+import { errorEmbed } from '../utils/embeds';
 import { BadRequestError } from '../errors';
 import { UserModel } from '../db/models';
 import { config } from '../../config'
@@ -34,12 +35,7 @@ export default {
             callback: (err: Error, data: { response: { player_level: number } }) => {
                 if (err) {
                     return interaction.reply({
-                        embeds: [
-                            new EmbedBuilder()
-                            .setTitle("There's been an error!")
-                            .setDescription('Could not get level.')
-                            .setColor('#FF0000')
-                        ],
+                        embeds: [errorEmbed('Could not get level.')],
                         ephemeral: true
                     });
                 }
