@@ -1,4 +1,4 @@
-import { discordAuth } from '../controllers/auth'
+import { discordAuth } from '../controllers/'
 import { Router } from 'express';
 
 const authRouter: Router = Router();
