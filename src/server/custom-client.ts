@@ -1,3 +1,8 @@
+import { errorEmbed } from './utils/embeds';
+import { readdirSync, statSync } from 'fs';
+import { CustomError } from './errors';
+import { config } from '../config';
+import { join } from 'path';
 import {
     Client,
     Collection,
@@ -6,14 +11,8 @@ import {
     ClientOptions,
     ActivityType,
     Presence,
-    EmbedBuilder,
     Events
 } from 'discord.js';
-
-import { readdirSync, statSync } from 'fs';
-import { CustomError } from './errors';
-import { config } from '../config';
-import { join } from 'path';
 
 function getPaths(dir: string): string[] {
     const paths = readdirSync(dir)
@@ -104,15 +103,10 @@ export class CustomClient extends Client {
             } catch (err) {
                 console.error(err);
 
-                const embed: EmbedBuilder = new EmbedBuilder()
-                .setTitle("There's been an error!")
-                .setColor('#FF0000')
-
                 if (err instanceof CustomError) {
-                    embed.setDescription(err.message)
-                    interaction.reply({ embeds: [embed], ephemeral: true });
+                    interaction.reply({ embeds: [errorEmbed(err.message)], ephemeral: true });
                 } else {
-                    interaction.reply({ embeds: [embed], ephemeral: true });
+                    interaction.reply({ embeds: [errorEmbed(null)], ephemeral: true });
                 }
             }
         });
@@ -134,16 +128,11 @@ export class CustomClient extends Client {
 
                         if (event.default.name == Events.InteractionCreate) {
                             const interaction = args[0]
-    
-                            const embed: EmbedBuilder = new EmbedBuilder()
-                            .setTitle("There's been an error!")
-                            .setColor('#FF0000')
             
                             if (err instanceof CustomError) {
-                                embed.setDescription(err.message)
-                                interaction.reply({ embeds: [embed], ephemeral: true })!;
+                                interaction.reply({ embeds: [errorEmbed(err.message)], ephemeral: true })!;
                             } else {
-                                interaction.reply({ embeds: [embed], ephemeral: true });
+                                interaction.reply({ embeds: [errorEmbed(null)], ephemeral: true });
                             }
                         }
                     })
