@@ -1,14 +1,9 @@
-import { errorEmbed } from '../utils/embeds';
+import { SlashCommandBuilder, ChatInputCommandInteraction, User } from 'discord.js'
+import { errorEmbed, titleEmbed } from '../utils/embeds';
 import { BadRequestError } from '../errors';
 import { UserModel } from '../db/models';
 const steamWeb = require('steam-web');
 import { config } from '../../config';
-import {
-    SlashCommandBuilder,
-    ChatInputCommandInteraction,
-    User,
-    EmbedBuilder
-} from 'discord.js'
 
 export default {
 	data: new SlashCommandBuilder()
@@ -46,11 +41,7 @@ export default {
                 }
 
                 interaction.reply({
-                    embeds: [
-                        new EmbedBuilder()
-                        .setTitle(`Level: ${data.response.player_level}`)
-                        .setColor('#8F00FF') // Purple
-                    ],
+                    embeds: [titleEmbed(`Level: ${data.response.player_level}`)],
                     ephemeral: true
                 })
             }
