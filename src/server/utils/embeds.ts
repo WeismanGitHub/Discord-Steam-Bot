@@ -1,6 +1,6 @@
 import { EmbedBuilder } from "discord.js";
 
-function errorEmbed(description: string | null): EmbedBuilder {
+function errorEmbed(description: string | null = null): EmbedBuilder {
     return new EmbedBuilder()
         .setTitle("There's been an error!")
         .setDescription(description)
