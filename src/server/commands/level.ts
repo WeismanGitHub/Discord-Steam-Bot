@@ -1,9 +1,14 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction, User, EmbedBuilder } from 'discord.js'
 import { errorEmbed } from '../utils/embeds';
 import { BadRequestError } from '../errors';
 import { UserModel } from '../db/models';
-import { config } from '../../config'
-const steamWeb = require('steam-web')
+const steamWeb = require('steam-web');
+import { config } from '../../config';
+import {
+    SlashCommandBuilder,
+    ChatInputCommandInteraction,
+    User,
+    EmbedBuilder
+} from 'discord.js'
 
 export default {
 	data: new SlashCommandBuilder()
