@@ -1,3 +1,4 @@
+import { config } from '../../config'
 import {
 	SlashCommandBuilder,
 	CommandInteraction,
@@ -6,8 +7,6 @@ import {
 	ButtonBuilder,
 	ButtonStyle,
 } from 'discord.js'
-
-import { config } from '../../config'
 
 export default {
 	data: new SlashCommandBuilder()
