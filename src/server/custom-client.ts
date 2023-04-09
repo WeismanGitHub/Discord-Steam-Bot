@@ -106,7 +106,7 @@ export class CustomClient extends Client {
                 if (err instanceof CustomError) {
                     interaction.reply({ embeds: [errorEmbed(err.message)], ephemeral: true });
                 } else {
-                    interaction.reply({ embeds: [errorEmbed(null)], ephemeral: true });
+                    interaction.reply({ embeds: [errorEmbed()], ephemeral: true });
                 }
             }
         });
@@ -132,7 +132,7 @@ export class CustomClient extends Client {
                             if (err instanceof CustomError) {
                                 interaction.reply({ embeds: [errorEmbed(err.message)], ephemeral: true })!;
                             } else {
-                                interaction.reply({ embeds: [errorEmbed(null)], ephemeral: true });
+                                interaction.reply({ embeds: [errorEmbed()], ephemeral: true });
                             }
                         }
                     })
