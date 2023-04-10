@@ -32,12 +32,18 @@ export default {
             throw new BadRequestError('User is not in database.')
         }
 
-        const playerData: player | undefined = (await axios.get(
-            `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.steamAPIKey}&steamids=${steamID}`
-        )
+        async function GetPlayerSummaries(): Promise<player | undefined> {
+            return (await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.steamAPIKey}&steamids=${steamID}`))?.data?.response?.players?.[0]
+        }
+
+        const results = await Promise.all([
+            GetPlayerSummaries()
+        ])
         .catch((err: Error): void => {
             throw new InternalServerError('Could not get user data.')
-        }))?.data?.response?.players[0]
+        })
+
+        const playerData = results?.[0]
         
         if (!playerData) {
             throw new InternalServerError('Could not get user data.')
