@@ -52,11 +52,11 @@ export default {
         })
 
         const embed = new EmbedBuilder()
-        .setImage(playerData.avatarfull)
+        .setImage(playerData.avatarfull || null)
         .addFields({
             inline: true,
             name: 'Name:',
-            value: playerData.personaname
+            value: playerData.personaname || 'unknown'
         })
         .addFields({
             inline: true,
