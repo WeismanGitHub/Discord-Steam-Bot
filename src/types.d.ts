@@ -78,24 +78,24 @@ interface wishlistSub {
 }
 
 interface player {
-    steamid: string
-    communityvisibilitystate: number
-    profilestate: number
-    personaname: string
-    commentpermission: number
+    steamid: string | undefined
+    communityvisibilitystate: number | undefined
+    profilestate: number | undefined
+    personaname: string | undefined
+    commentpermission: number | undefined
     profileurl: string
-    avatar: string
-    avatarmedium: string
-    avatarfull: string
-    avatarhash: string
-    lastlogoff: number
-    lastlogoff: number
-    personastate: number
-    realname: string
-    primaryclanid: string
-    timecreated: number
-    personastateflags: number
-    loccountrycode: string
-    locstatecode: string
-    loccityid: number
+    avatar: string | undefined
+    avatarmedium: string | undefined
+    avatarfull: string | undefined
+    avatarhash: string | undefined
+    lastlogoff: number | undefined
+    lastlogoff: number | undefined
+    personastate: number | undefined
+    realname: string | undefined
+    primaryclanid: string | undefined
+    timecreated: number | undefined
+    personastateflags: number | undefined
+    loccountrycode: string | undefined
+    locstatecode: string | undefined
+    loccityid: number | undefined
 }
