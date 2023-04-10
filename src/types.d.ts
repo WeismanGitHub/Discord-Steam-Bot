@@ -76,3 +76,26 @@ interface wishlistSub {
     discount_pct: number | undefined
     price: number | undefined
 }
+
+interface player {
+    steamid: string
+    communityvisibilitystate: number
+    profilestate: number
+    personaname: string
+    commentpermission: number
+    profileurl: string
+    avatar: string
+    avatarmedium: string
+    avatarfull: string
+    avatarhash: string
+    lastlogoff: number
+    lastlogoff: number
+    personastate: number
+    realname: string
+    primaryclanid: string
+    timecreated: number
+    personastateflags: number
+    loccountrycode: string
+    locstatecode: string
+    loccityid: number
+}
