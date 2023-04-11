@@ -43,7 +43,7 @@ export default {
             )
         )
 	,
-	async execute(interaction: ChatInputCommandInteraction): Promise<void> {
+	async execute(interaction: ChatInputCommandInteraction) {
         if (!interaction.isCommand()) return;
 
         const selectedUser: User = interaction.options.getUser('user')!
