@@ -42,7 +42,7 @@ export default {
 
         interface res {
             game_count: number | undefined
-            games: playedGame[] | undefined
+            games: ownedGame[] | undefined
         }
 
         const res: res = (await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${config.steamAPIKey}&steamid=${steamID}${playedFreeGamesParam}&include_appinfo=true`)
@@ -50,21 +50,21 @@ export default {
             throw new InternalServerError('Error getting owned games.')
         })).data?.response
 
-        const playedGames= res.games
+        const ownedGames= res.games
         const gameCount = res.game_count
 
-        if (!playedGames) {
+        if (!ownedGames) {
             throw new InternalServerError('Could not get owned games.')
         }
 
-        if (!playedGames.length) {
+        if (!ownedGames.length) {
             return interaction.reply({
                 embeds: [titleEmbed('No owned games.')],
                 ephemeral: true
             })
         }
 
-        const playedGamesEmbeds: EmbedBuilder[] = playedGames.map((game): EmbedBuilder => {
+        const ownedGamesEmbeds: EmbedBuilder[] = ownedGames.map((game): EmbedBuilder => {
             const playTime = (): string => {
                 if (game.playtime_forever === undefined) return 'unknown'
 
@@ -102,14 +102,14 @@ export default {
             // })
         })
 
-        if (!playedGamesEmbeds.length) {
+        if (!ownedGamesEmbeds.length) {
             throw new BadRequestError('No wishlist items found.')
         }
 
         const embedGroups = [];
 
-        while (playedGamesEmbeds.length > 0) {
-            embedGroups.push(playedGamesEmbeds.splice(0, 10))
+        while (ownedGamesEmbeds.length > 0) {
+            embedGroups.push(ownedGamesEmbeds.splice(0, 10))
         }
 
         await interaction.reply({
