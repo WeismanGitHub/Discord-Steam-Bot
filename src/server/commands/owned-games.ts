@@ -79,7 +79,6 @@ export default {
                 return `${formattedPlaytime} hours`
             }
 
-            console.log(game)
             return new EmbedBuilder()
             .setTitle(game.name || 'unknown')
             .setColor('#8F00FF') // Purple
