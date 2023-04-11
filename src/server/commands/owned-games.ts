@@ -65,17 +65,14 @@ export default {
         }
 
         const playedGamesEmbeds: EmbedBuilder[] = playedGames.map((game): EmbedBuilder => {
+            console.log(game)
             return new EmbedBuilder()
             .setTitle(game.name || 'unknown')
-            // .setTitle(item.name || 'Missing Title')
+            .setColor('#8F00FF') // Purple
+            .setImage(
+                game.appid && game.img_icon_url ? `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg` : null
+            )
             // .setImage(item.capsule || item.background || null)
-            // .setFooter({ text: `Release: ${item.release_string || 'unknown'}` })
-            // .setColor('#8F00FF') // Purple
-            // .addFields({
-            //     name: 'Reviews:',
-            //     value: item.reviews_percent ? `${item.reviews_percent}% positive` : 'unknown',
-            //     inline: false
-            // })
             // .addFields({
             //     name: 'Free:',
             //     value: String(Boolean(item.is_free_game)),
