@@ -100,7 +100,7 @@ interface player {
     loccityid: number | undefined
 }
 
-interface playedGame {
+interface ownedGame {
     appid: number | undefined
     name: string | undefined
     playtime_forever: number | undefined
