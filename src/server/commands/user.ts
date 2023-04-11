@@ -36,14 +36,20 @@ export default {
             return (await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.steamAPIKey}&steamids=${steamID}`))?.data?.response?.players?.[0]
         }
 
+        async function GetSteamLevel(): Promise<number | undefined> {
+            return (await axios.get(`https://api.steampowered.com/IPlayerService/GetSteamLevel/v1/?key=${config.steamAPIKey}&steamid=${steamID}`)).data?.response?.player_level
+        }
+
         const results = await Promise.all([
-            GetPlayerSummaries()
+            GetPlayerSummaries(),
+            GetSteamLevel()
         ])
         .catch((err: Error): void => {
             throw new InternalServerError('Could not get user data.')
         })
 
         const playerData = results?.[0]
+        const playerLevel = results?.[1]
         
         if (!playerData) {
             throw new InternalServerError('Could not get user data.')
@@ -66,6 +72,10 @@ export default {
         })
         .addFields({
             inline: true,
+            name: 'Level:',
+            value: String(playerLevel)
+        })
+        .addFields({
             name: 'Account Birthday:',
             value: formattedBirthday
         })
