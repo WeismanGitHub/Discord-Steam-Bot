@@ -59,10 +59,6 @@ export default {
             throw new InternalServerError('Error getting wishlist.')
         })
 
-        if (!res?.data) {
-            throw new InternalServerError('Error getting wishlist.')
-        }
-
         let wishlistItems: wishlistItem[] = Object.values(res.data)
 
         if (!wishlistItems.length) {
