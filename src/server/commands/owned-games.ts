@@ -32,6 +32,7 @@ export default {
 	async execute(interaction: ChatInputCommandInteraction) {
         const playedFreeGamesOption = interaction.options.getString('played_free_games')
         const user: User = interaction.options.getUser('user')!
+
         const playedFreeGamesParam = playedFreeGamesOption !== null ? `&include_played_free_games=${playedFreeGamesOption}` : ''
 
         const steamID = (await UserModel.findById(user.id).select('-_id steamID').lean())?.steamID
@@ -50,8 +51,8 @@ export default {
             throw new InternalServerError('Error getting owned games.')
         })).data?.response
 
-        const ownedGames= res.games
         const gameCount = res.game_count
+        const ownedGames= res.games
 
         if (!ownedGames) {
             throw new InternalServerError('Could not get owned games.')
@@ -85,21 +86,10 @@ export default {
             .setImage(
                 game.appid && game.img_icon_url ? `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg` : null
             )
-            // .setImage(item.capsule || item.background || null)
             .addFields({
                 name: 'Play Time:',
                 value: playTime(),
             })
-            // .addFields({
-            //     name: 'Free:',
-            //     value: String(Boolean(item.is_free_game)),
-            //     inline: false
-            // })
-            // .addFields({
-            //     name: 'Tags:',
-            //     value: item.tags ? item.tags.join(', ') : 'none',
-            //     inline: false
-            // })
         })
 
         if (!ownedGamesEmbeds.length) {
