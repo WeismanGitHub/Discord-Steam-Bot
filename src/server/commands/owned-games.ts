@@ -65,6 +65,18 @@ export default {
         }
 
         const playedGamesEmbeds: EmbedBuilder[] = playedGames.map((game): EmbedBuilder => {
+            const playTime = (): string => {
+                if (game.playtime_forever === undefined) return 'unknown'
+
+                const playTime = String(game.playtime_forever)
+                
+                if (playTime.length < 3) return `0.${playTime} hours`
+
+                const position = String(playTime).length - 2;
+                const formattedPlaytime = [playTime.slice(0, position), '.', playTime.slice(position)].join('');
+                return `${formattedPlaytime} hours`
+            }
+
             console.log(game)
             return new EmbedBuilder()
             .setTitle(game.name || 'unknown')
@@ -73,6 +85,10 @@ export default {
                 game.appid && game.img_icon_url ? `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg` : null
             )
             // .setImage(item.capsule || item.background || null)
+            .addFields({
+                name: 'Play Time:',
+                value: playTime(),
+            })
             // .addFields({
             //     name: 'Free:',
             //     value: String(Boolean(item.is_free_game)),
