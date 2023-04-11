@@ -33,8 +33,6 @@ export default {
         const playedFreeGamesOption = interaction.options.getString('played_free_games')
         const user: User = interaction.options.getUser('user')!
 
-        const playedFreeGamesParam = playedFreeGamesOption !== null ? `&include_played_free_games=${playedFreeGamesOption}` : ''
-
         const steamID = (await UserModel.findById(user.id).select('-_id steamID').lean())?.steamID
 
         if (!steamID) {
@@ -46,7 +44,13 @@ export default {
             games: ownedGame[] | undefined
         }
 
-        const res: res = (await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${config.steamAPIKey}&steamid=${steamID}${playedFreeGamesParam}&include_appinfo=true`)
+        const res: res = (await axios.get(
+            `https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/
+            ?key=${config.steamAPIKey}
+            &steamid=${steamID}
+            &include_appinfo=true
+            ${playedFreeGamesOption !== null ? `&include_played_free_games=${playedFreeGamesOption}` : ''}`
+        )
         .catch((err: Error) => {
             throw new InternalServerError('Error getting owned games.')
         })).data?.response
@@ -66,19 +70,6 @@ export default {
         }
 
         const ownedGamesEmbeds: EmbedBuilder[] = ownedGames.map((game): EmbedBuilder => {
-            const playTime = (): string => {
-                if (game.playtime_forever === undefined) return 'unknown'
-
-                const playTime = String(game.playtime_forever)
-                
-                if (playTime.length === 1) return `0.0${playTime} hours`
-                if (playTime.length === 2) return `0.${playTime} hours`
-
-                const position = String(playTime).length - 2;
-                const formattedPlaytime = [playTime.slice(0, position), '.', playTime.slice(position)].join('');
-                return `${formattedPlaytime} hours`
-            }
-
             return new EmbedBuilder()
             .setTitle(game.name || 'unknown')
             .setColor('#8F00FF') // Purple
@@ -87,7 +78,18 @@ export default {
             )
             .addFields({
                 name: 'Play Time:',
-                value: playTime(),
+                value: ((): string => {
+                    if (game.playtime_forever === undefined) return 'unknown'
+    
+                    const playTime = String(game.playtime_forever)
+                    
+                    if (playTime.length === 1) return `0.0${playTime} hours`
+                    if (playTime.length === 2) return `0.${playTime} hours`
+    
+                    const position = String(playTime).length - 2;
+                    const formattedPlaytime = [playTime.slice(0, position), '.', playTime.slice(position)].join('');
+                    return `${formattedPlaytime} hours`
+                })(),
             })
         })
 
