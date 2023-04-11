@@ -70,7 +70,8 @@ export default {
 
                 const playTime = String(game.playtime_forever)
                 
-                if (playTime.length < 3) return `0.${playTime} hours`
+                if (playTime.length === 1) return `0.0${playTime} hours`
+                if (playTime.length === 2) return `0.${playTime} hours`
 
                 const position = String(playTime).length - 2;
                 const formattedPlaytime = [playTime.slice(0, position), '.', playTime.slice(position)].join('');
