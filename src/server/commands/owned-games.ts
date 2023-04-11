@@ -47,19 +47,19 @@ export default {
 
         const res: res = (await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${config.steamAPIKey}&steamid=${steamID}${playedFreeGamesParam}&include_appinfo=true`)
         .catch((err: Error) => {
-            throw new InternalServerError('Error getting wishlist.')
+            throw new InternalServerError('Error getting owned games.')
         })).data?.response
 
         const playedGames= res.games
         const gameCount = res.game_count
 
         if (!playedGames) {
-            throw new InternalServerError('Could not get played games.')
+            throw new InternalServerError('Could not get owned games.')
         }
 
         if (!playedGames.length) {
             return interaction.reply({
-                embeds: [titleEmbed('No played games.')],
+                embeds: [titleEmbed('No owned games.')],
                 ephemeral: true
             })
         }
