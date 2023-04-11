@@ -99,3 +99,15 @@ interface player {
     locstatecode: string | undefined
     loccityid: number | undefined
 }
+
+interface playedGame {
+    appid: number | undefined
+    name: string | undefined
+    playtime_forever: number | undefined
+    img_icon_url: string | undefined
+    has_community_visible_stats: boolean | undefined
+    playtime_windows_forever: number | undefined
+    playtime_mac_forever: number | undefined
+    playtime_linux_forever: number | undefined
+    rtime_last_played: number | undefined
+}
