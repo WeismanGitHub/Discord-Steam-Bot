@@ -45,10 +45,10 @@ export default {
             games: playedGame[] | undefined
         }
 
-        const res: res = ((await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${config.steamAPIKey}&steamid=${steamID}${playedFreeGamesParam}&include_appinfo=true`)).data?.response)
+        const res: res = (await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${config.steamAPIKey}&steamid=${steamID}${playedFreeGamesParam}&include_appinfo=true`)
         .catch((err: Error) => {
             throw new InternalServerError('Error getting wishlist.')
-        })
+        })).data?.response
 
         const playedGames= res.games
         const gameCount = res.game_count
