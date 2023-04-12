@@ -24,9 +24,13 @@ export default function DiscordAuth() {
 
 		if (!code || localStorage.getItem('oauth-state') !== state) {
 			const randomString = generateRandomString();
-			
+		
 			localStorage.setItem('oauth-state', randomString);
-			return setSearchParams({ state: randomString })
+			setSearchParams({ state: randomString })
+			searchParams.set('state', randomString)
+			console.log(localStorage.getItem('oauth-state'), searchParams.getAll())
+
+			return
 		}
 
 		axios.post('/api/v1/auth/discord', { code })
@@ -38,9 +42,9 @@ export default function DiscordAuth() {
     }, [])
     
 	if (authorized) {
-		return <div>Authorized</div>
+		return <h1>Authorized</h1>
 	} else {
-		return <a href={process.env.REACT_APP_DISCORD_OAUTH_URL}>
+		return <a href={process.env.REACT_APP_DISCORD_OAUTH_URL} class='authorize-button'>
 			<button>Authorize</button>
     	</a>
 	}
