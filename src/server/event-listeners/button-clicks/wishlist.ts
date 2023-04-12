@@ -1,7 +1,14 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, ChannelType, EmbedBuilder, Events } from "discord.js"
-import { InternalServerError } from "../../errors"
-import axios, * as _ from 'axios'
+import { BadGatewayError, InternalServerError } from "../../errors"
 import { titleEmbed } from "../../utils/embeds"
+import axios, * as _ from 'axios'
+import {
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonInteraction,
+    ButtonStyle,
+    EmbedBuilder,
+    Events
+} from "discord.js"
 
 export default {
 	name: Events.InteractionCreate,
@@ -24,12 +31,8 @@ export default {
 
         const res = await axios.get(`https://store.steampowered.com/wishlist/profiles/${steamID}/wishlistdata/?p=${page + 1}`)
         .catch((err: Error) => {
-            throw new InternalServerError('Error getting wishlist.')
+            throw new BadGatewayError('Error getting wishlist.')
         })
-
-        if (!res?.data) {
-            throw new InternalServerError('Error getting wishlist.')
-        }
 
         let wishlistItems: wishlistItem[] = Object.values(res.data)
 
@@ -86,10 +89,6 @@ export default {
 
         while (wishlistEmbeds.length > 0) {
             embedGroups.push(wishlistEmbeds.splice(0, 10))
-        }
-
-        if (interaction.channel?.type !== ChannelType.GuildText) {
-            return
         }
 
         await interaction.reply({ embeds: embedGroups[0], ephemeral: true })
