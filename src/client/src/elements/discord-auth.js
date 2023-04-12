@@ -1,6 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import axios, * as others from 'axios'
+import { errorToast } from './toasts'
 
 function generateRandomString() {
 	let randomString = '';
@@ -27,11 +28,13 @@ export default function DiscordAuth() {
 			return localStorage.setItem('oauth-state', randomString);
 		}
 
-		axios.post('/api/v1/auth/discord', { code })
+		axios.post('/api/v1.0.0/auth/discord', { code })
 		.then(res => {
 			setAuthorized(true)
 		})
-		.catch(console.error);
+		.catch((err) => {
+			errorToast(err.response.data.error || err.message)
+		});
     }, [])
     
 	if (authorized) {
