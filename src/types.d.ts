@@ -12,7 +12,6 @@ interface configuration {
     // App
     appPort: number
     jwtSecret: undefined | string
-    jwtLifetime: string
     redirectURI: undefined | string
     buyMeACofeeLink: undefined | string
     sourceCodeLink: undefined | string
