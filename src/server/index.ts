@@ -1,10 +1,10 @@
 import { CustomError, NotFoundError } from './errors';
 import { CustomClient } from './custom-client';
 import { GatewayIntentBits } from 'discord.js';
+import authRouter from './api/v1/routers/auth';
 import rateLimit from 'express-rate-limit';
 import fetchMetadata from 'fetch-metadata';
 import { connectDB } from './db/connect';
-import authRouter from './routers/auth';
 import compression from 'compression'
 import { config } from '../config'
 require('express-async-errors')
