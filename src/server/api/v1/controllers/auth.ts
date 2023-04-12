@@ -3,13 +3,14 @@ const DiscordOauth2 = require("discord-oauth2");
 import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
 import { config } from '../../../../config';
+const jwt = require('jsonwebtoken');
 require('express-async-errors')
 
 async function discordAuth(req: Request, res: Response): Promise<void> {
     const oauth = new DiscordOauth2();
     const { code } = req.body
     let connections: connection[];
-    let userID: string;
+    let userID: string | undefined;
 
     if (!code) {
         throw new BadRequestError('Missing Code')
@@ -32,6 +33,10 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
         throw new InternalServerError('Something went wrong getting your connections.')
     }
 
+    if (!userID) {
+        throw new InternalServerError('Could not get user ID.')
+    }
+
     const steamConnection: connection | undefined = connections.find((connection: connection) => connection.type == 'steam')
 
     if (!steamConnection) {
@@ -47,7 +52,19 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
         throw new InternalServerError("Error creating user.")
     })
 
-    res.status(200).end()
+    const idJWT = jwt.sign(
+        { userID },
+        config.jwtSecret,
+        { expiresIn: '14d' },
+    )
+
+    res.status(200)
+	.cookie('userID', idJWT, {
+		httpOnly: true,
+		secure: true,
+		sameSite: 'strict',
+		expires: new Date(Date.now() + (3600000 * 24 * 14)) // 14 days
+	}).end()
 }
 
 export { discordAuth }
