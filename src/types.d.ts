@@ -7,7 +7,7 @@ interface configuration {
     mainAccountID: undefined | string
     discordOAuthURL: undefined | string
     discordStatus: string
-    adminDiscordIDs: string[]
+    adminIDs: (string | undefined)[]
     
     // App
     appPort: number
