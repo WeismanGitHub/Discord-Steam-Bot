@@ -64,7 +64,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static(resolve(__dirname, '../client/build')))
 app.use(express.json())
 
-app.use('/api/v1/auth', authRouter)
+app.use('/api/v1.0.0/auth', authRouter)
 
 app.use('/api/*', (req: Request, res: Response, next: NextFunction): void => {
 	throw new NotFoundError('Route does not exist.')
