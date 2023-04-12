@@ -74,9 +74,14 @@ app.get('/*', (req: Request, res: Response): void => {
 	res.status(200).sendFile(resolve(__dirname, '../client/build/index.html'))
 })
 
-app.use((err: CustomError, req: Request, res: Response, next: NextFunction): void => {
+app.use((err: Error | CustomError, req: Request, res: Response, next: NextFunction): void => {
     console.error(err.message)
-    res.status(err.statusCode || 500).send(err.message)
+
+	if (err instanceof CustomError) {
+		res.status(err.statusCode).send(err.message)
+	} else {
+		res.status(500).send('Something went wrong!')
+	}
 })
 
 connectDB()
