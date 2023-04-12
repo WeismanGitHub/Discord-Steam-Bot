@@ -15,36 +15,29 @@ function generateRandomString() {
 
 export default function DiscordAuth() {
 	const [searchParams, setSearchParams] = useSearchParams();
+	const [randomString] = generateRandomString()
 	const [authorized, setAuthorized] = useState(false)
 
     useEffect(() => {
-		const code = searchParams.get('code')
 		const state = searchParams.get('state')
+		const code = searchParams.get('code')
 		setSearchParams({})
 
-		if (!code || localStorage.getItem('oauth-state') !== state) {
-			const randomString = generateRandomString();
-		
-			localStorage.setItem('oauth-state', randomString);
-			setSearchParams({ state: randomString })
-			searchParams.set('state', randomString)
-			console.log(localStorage.getItem('oauth-state'), searchParams.getAll())
-
-			return
+		if (!code || localStorage.getItem('oauth-state') !== atob(decodeURIComponent(state))) {
+			return localStorage.setItem('oauth-state', randomString);
 		}
 
 		axios.post('/api/v1/auth/discord', { code })
 		.then(res => {
 			setAuthorized(true)
-			console.log(res)
 		})
 		.catch(console.error);
     }, [])
     
 	if (authorized) {
-		return <h1>Authorized</h1>
+		return <h2>Authorized</h2>
 	} else {
-		return <a href={process.env.REACT_APP_DISCORD_OAUTH_URL} class='authorize-button'>
+		return <a href={process.env.REACT_APP_DISCORD_OAUTH_URL + `&state=${btoa(randomString)}`} class='authorize-button'>
 			<button>Authorize</button>
     	</a>
 	}
