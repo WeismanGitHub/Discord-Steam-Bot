@@ -1,4 +1,4 @@
-import { BadRequestError, InternalServerError } from '../errors';
+import { BadGatewayError, BadRequestError, InternalServerError } from '../errors';
 import { titleEmbed } from '../utils/embeds';
 import { UserModel } from '../db/models';
 import { config } from '../../config';
@@ -52,7 +52,7 @@ export default {
             ${playedFreeGamesOption !== null ? `&include_played_free_games=${playedFreeGamesOption}` : ''}`
         )
         .catch((err: Error) => {
-            throw new InternalServerError('Error getting owned games.')
+            throw new BadGatewayError('Error getting owned games.')
         })).data?.response
 
         const gameCount = res.game_count

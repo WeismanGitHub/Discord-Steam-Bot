@@ -1,4 +1,4 @@
-import { BadRequestError, InternalServerError } from '../errors';
+import { BadGatewayError, BadRequestError, InternalServerError } from '../errors';
 import { UserModel } from '../db/models';
 import { config } from '../../config';
 import axios, * as _ from 'axios'
@@ -45,7 +45,7 @@ export default {
             GetSteamLevel()
         ])
         .catch((err: Error): void => {
-            throw new InternalServerError('Could not get user data.')
+            throw new BadGatewayError('Could not get user data.')
         })
 
         const playerData = results?.[0]

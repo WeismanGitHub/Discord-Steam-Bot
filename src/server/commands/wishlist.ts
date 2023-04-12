@@ -1,4 +1,4 @@
-import { BadRequestError, InternalServerError } from '../errors';
+import { BadGatewayError, BadRequestError } from '../errors';
 import { UserModel } from '../db/models';
 import axios, * as _ from 'axios'
 import {
@@ -56,7 +56,7 @@ export default {
 
         const res = await axios.get(`https://store.steampowered.com/wishlist/profiles/${user.steamID}/wishlistdata/?p=0`)
         .catch(err => {
-            throw new InternalServerError('Error getting wishlist.')
+            throw new BadGatewayError('Error getting wishlist.')
         })
 
         let wishlistItems: wishlistItem[] = Object.values(res.data)
