@@ -10,6 +10,7 @@ const config: configuration = {
     mainAccountID: process.env.DISCORD_MAIN_ACCOUNT_ID,
     discordOAuthURL: process.env.DISCORD_OAUTH_URL,
     discordStatus: 'something',
+    adminIDs: [process.env.DISCORD_MAIN_ACCOUNT_ID],
 
     // App
     appPort: 5000,
