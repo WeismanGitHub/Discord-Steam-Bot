@@ -1,7 +1,7 @@
+import { authRouter, adminRouter } from './api/v1/routers/';
 import { CustomError, NotFoundError } from './errors';
 import { CustomClient } from './custom-client';
 import { GatewayIntentBits } from 'discord.js';
-import authRouter from './api/v1/routers/auth';
 import rateLimit from 'express-rate-limit';
 import fetchMetadata from 'fetch-metadata';
 import { connectDB } from './db/connect';
@@ -64,6 +64,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static(resolve(__dirname, '../client/build')))
 app.use(express.json())
 
+app.use('/api/v1.0.0/admin', adminRouter)
 app.use('/api/v1.0.0/auth', authRouter)
 
 app.use('/api/*', (req: Request, res: Response, next: NextFunction): void => {
