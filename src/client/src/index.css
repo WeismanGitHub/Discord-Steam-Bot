@@ -12,6 +12,8 @@ body {
   background-color: #40444b;
   color: #a4a7aa;
   cursor: pointer;
+  border: black 1px solid;
+  display: inline-block;
 }
 
 .authorize-button:hover{
