@@ -8,12 +8,17 @@ import {
 
 import DiscordAuth from './elements/discord-auth';
 import NotFound from './elements/not-found';
+import Admin from './elements/admin';
 import Home from './elements/home';
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Home/>
+    },
+    {
+        path: '/admin',
+        element: <Admin/>
     },
     {
         path: '/auth/discord',
