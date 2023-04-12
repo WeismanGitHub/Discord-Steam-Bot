@@ -22,7 +22,6 @@ export default function DiscordAuth() {
 		const state = searchParams.get('state')
 		const code = searchParams.get('code')
 		setSearchParams({})
-		console.log(state, code, localStorage.getItem('oauth-state'))
 
 		if (!code || localStorage.getItem('oauth-state') !== atob(decodeURIComponent(state))) {
 			return localStorage.setItem('oauth-state', randomString);
