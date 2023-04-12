@@ -38,7 +38,7 @@ export default function DiscordAuth() {
 		return <h2>Authorized</h2>
 	} else {
 		return <a href={process.env.REACT_APP_DISCORD_OAUTH_URL + `&state=${btoa(randomString)}`} class='authorize-button'>
-			<button>Authorize</button>
+			Authorize
     	</a>
 	}
 }
