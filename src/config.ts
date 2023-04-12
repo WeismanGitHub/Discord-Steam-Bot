@@ -26,9 +26,9 @@ const config: configuration = {
     mongoWtimeoutMS: 2500,
 
     // Rate Limiter
-    limiterWindowMs: 1000,
-    limiterMax: 15,
-    limiterMessage: 'Rate Limit: 15 requests per second',
+    limiterWindowMs: 2000,
+    limiterMax: 30,
+    limiterMessage: 'Rate Limit: 30 requests per two seconds.',
     limiterStandardHeaders: true,
     limiterLegacyHeaders: false,
 }
