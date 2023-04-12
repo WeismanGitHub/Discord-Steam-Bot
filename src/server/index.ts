@@ -78,9 +78,9 @@ app.use((err: Error | CustomError, req: Request, res: Response, next: NextFuncti
     console.error(err.message)
 
 	if (err instanceof CustomError) {
-		res.status(err.statusCode).send(err.message)
+		res.status(err.statusCode).json({ error: err.message })
 	} else {
-		res.status(500).send('Something went wrong!')
+		res.status(500).json({ error: 'Something went wrong!' })
 	}
 })
 
