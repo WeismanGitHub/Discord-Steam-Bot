@@ -28,7 +28,7 @@ export default function DiscordAuth() {
 			return localStorage.setItem('oauth-state', randomString);
 		}
 
-		axios.post('/api/v1.0.0/auth/discord', { code })
+		axios.post('/api/v1/auth/discord', { code })
 		.then(res => {
 			setAuthorized(true)
 		})

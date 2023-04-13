@@ -7,8 +7,8 @@ export default function Admin() {
 
     useEffect(async () => {
 		const [guilds, users] = await Promise.all([
-			axios.get('/api/v1.0.0/admin/guilds'),
-			axios.get('/api/v1.0.0/admin/users')
+			axios.get('/api/v1/admin/guilds'),
+			axios.get('/api/v1/admin/users')
 		])
 		.then(res => {
 			setAuthorized(true)
