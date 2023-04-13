@@ -117,3 +117,11 @@ declare namespace Express {
         userID: string
     }
 }
+
+interface GuildData {
+    name: string
+    icon: string | null
+    memberCount: number
+    joinedTimestamp: number
+    preferredLocale: string
+}
