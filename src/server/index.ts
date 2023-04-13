@@ -1,4 +1,5 @@
 import { authRouter, adminRouter } from './api/v1/routers/';
+import { CustomError, NotFoundError } from './errors';
 import { CustomClient } from './custom-client';
 import { GatewayIntentBits } from 'discord.js';
 import rateLimit from 'express-rate-limit';
@@ -9,7 +10,6 @@ import compression from 'compression'
 import { config } from '../config'
 require('express-async-errors')
 import { resolve } from 'path'
-import jwt from 'jsonwebtoken'
 import helmet from 'helmet'
 import cors from 'cors'
 import express, {
@@ -18,12 +18,6 @@ import express, {
 	Request,
 	Response
 } from 'express';
-import {
-	CustomError,
-	ForbiddenError,
-	NotFoundError,
-	UnauthorizedError
-} from './errors';
 
 const client: CustomClient = new CustomClient({
     intents: [
@@ -71,30 +65,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static(resolve(__dirname, '../client/build')))
 app.use(express.json())
 app.use(cookieParser())
-
-app.use('/api/v1/admin/*', (req: Request, res: Response, next: NextFunction): void => {
-	if (!req.cookies.userID) {
-		throw new UnauthorizedError('Authenticate yourself.')
-	}
-
-	interface JwtPayload extends jwt.JwtPayload {
-		userID?: string;
-	}
-	
-	const idJWT: string | JwtPayload = jwt.verify(req.cookies.userID, config.jwtSecret!)
-
-	if (!idJWT || typeof idJWT === 'string' || !idJWT.userID) {
-		throw new UnauthorizedError('Authenticate yourself.')
-	}
-
-	req.userID = idJWT.userID
-
-	if (!config.adminIDs.includes(req.userID)) {
-		throw new ForbiddenError('You are not an admin.')
-	}
-
-	next()
-})
 
 app.use('/api/v1/admin', adminRouter)
 app.use('/api/v1/auth', authRouter)
