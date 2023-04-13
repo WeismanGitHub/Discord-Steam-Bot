@@ -54,7 +54,7 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
 
     const idJWT = jwt.sign(
         { userID },
-        config.jwtSecret,
+        config.jwtSecret!,
         { expiresIn: '14d' },
     )
 
