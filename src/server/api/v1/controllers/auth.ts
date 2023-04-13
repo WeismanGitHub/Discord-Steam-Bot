@@ -3,8 +3,8 @@ const DiscordOauth2 = require("discord-oauth2");
 import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
 import { config } from '../../../../config';
-const jwt = require('jsonwebtoken');
 require('express-async-errors')
+import jwt from 'jsonwebtoken';
 
 async function discordAuth(req: Request, res: Response): Promise<void> {
     const oauth = new DiscordOauth2();
