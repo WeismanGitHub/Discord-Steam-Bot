@@ -67,4 +67,11 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
 	}).end()
 }
 
-export { discordAuth }
+function logout(req: Request, res: Response): void {
+	res.status(200).clearCookie('userID').end()
+}
+
+export {
+    discordAuth,
+    logout,
+}
