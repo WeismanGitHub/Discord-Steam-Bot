@@ -111,3 +111,9 @@ interface ownedGame {
     playtime_linux_forever: number | undefined
     rtime_last_played: number | undefined
 }
+
+declare namespace Express {
+    export interface Request {
+        userID?: string
+    }
+}
