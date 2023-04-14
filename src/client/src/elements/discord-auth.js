@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import axios, * as others from 'axios'
 import { errorToast } from './toasts'
@@ -18,6 +18,7 @@ export default function DiscordAuth() {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [randomString] = useState(generateRandomString())
 	const [authorized, setAuthorized] = useState(false)
+	const navigate = useNavigate();
 
     useEffect(() => {
 		const state = searchParams.get('state')
@@ -38,9 +39,9 @@ export default function DiscordAuth() {
     }, [])
     
 	if (authorized) {
-		return <h2>Authorized</h2>
+		navigate('/')
 	} else {
-		return <a href={process.env.REACT_APP_DISCORD_OAUTH_URL + `&state=${btoa(randomString)}`} class='authorize-button'>
+		return <a href={process.env.REACT_APP_DISCORD_OAUTH_URL + `&state=${btoa(randomString)}`} class='gray-button'>
 			Authorize
     	</a>
 	}
