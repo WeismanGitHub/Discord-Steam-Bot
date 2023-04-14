@@ -4,6 +4,12 @@ body {
   background-color: #2e3035;
   color: #f2f3f5;
   text-align: center;
+  font-size: xx-large;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  top: 50%;
+  justify-content: center;
 }
 
 .gray-button {
@@ -33,3 +39,4 @@ a, a:hover, a:focus, a:active {
   flex-basis: 100%;
   height: 0;
 }
+
