@@ -1,0 +1,8 @@
+.not-found {
+    font-size: xx-large;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    top: 50%;
+    justify-content: center;
+}
