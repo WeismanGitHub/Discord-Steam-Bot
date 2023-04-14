@@ -1,13 +1,9 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { createRoot } from "react-dom/client";
 import React from 'react';
-import './index.css';
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from "react-router-dom";
-
+import './css/index.css';
 
 import DiscordAuth from './elements/discord-auth';
 import NotFound from './elements/not-found';
