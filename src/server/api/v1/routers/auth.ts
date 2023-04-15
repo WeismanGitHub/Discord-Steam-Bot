@@ -1,13 +1,17 @@
-import { discordAuth, logout, unauthorize } from '../controllers'
 import { userAuth } from '../middleware';
 import { Router } from 'express';
+import {
+    discordAuth,
+    logout,
+    unauthorize,
+    login
+} from '../controllers'
 
 const authRouter: Router = Router();
 
-authRouter.use('/unauthorize', userAuth)
-
-authRouter.route('/discord').post(discordAuth)
-authRouter.route('/logout').get(logout)
-authRouter.route('/unauthorize').get(unauthorize)
+authRouter.post('/login', login)
+authRouter.post('/discord', discordAuth)
+authRouter.post('/logout', logout)
+authRouter.post('/unauthorize', userAuth, unauthorize)
 
 export default authRouter
