@@ -25,8 +25,8 @@ export default function DiscordAuth() {
 		const code = searchParams.get('code')
 		setSearchParams({})
 
-		if (!code || localStorage.getItem('oauth-state') !== atob(decodeURIComponent(state))) {
-			return localStorage.setItem('oauth-state', randomString);
+		if (!code || localStorage.getItem('auth-state') !== atob(decodeURIComponent(state))) {
+			return localStorage.setItem('auth-state', randomString);
 		}
 
 		axios.post('/api/v1/auth/discord', { code })
