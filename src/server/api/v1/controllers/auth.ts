@@ -24,7 +24,7 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
             code: code,
             scope: 'connections identify',
             grantType: "authorization_code",
-            redirectUri: config.redirectURI,
+            redirectUri: config.authRedirectURI,
         })).access_token
 
         connections = await oauth.getUserConnections(token)
@@ -59,8 +59,43 @@ function logout(req: Request, res: Response): void {
 	res.status(200).clearCookie('userID').end()
 }
 
-function login(req: Request, res: Response): void {
-    const userID = ''
+async function login(req: Request, res: Response): Promise<void> {
+    const oauth = new DiscordOauth2();
+    let userID: string | undefined;
+    const { code } = req.body
+
+    if (!code) {
+        throw new BadRequestError('Missing Code')
+    }
+
+    try {
+        const token: string = (await oauth.tokenRequest({
+            clientId: config.discordClientID,
+            clientSecret: config.discordClientSecret,
+        
+            code: code,
+            scope: 'identify',
+            grantType: "authorization_code",
+            redirectUri: config.loginRedirectURI,
+        })).access_token
+
+        userID = (await oauth.getUser(token)).id
+    } catch(err) {
+        throw new InternalServerError()
+    }
+
+    if (!userID) {
+        throw new InternalServerError('Could not get user ID.')
+    }
+
+    const user = await UserModel.findOne({ _id: userID }).lean()
+    .catch(err => {
+        throw new InternalServerError("Error creating user.")
+    })
+
+    if (!user) {
+        throw new UnauthorizedError("You need to authorize yourself first.")
+    }
 
     const idJWT = jwt.sign(
         { userID },
@@ -68,13 +103,20 @@ function login(req: Request, res: Response): void {
         { expiresIn: '14d' },
     )
 
+    const expiration = new Date(Date.now() + (3600000 * 24 * 14)) // 14 days
+
 	res.status(200)
 	.cookie('userID', idJWT, {
 		httpOnly: true,
 		secure: true,
 		sameSite: 'strict',
-		expires: new Date(Date.now() + (3600000 * 24 * 14)) // 14 days
-	}).end()
+		expires: expiration
+	})
+	.cookie(
+        'userData',
+        { userID, admin: config.adminIDs.includes(userID) },
+        { secure: true, sameSite: 'strict', expires: expiration }
+    ).end()
 }
 
 async function unauthorize(req: Request, res: Response): Promise<void> {
