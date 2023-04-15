@@ -1,9 +1,9 @@
-import { BadRequestError, InternalServerError } from '../../../errors';
+import { BadRequestError, InternalServerError, UnauthorizedError } from '../../../errors';
 const DiscordOauth2 = require("discord-oauth2");
 import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
 import { config } from '../../../../config';
-require('express-async-errors')
+require('express-async-errors');
 import jwt from 'jsonwebtoken';
 
 async function discordAuth(req: Request, res: Response): Promise<void> {
@@ -52,13 +52,23 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
         throw new InternalServerError("Error creating user.")
     })
 
+    res.status(200).end()
+}
+
+function logout(req: Request, res: Response): void {
+	res.status(200).clearCookie('userID').end()
+}
+
+function login(req: Request, res: Response): void {
+    const userID = ''
+
     const idJWT = jwt.sign(
         { userID },
         config.jwtSecret!,
         { expiresIn: '14d' },
     )
 
-    res.status(200)
+	res.status(200)
 	.cookie('userID', idJWT, {
 		httpOnly: true,
 		secure: true,
@@ -67,11 +77,11 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
 	}).end()
 }
 
-function logout(req: Request, res: Response): void {
-	res.status(200).clearCookie('userID').end()
-}
-
 async function unauthorize(req: Request, res: Response): Promise<void> {
+    if (!req.userID) {
+        throw new UnauthorizedError("Please login.")
+    }
+
     const result = await UserModel.deleteOne({ _id:  req.userID })
     .catch(err => { throw new InternalServerError('Could not delete your data.') })
 
@@ -86,4 +96,5 @@ export {
     discordAuth,
     logout,
     unauthorize,
+    login,
 }
