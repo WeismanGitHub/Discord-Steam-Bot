@@ -1,5 +1,8 @@
-import { discordAuth, unauthorize, logout } from "./auth";
 import { getBotGuilds, getUsers } from "./admin";
+import {
+    discordAuth,
+    unauthorize,
+    logout,login } from "./auth";
 
 export {
     discordAuth,
@@ -7,4 +10,5 @@ export {
     getUsers,
     unauthorize,
     logout,
+    login,
 }
