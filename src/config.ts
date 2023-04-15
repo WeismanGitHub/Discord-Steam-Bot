@@ -8,7 +8,6 @@ const config: configuration = {
     discordClientID: process.env.DISCORD_CLIENT_ID,
     discordClientSecret: process.env.DISCORD_CLIENT_SECRET,
     mainAccountID: process.env.DISCORD_MAIN_ACCOUNT_ID,
-    discordOAuthURL: process.env.DISCORD_OAUTH_URL,
     discordStatus: 'something',
     adminIDs: [process.env.DISCORD_MAIN_ACCOUNT_ID],
 

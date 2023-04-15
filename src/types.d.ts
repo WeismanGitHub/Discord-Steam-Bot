@@ -5,7 +5,6 @@ interface configuration {
     discordClientID: undefined | string
     discordClientSecret: undefined | string
     mainAccountID: undefined | string
-    discordOAuthURL: undefined | string
     discordStatus: string
     adminIDs: (string | undefined)[]
     
