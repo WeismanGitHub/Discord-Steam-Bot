@@ -23,7 +23,7 @@ export default {
 		.addComponents([
 			new ButtonBuilder()
 			.setLabel('Authorization')
-			.setURL(config.redirectURI!)
+			.setURL(config.authRedirectURI!)
 			.setStyle(ButtonStyle.Link),
 			new ButtonBuilder()
 			.setLabel('Source Code')
