@@ -41,7 +41,7 @@ export default function DiscordAuth() {
 	if (authorized) {
 		navigate('/')
 	} else {
-		return <a href={process.env.REACT_APP_DISCORD_OAUTH_URL + `&state=${btoa(randomString)}`} class='gray-button'>
+		return <a href={process.env.REACT_APP_AUTH_OAUTH_URL + `&state=${btoa(randomString)}`} class='gray-button'>
 			Authorize
     	</a>
 	}
