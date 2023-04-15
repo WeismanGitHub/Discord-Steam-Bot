@@ -12,7 +12,8 @@ interface configuration {
     // App
     appPort: number
     jwtSecret: undefined | string
-    redirectURI: undefined | string
+    authRedirectURI: undefined | string
+    loginRedirectURI: undefined | string
     buyMeACofeeLink: undefined | string
     sourceCodeLink: undefined | string
     steamAPIKey: undefined | string

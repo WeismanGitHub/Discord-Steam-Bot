@@ -15,7 +15,8 @@ const config: configuration = {
     // App
     appPort: 5000,
     jwtSecret: process.env.JWT_SECRET,
-    redirectURI: process.env.REDIRECT_URI,
+    authRedirectURI: process.env.AUTH_REDIRECT_URI,
+    loginRedirectURI: process.env.LOGIN_REDIRECT_URI,
     buyMeACofeeLink: process.env.BUY_ME_A_COFFEE_LINK,
     sourceCodeLink: process.env.SOURCE_CODE_LINK,
     steamAPIKey: process.env.STEAM_API_KEY,
