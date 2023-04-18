@@ -112,11 +112,7 @@ async function login(req: Request, res: Response): Promise<void> {
 		sameSite: 'strict',
 		expires: expiration
 	})
-	.cookie(
-        'userData',
-        { userID, admin: config.adminIDs.includes(userID) },
-        { secure: true, sameSite: 'strict', expires: expiration }
-    ).end()
+	.json({ userID, level:  user.level }).end()
 }
 
 async function unauthorize(req: Request, res: Response): Promise<void> {
