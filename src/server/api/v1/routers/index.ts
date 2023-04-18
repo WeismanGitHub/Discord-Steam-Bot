@@ -53,6 +53,6 @@ v1Router.use(cookieParser())
 
 v1Router.use('/admin', adminRouter)
 v1Router.use('/owner', ownerRouter)
-v1Router.use('auth', authRouter)
+v1Router.use('/auth', authRouter)
 
 export default v1Router
