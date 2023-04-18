@@ -6,10 +6,9 @@ import React from 'react';
 import './css/index.css';
 
 import DiscordAuth from './elements/discord-auth';
+import Privileged from './elements/privileged';
 import NotFound from './elements/not-found';
-import Admin from './elements/admin';
 import Login from './elements/login';
-import Owner from './elements/owner';
 import Home from './elements/home';
 
 const router = createBrowserRouter([
@@ -22,12 +21,8 @@ const router = createBrowserRouter([
         element: <Login/>
     },
     {
-        path: '/admin',
-        element: <Admin/>
-    },
-    {
-        path: '/owner',
-        element: <Owner/>
+        path: '/privileged',
+        element: <Privileged/>
     },
     {
         path: '/auth/discord',
