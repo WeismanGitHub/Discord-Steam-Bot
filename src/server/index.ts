@@ -1,17 +1,11 @@
 import { CustomError, NotFoundError } from './errors';
 import { CustomClient } from './custom-client';
 import { GatewayIntentBits } from 'discord.js';
-import rateLimit from 'express-rate-limit';
-import fetchMetadata from 'fetch-metadata';
 import v1Router from './api/v1/routers/';
-import cookieParser from 'cookie-parser';
 import { connectDB } from './db/connect';
-import compression from 'compression'
 import { config } from '../config'
 require('express-async-errors')
 import { resolve } from 'path'
-import helmet from 'helmet'
-import cors from 'cors'
 import express, {
 	Application,
 	NextFunction,
@@ -28,44 +22,7 @@ const client: CustomClient = new CustomClient({
 const app: Application = express();
 app.set('discordClient', client);
 
-const limiter = rateLimit({
-    windowMs: config.limiterWindowMs,
-	max: config.limiterMax,
-	standardHeaders: true,
-	legacyHeaders: false,
-	message: config.limiterMessage
-})
-
-app.use(helmet({
-	contentSecurityPolicy: {
-		directives: {
-			...helmet.contentSecurityPolicy.getDefaultDirectives(),
-			"img-src": ["'self'"],
-			'media-src': ["'self'"],
-			"default-src": ["'self'"]
-		},
-	}
-}))
-
-app.use(fetchMetadata({
-	allowedFetchSites: ['same-origin', 'same-site', 'none'],
-	disallowedNavigationRequests: ['frame', 'iframe'],
-	errorStatusCode: 403,
-	allowedPaths: [],
-	onError: (request, response, next, options) => {
-		response.statusCode = options.errorStatusCode
-		response.end()
-	}
-}))
-
-app.use(limiter)
-app.use(compression())
-app.use(cors({ origin: [`http://localhost:${config.appPort}`] }))
-app.use(express.urlencoded({ extended: true }))
 app.use(express.static(resolve(__dirname, '../client/build')))
-app.use(express.json())
-app.use(cookieParser())
-
 app.use('/api/v1/', v1Router)
 
 app.use('/api/*', (req: Request, res: Response, next: NextFunction): void => {
