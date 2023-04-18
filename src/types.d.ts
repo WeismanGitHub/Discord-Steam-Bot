@@ -119,7 +119,8 @@ interface User extends Document {
 
 declare namespace Express {
     export interface Request {
-        user: User
+        user?: User
+        userID?: string
     }
 }
 
