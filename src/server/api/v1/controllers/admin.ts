@@ -32,4 +32,11 @@ async function getUsers(req: Request, res: Response): Promise<void> {
     res.status(200).json({ users })
 }
 
-export { getBotGuilds, getUsers }
+async function getBotData(req: Request, res: Response): Promise<void> {
+    const client: CustomClient = req.app.get('discordClient')
+    console.log(client)
+    
+    res.status(200).json({})
+}
+
+export { getBotGuilds, getUsers, getBotData }
