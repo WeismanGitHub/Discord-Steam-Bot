@@ -6,8 +6,20 @@ interface User extends Document {
 }
 
 const UserSchema: Schema = new Schema({
-    _id: { type: String, required: true }, // Discord ID
-    steamID: { type: String, required: true },
+    _id: { // Discord ID
+        type: String,
+        required: true
+    },
+    steamID: {
+        type: String,
+        required: true
+    },
+    level: {
+        type: String,
+        required: true,
+        default: 'user',
+        enum: ['user', 'admin', 'owner']
+    }
 });
 
 export default mongoose.model<User>('users', UserSchema)
