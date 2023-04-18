@@ -2,7 +2,8 @@ import mongoose, { Schema } from 'mongoose';
 
 interface User extends Document {
     _id: string
-    steamID: string
+    steamID: string,
+    level: 'user' | 'admin' | 'owner'
 }
 
 const UserSchema: Schema = new Schema({
