@@ -17,16 +17,16 @@ const router = createBrowserRouter([
         element: <Home/>
     },
     {
-        path: '/login',
-        element: <Login/>
-    },
-    {
         path: '/privileged',
         element: <Privileged/>
     },
     {
         path: '/auth/discord',
         element: <DiscordAuth/>
+    },
+    {
+        path: '/auth/login',
+        element: <Login/>
     },
     {
         path: '*',
