@@ -6,7 +6,6 @@ interface configuration {
     discordClientSecret: undefined | string
     mainAccountID: undefined | string
     discordStatus: string
-    adminIDs: (string | undefined)[]
     
     // App
     appPort: number

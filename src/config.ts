@@ -9,7 +9,6 @@ const config: configuration = {
     discordClientSecret: process.env.DISCORD_CLIENT_SECRET,
     mainAccountID: process.env.DISCORD_MAIN_ACCOUNT_ID,
     discordStatus: 'something',
-    adminIDs: [process.env.DISCORD_MAIN_ACCOUNT_ID],
 
     // App
     appPort: 5000,
