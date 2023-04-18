@@ -67,7 +67,7 @@ async function ownerAuth(req: Request, res: Response, next: NextFunction): Promi
 
 	const user = await UserModel.findById(idJWT.userID).lean()
 
-	if (!user || user.level == 'owner') {
+	if (!user || user.level !== 'owner') {
 		throw new ForbiddenError('You are not an owner.')
 	}
 
