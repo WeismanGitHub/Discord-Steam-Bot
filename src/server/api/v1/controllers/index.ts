@@ -1,5 +1,5 @@
 import { getBotGuilds, getUsers } from "./admin";
-import { getAdmins } from "./owner";
+import { getAdmins, getOwners } from "./owner";
 import {
     discordAuth,
     unauthorize,
@@ -15,4 +15,5 @@ export {
     logout,
     login,
     getAdmins,
+    getOwners
 }
