@@ -1,9 +1,10 @@
 import { ForbiddenError, UnauthorizedError } from '../../../errors';
 import { NextFunction, Request, Response } from 'express';
+import { UserModel } from '../../../db/models';
 import { config } from '../../../../config'
 import jwt from 'jsonwebtoken'
 
-function adminAuth(req: Request, res: Response, next: NextFunction): void {
+async function adminAuth(req: Request, res: Response, next: NextFunction): Promise<void> {
 	if (!req.cookies.userID) {
 		throw new UnauthorizedError("Please login.")
 	}
@@ -18,12 +19,14 @@ function adminAuth(req: Request, res: Response, next: NextFunction): void {
 		throw new UnauthorizedError("Please login.")
 	}
 
-	req.userID = idJWT.userID
+	const user = await UserModel.findById(idJWT.userID).lean()
 
-	if (!config.adminIDs.includes(req.userID)) {
-		throw new ForbiddenError('You are not an admin.')
+	if (!user || user.level == 'user') {
+		throw new ForbiddenError('You are not an admin or owner.')
 	}
 
+	req.user = user
+	
 	next()
 }
 
