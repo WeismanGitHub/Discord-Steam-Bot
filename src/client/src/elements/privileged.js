@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import axios, * as others from 'axios'
 import { errorToast } from './toasts'
 
-export default function Admin() {
+export default function Privileged() {
+	const userData = localStorage.getItem('userData')
 	const [guilds, setGuilds] = useState([])
 	const [users, setUsers] = useState([])
 
