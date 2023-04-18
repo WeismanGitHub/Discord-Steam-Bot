@@ -4,10 +4,8 @@ import { Router } from 'express';
 
 const adminRouter: Router = Router();
 
-adminRouter.use('*', adminAuth)
-
-adminRouter.get('/guilds', getBotGuilds)
-adminRouter.get('/users', getUsers)
-adminRouter.get('/bot', getBotData)
+adminRouter.get('/guilds', adminAuth, getBotGuilds)
+adminRouter.get('/users', adminAuth, getUsers)
+adminRouter.get('/bot', adminAuth, getBotData)
 
 export default adminRouter
