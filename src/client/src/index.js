@@ -9,6 +9,7 @@ import DiscordAuth from './elements/discord-auth';
 import NotFound from './elements/not-found';
 import Admin from './elements/admin';
 import Login from './elements/login';
+import Owner from './elements/owner';
 import Home from './elements/home';
 
 const router = createBrowserRouter([
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
     {
         path: '/admin',
         element: <Admin/>
+    },
+    {
+        path: '/owner',
+        element: <Owner/>
     },
     {
         path: '/auth/discord',
