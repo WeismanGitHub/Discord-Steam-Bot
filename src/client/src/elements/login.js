@@ -31,6 +31,7 @@ export default function Login() {
 
 		axios.post('/api/v1/auth/login', { code })
 		.then(res => {
+			localStorage.setItem('userData', res.data)
 			setAuthorized(true)
 		})
 		.catch((err) => {
