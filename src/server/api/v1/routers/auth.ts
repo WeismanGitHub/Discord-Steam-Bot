@@ -5,7 +5,7 @@ import {
     logout,
     unauthorize,
     login
-} from '../controllers'
+} from '../controllers/auth'
 
 const authRouter: Router = Router();
 

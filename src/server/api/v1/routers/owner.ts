@@ -1,9 +1,6 @@
+import { getOwners, getAdmins } from '../controllers/owner'
 import { ownerAuth } from '../middleware';
 import { Router } from 'express';
-import {
-    getOwners,
-    getAdmins
-} from '../controllers'
 
 const ownerRouter: Router = Router();
 

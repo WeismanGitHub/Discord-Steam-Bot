@@ -1,4 +1,4 @@
-import { getBotGuilds, getUsers } from '../controllers'
+import { getBotGuilds, getUsers } from '../controllers/admin'
 import { adminAuth } from '../middleware';
 import { Router } from 'express';
 
