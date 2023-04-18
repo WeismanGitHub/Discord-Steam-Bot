@@ -1,9 +1,9 @@
-import { authRouter, adminRouter } from './api/v1/routers/';
 import { CustomError, NotFoundError } from './errors';
 import { CustomClient } from './custom-client';
 import { GatewayIntentBits } from 'discord.js';
 import rateLimit from 'express-rate-limit';
 import fetchMetadata from 'fetch-metadata';
+import v1Router from './api/v1/routers/';
 import cookieParser from 'cookie-parser';
 import { connectDB } from './db/connect';
 import compression from 'compression'
@@ -66,8 +66,7 @@ app.use(express.static(resolve(__dirname, '../client/build')))
 app.use(express.json())
 app.use(cookieParser())
 
-app.use('/api/v1/admin', adminRouter)
-app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/', v1Router)
 
 app.use('/api/*', (req: Request, res: Response, next: NextFunction): void => {
 	throw new NotFoundError('Route does not exist.')
