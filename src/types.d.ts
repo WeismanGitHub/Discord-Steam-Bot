@@ -111,9 +111,15 @@ interface ownedGame {
     rtime_last_played: number | undefined
 }
 
+interface User extends Document {
+    _id: string
+    steamID: string,
+    level: 'user' | 'admin' | 'owner'
+}
+
 declare namespace Express {
     export interface Request {
-        userID: string
+        user: User
     }
 }
 
