@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #2e3035;
-  color: #f2f3f5;
+  color: #a4a7aa;
   text-align: center;
   font-size: xx-large;
   display: flex;
@@ -17,7 +17,7 @@ body {
   margin: 20px;
   border-radius: 5px;
   background-color: #40444b;
-  color: #f2f3f5;
+  color: #a4a7aa;
   cursor: pointer;
   border: black 1px solid;
   display: inline-block;
