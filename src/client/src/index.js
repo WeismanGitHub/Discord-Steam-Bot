@@ -9,12 +9,12 @@ import DiscordAuth from './elements/discord-auth';
 import Privileged from './elements/privileged';
 import NotFound from './elements/not-found';
 import Login from './elements/login';
-import Home from './elements/home';
+import Main from './main';
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Home/>
+        element: <Main/>
     },
     {
         path: '/privileged',
