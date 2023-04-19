@@ -90,11 +90,11 @@ async function login(req: Request, res: Response): Promise<void> {
 
     const user = await UserModel.findOne({ _id: userID }).lean()
     .catch(err => {
-        throw new InternalServerError("Error creating user.")
+        throw new InternalServerError("Error finding user.")
     })
 
     if (!user) {
-        throw new UnauthorizedError("You need to authorize yourself first.")
+        throw new UnauthorizedError("You need to register first.")
     }
 
     const idJWT = jwt.sign(
