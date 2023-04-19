@@ -39,6 +39,6 @@ export default function Login() {
     }, [])
     
 	return <a href={process.env.REACT_APP_LOGIN_OAUTH_URL + `&state=${btoa(randomString)}`} class='gray-button'>
-		Authorize
+		Login
 	</a>
 }
