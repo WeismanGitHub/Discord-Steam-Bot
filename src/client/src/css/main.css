@@ -1,0 +1,9 @@
+.navbar {
+    border: 1px black solid;
+    border-radius: 0px;
+    position: fixed;
+    padding: 8px;
+    width: 100%;
+    top: 0;
+    color: #f2f3f5;
+}
