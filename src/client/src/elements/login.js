@@ -17,7 +17,6 @@ function generateRandomString() {
 export default function Login() {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [randomString] = useState(generateRandomString())
-	const [authorized, setAuthorized] = useState(false)
 	const navigate = useNavigate();
 
     useEffect(() => {
@@ -31,19 +30,15 @@ export default function Login() {
 
 		axios.post('/api/v1/auth/login', { code })
 		.then(res => {
-			localStorage.setItem('userData', res.data)
-			setAuthorized(true)
+			localStorage.setItem('userData', JSON.stringify(res.data))
+			navigate('/')
 		})
 		.catch((err) => {
 			errorToast(err.response.data.error || err.message)
 		});
     }, [])
     
-	if (authorized) {
-		navigate('/')
-	} else {
-		return <a href={process.env.REACT_APP_LOGIN_OAUTH_URL + `&state=${btoa(randomString)}`} class='gray-button'>
-			Authorize
-    	</a>
-	}
+	return <a href={process.env.REACT_APP_LOGIN_OAUTH_URL + `&state=${btoa(randomString)}`} class='gray-button'>
+		Authorize
+	</a>
 }
