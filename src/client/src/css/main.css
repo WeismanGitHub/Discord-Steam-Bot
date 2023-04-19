@@ -1,9 +1,26 @@
 .navbar {
-    border: 1px black solid;
     border-radius: 0px;
-    position: fixed;
     padding: 8px;
     width: 100%;
     top: 0;
-    color: #f2f3f5;
+    margin: 0px;
+}
+
+.navbar-button {
+    margin: 5px;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #40444b;
+    color: #a4a7aa;
+    cursor: pointer;
+    all: unset
+}
+
+.navbar-button:hover{
+    filter: brightness(90%);
+}
+
+.navbar-button:active {
+    filter: brightness(80%);
 }
