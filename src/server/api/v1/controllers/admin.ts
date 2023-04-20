@@ -1,5 +1,5 @@
 import { CustomClient } from '../../../custom-client';
-import { BadRequestError } from '../../../errors';
+import { BadRequestError, InternalServerError } from '../../../errors';
 import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
 import { config } from '../../../../config';
@@ -18,7 +18,7 @@ async function getBotGuilds(req: Request, res: Response): Promise<void> {
         }
     })
 
-    res.status(200).json({ guilds })
+    res.status(200).json(guilds)
 }
 
 async function getUsers(req: Request, res: Response): Promise<void> {
@@ -27,10 +27,29 @@ async function getUsers(req: Request, res: Response): Promise<void> {
     if (!Number.isSafeInteger(page) || page < 0) {
         throw new BadRequestError('Page is invalid.')
     }
+    
+    const userIDs = (await UserModel.find({}).skip(page).limit(10).select('_id').lean()
+    .catch(err => {
+        throw new InternalServerError('Could not get user ids.')
+    })).map(user => user._id)
 
-    const users = await UserModel.find({}).skip(page).limit(10).lean()
+    const users = await Promise.all(userIDs.map(async (userID) => {
+        const client: CustomClient = req.app.get('discordClient')
 
-    res.status(200).json({ users })
+        const user = await client.users.fetch(userID)
+        .catch(err => {
+            throw new InternalServerError('Could not get users.')
+        })
+
+        return {
+            username: user.username,
+            avatar: user.avatarURL(),
+        }
+    }))
+
+    console.log(users)
+
+    res.status(200).json(users)
 }
 
 async function getBotData(req: Request, res: Response): Promise<void> {
