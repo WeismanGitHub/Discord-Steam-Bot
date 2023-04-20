@@ -32,4 +32,13 @@ function killProcess(req: Request, res: Response): void {
     process.exit(1)
 }
 
-export { getAdmins, getOwners, killProcess }
+function restartProcess(req: Request, res: Response): void {
+    res.status(202)
+}
+
+export {
+    getAdmins,
+    getOwners,
+    killProcess, 
+    restartProcess
+}
