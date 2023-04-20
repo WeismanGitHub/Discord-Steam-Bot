@@ -47,8 +47,6 @@ async function getUsers(req: Request, res: Response): Promise<void> {
         }
     }))
 
-    console.log(users)
-
     res.status(200).json(users)
 }
 
