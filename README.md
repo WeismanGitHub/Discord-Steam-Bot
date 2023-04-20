@@ -23,4 +23,6 @@
   `tsc` to build the server.
   
   `npm run app` to run the bot and website.
+
+  `jest` to run tests.
 </div>
