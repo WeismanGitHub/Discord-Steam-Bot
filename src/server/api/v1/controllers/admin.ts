@@ -2,6 +2,7 @@ import { CustomClient } from '../../../custom-client';
 import { BadRequestError } from '../../../errors';
 import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
+import { config } from '../../../../config';
 require('express-async-errors')
 
 async function getBotGuilds(req: Request, res: Response): Promise<void> {
@@ -34,9 +35,12 @@ async function getUsers(req: Request, res: Response): Promise<void> {
 
 async function getBotData(req: Request, res: Response): Promise<void> {
     const client: CustomClient = req.app.get('discordClient')
-    console.log(client)
-    
-    res.status(200).json({})
+
+    res.status(200).json({
+        readyTimestamp: client.readyTimestamp,
+        avatar: client.user?.avatarURL(),
+        presence: config.discordStatus,
+    })
 }
 
 export { getBotGuilds, getUsers, getBotData }
