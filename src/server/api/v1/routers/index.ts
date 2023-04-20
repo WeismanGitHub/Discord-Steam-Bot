@@ -1,4 +1,4 @@
-import { config } from '../../../../config';
+import { Config } from '../../../../config';
 import rateLimit from 'express-rate-limit';
 import fetchMetadata from 'fetch-metadata';
 import express, { Router } from 'express';
@@ -15,11 +15,11 @@ import authRouter from './auth';
 const v1Router: Router = Router();
 
 const limiter = rateLimit({
-    windowMs: config.limiterWindowMs,
-	max: config.limiterMax,
+    windowMs: Config.limiterWindowMs,
+	max: Config.limiterMax,
 	standardHeaders: true,
 	legacyHeaders: false,
-	message: config.limiterMessage
+	message: Config.limiterMessage
 })
 
 v1Router.use(helmet({
@@ -46,7 +46,7 @@ v1Router.use(fetchMetadata({
 
 v1Router.use(limiter)
 v1Router.use(compression())
-v1Router.use(cors({ origin: [`http://localhost:${config.appPort}`] }))
+v1Router.use(cors({ origin: [`http://localhost:${Config.appPort}`] }))
 v1Router.use(express.urlencoded({ extended: true }))
 v1Router.use(express.json())
 v1Router.use(cookieParser())

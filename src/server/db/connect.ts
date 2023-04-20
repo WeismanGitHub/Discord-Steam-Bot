@@ -1,10 +1,10 @@
-import { config } from '../../config'
+import { Config } from '../../config'
 import mongoose from 'mongoose'
 
 const connectDB = (): void => {
-    mongoose.connect(config.mongoURI!, {
-        maxPoolSize: config.mongoMaxPoolSize,
-        wtimeoutMS: config.mongoWtimeoutMS,
+    mongoose.connect(Config.mongoURI!, {
+        maxPoolSize: Config.mongoMaxPoolSize,
+        wtimeoutMS: Config.mongoWtimeoutMS,
     })
     .then(res => {
         console.log('connected to database...')

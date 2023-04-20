@@ -1,7 +1,7 @@
 import { BadGatewayError, BadRequestError, InternalServerError } from '../errors';
 import { titleEmbed } from '../utils/embeds';
 import { UserModel } from '../db/models';
-import { config } from '../../config';
+import { Config } from '../../config';
 import axios, * as _ from 'axios'
 import {
     SlashCommandBuilder,
@@ -46,7 +46,7 @@ export default {
 
         const res: res = (await axios.get(
             `https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/
-            ?key=${config.steamAPIKey}
+            ?key=${Config.steamAPIKey}
             &steamid=${steamID}
             &include_appinfo=true
             ${playedFreeGamesOption !== null ? `&include_played_free_games=${playedFreeGamesOption}` : ''}`

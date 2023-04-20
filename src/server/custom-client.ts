@@ -1,7 +1,7 @@
 import { errorEmbed } from './utils/embeds';
 import { readdirSync, statSync } from 'fs';
 import { CustomError } from './errors';
-import { config } from '../config';
+import { Config } from '../config';
 import { join } from 'path';
 import {
     Client,
@@ -39,7 +39,7 @@ export class CustomClient extends Client {
     constructor(clientOptions: ClientOptions) {
         super(clientOptions);
 
-        this.token = config.discordToken!
+        this.token = Config.discordToken
         this.commands = new Collection()
         
         this.login(this.token)
@@ -54,7 +54,7 @@ export class CustomClient extends Client {
         try {
             const rest = new REST({ version: '10' }).setToken(this.token);
 
-            await rest.put(Routes.applicationCommands(config.discordClientID!), { body: [] })
+            await rest.put(Routes.applicationCommands(Config.discordClientID!), { body: [] })
 
             console.log('deleted all commands...')
         } catch (err) {
@@ -82,7 +82,7 @@ export class CustomClient extends Client {
             const rest = new REST({ version: '10' }).setToken(this.token);
 
             await rest.put(
-                Routes.applicationCommands(config.discordClientID!),
+                Routes.applicationCommands(Config.discordClientID!),
                 { body: commands },
             );
 

@@ -1,4 +1,4 @@
-import { config } from '../../config'
+import { Config } from '../../config'
 import {
 	SlashCommandBuilder,
 	CommandInteraction,
@@ -17,21 +17,21 @@ export default {
 		const embed: EmbedBuilder = new EmbedBuilder()
 		.setColor('#8F00FF') // Purple
 		.setDescription("Click the link to allow this bot to save your Steam connection. Use the `/unauthorize` command to delete all your data stored by the bot.")
-		.addFields({ name: 'Contact the Creator:', value: `<@${config.mainAccountID}>` })
+		.addFields({ name: 'Contact the Creator:', value: `<@${Config.mainAccountID}>` })
 	
 		const row = new ActionRowBuilder<ButtonBuilder>()
 		.addComponents([
 			new ButtonBuilder()
 			.setLabel('Authorization')
-			.setURL(config.authRedirectURI!)
+			.setURL(Config.authRedirectURI!)
 			.setStyle(ButtonStyle.Link),
 			new ButtonBuilder()
 			.setLabel('Source Code')
-			.setURL(config.sourceCodeLink!)
+			.setURL(Config.sourceCodeLink!)
 			.setStyle(ButtonStyle.Link),
 			new ButtonBuilder()
 			.setLabel('Buy Me a Coffee')
-			.setURL(config.buyMeACofeeLink!)
+			.setURL(Config.buyMeACofeeLink!)
 			.setStyle(ButtonStyle.Link),
 		])
 

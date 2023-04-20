@@ -2,7 +2,7 @@ import { BadRequestError, InternalServerError, UnauthorizedError } from '../../.
 const DiscordOauth2 = require("discord-oauth2");
 import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
-import { config } from '../../../../config';
+import { Config } from '../../../../config';
 require('express-async-errors');
 import jwt from 'jsonwebtoken';
 
@@ -18,13 +18,13 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
 
     try {
         const token: string = (await oauth.tokenRequest({
-            clientId: config.discordClientID,
-            clientSecret: config.discordClientSecret,
+            clientId: Config.discordClientID,
+            clientSecret: Config.discordClientSecret,
         
             code: code,
             scope: 'connections identify',
             grantType: "authorization_code",
-            redirectUri: config.authRedirectURI,
+            redirectUri: Config.authRedirectURI,
         })).access_token
 
         connections = await oauth.getUserConnections(token)
@@ -70,13 +70,13 @@ async function login(req: Request, res: Response): Promise<void> {
 
     try {
         const token: string = (await oauth.tokenRequest({
-            clientId: config.discordClientID,
-            clientSecret: config.discordClientSecret,
+            clientId: Config.discordClientID,
+            clientSecret: Config.discordClientSecret,
         
             code: code,
             scope: 'identify',
             grantType: "authorization_code",
-            redirectUri: config.loginRedirectURI,
+            redirectUri: Config.loginRedirectURI,
         })).access_token
 
         userID = (await oauth.getUser(token)).id
@@ -99,7 +99,7 @@ async function login(req: Request, res: Response): Promise<void> {
 
     const idJWT = jwt.sign(
         { userID },
-        config.jwtSecret!,
+        Config.jwtSecret!,
         { expiresIn: '14d' },
     )
 

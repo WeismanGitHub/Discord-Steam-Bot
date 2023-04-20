@@ -1,7 +1,7 @@
 import { ForbiddenError, UnauthorizedError } from '../../../errors';
 import { NextFunction, Request, Response } from 'express';
 import { UserModel } from '../../../db/models';
-import { config } from '../../../../config'
+import { Config } from '../../../../config'
 import jwt from 'jsonwebtoken'
 
 function userAuth(req: Request, res: Response, next: NextFunction): void {
@@ -13,7 +13,7 @@ function userAuth(req: Request, res: Response, next: NextFunction): void {
 		userID?: string;
 	}
 	
-	const idJWT: string | JwtPayload = jwt.verify(req.cookies.userID, config.jwtSecret!)
+	const idJWT: string | JwtPayload = jwt.verify(req.cookies.userID, Config.jwtSecret!)
 
 	if (!idJWT || typeof idJWT === 'string' || !idJWT.userID) {
 		throw new UnauthorizedError("Please login.")
@@ -33,7 +33,7 @@ async function adminAuth(req: Request, res: Response, next: NextFunction): Promi
 		userID?: string;
 	}
 	
-	const idJWT: string | JwtPayload = jwt.verify(req.cookies.userID, config.jwtSecret!)
+	const idJWT: string | JwtPayload = jwt.verify(req.cookies.userID, Config.jwtSecret!)
 
 	if (!idJWT || typeof idJWT === 'string' || !idJWT.userID) {
 		throw new UnauthorizedError("Please login.")
@@ -59,7 +59,7 @@ async function ownerAuth(req: Request, res: Response, next: NextFunction): Promi
 		userID?: string;
 	}
 	
-	const idJWT: string | JwtPayload = jwt.verify(req.cookies.userID, config.jwtSecret!)
+	const idJWT: string | JwtPayload = jwt.verify(req.cookies.userID, Config.jwtSecret!)
 
 	if (!idJWT || typeof idJWT === 'string' || !idJWT.userID) {
 		throw new UnauthorizedError("Please login.")

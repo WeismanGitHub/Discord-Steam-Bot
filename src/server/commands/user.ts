@@ -1,6 +1,6 @@
 import { BadGatewayError, BadRequestError, InternalServerError } from '../errors';
 import { UserModel } from '../db/models';
-import { config } from '../../config';
+import { Config } from '../../config';
 import axios, * as _ from 'axios'
 import {
     SlashCommandBuilder,
@@ -33,11 +33,11 @@ export default {
         }
 
         async function GetPlayerSummaries(): Promise<player | undefined> {
-            return (await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.steamAPIKey}&steamids=${steamID}`))?.data?.response?.players?.[0]
+            return (await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${Config.steamAPIKey}&steamids=${steamID}`))?.data?.response?.players?.[0]
         }
 
         async function GetSteamLevel(): Promise<number | undefined> {
-            return (await axios.get(`https://api.steampowered.com/IPlayerService/GetSteamLevel/v1/?key=${config.steamAPIKey}&steamid=${steamID}`)).data?.response?.player_level
+            return (await axios.get(`https://api.steampowered.com/IPlayerService/GetSteamLevel/v1/?key=${Config.steamAPIKey}&steamid=${steamID}`)).data?.response?.player_level
         }
 
         const results = await Promise.all([

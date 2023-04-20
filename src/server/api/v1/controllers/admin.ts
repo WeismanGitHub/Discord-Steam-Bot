@@ -2,7 +2,7 @@ import { CustomClient } from '../../../custom-client';
 import { BadRequestError, InternalServerError } from '../../../errors';
 import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
-import { config } from '../../../../config';
+import { Config } from '../../../../config';
 require('express-async-errors')
 
 async function getBotGuilds(req: Request, res: Response): Promise<void> {
@@ -57,7 +57,7 @@ async function getBotData(req: Request, res: Response): Promise<void> {
     .json({
         readyTimestamp: client.readyTimestamp,
         avatar: client.user?.avatarURL(),
-        presence: config.discordStatus,
+        presence: Config.discordStatus,
     })
 }
 
