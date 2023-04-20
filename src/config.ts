@@ -1,4 +1,5 @@
 import { InternalServerError } from "./server/errors";
+const { ActivityType } = require('discord.js');
 require("dotenv").config();
 
 class Configuration {
@@ -8,6 +9,7 @@ class Configuration {
     discordClientSecret: string
     mainAccountID: string
     discordStatus: string
+    activityType: typeof ActivityType
     appPort: number
     jwtSecret: string
     authRedirectURI: string
@@ -31,6 +33,7 @@ class Configuration {
         this.discordClientID = process.env.DISCORD_CLIENT_ID!
         this.discordClientSecret = process.env.DISCORD_CLIENT_SECRET!
         this.mainAccountID = process.env.DISCORD_MAIN_ACCOUNT_ID!
+        this.activityType = ActivityType.Playing
         this.discordStatus = 'something'
 
         // App
