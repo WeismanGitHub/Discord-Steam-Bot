@@ -44,7 +44,7 @@ export class CustomClient extends Client {
         
         this.login(this.token)
         .then(async () => {
-            this.setPresence(Config.activityType, Config.discordStatus)
+            this.setPresence(Config.activityType, Config.activityName)
             this.loadEventListeners()
             await this.deleteCommands()
             this.loadCommands()

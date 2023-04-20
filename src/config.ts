@@ -8,7 +8,7 @@ class Configuration {
     discordClientID: string
     discordClientSecret: string
     mainAccountID: string
-    discordStatus: string
+    activityName: string
     activityType: typeof ActivityType
     appPort: number
     jwtSecret: string
@@ -34,7 +34,7 @@ class Configuration {
         this.discordClientSecret = process.env.DISCORD_CLIENT_SECRET!
         this.mainAccountID = process.env.DISCORD_MAIN_ACCOUNT_ID!
         this.activityType = ActivityType.Playing
-        this.discordStatus = 'something'
+        this.activityName = 'something'
 
         // App
         this.appPort = 5000

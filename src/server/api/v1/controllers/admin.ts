@@ -57,7 +57,7 @@ async function getBotData(req: Request, res: Response): Promise<void> {
     .json({
         readyTimestamp: client.readyTimestamp,
         avatar: client.user?.avatarURL(),
-        presence: Config.discordStatus,
+        presence: Config.activityName,
     })
 }
 
