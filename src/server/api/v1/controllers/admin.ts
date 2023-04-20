@@ -36,7 +36,8 @@ async function getUsers(req: Request, res: Response): Promise<void> {
 async function getBotData(req: Request, res: Response): Promise<void> {
     const client: CustomClient = req.app.get('discordClient')
 
-    res.status(200).json({
+    res.status(200)
+    .json({
         readyTimestamp: client.readyTimestamp,
         avatar: client.user?.avatarURL(),
         presence: config.discordStatus,
