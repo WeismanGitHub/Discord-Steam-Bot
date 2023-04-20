@@ -27,4 +27,9 @@ async function getOwners(req: Request, res: Response): Promise<void> {
     res.status(200).json({ owners })
 }
 
-export { getAdmins, getOwners }
+function killProcess(req: Request, res: Response): void {
+    res.status(202)
+    process.exit(1)
+}
+
+export { getAdmins, getOwners, killProcess }
