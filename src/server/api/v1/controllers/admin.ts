@@ -1,5 +1,5 @@
-import { CustomClient } from '../../../custom-client';
 import { BadRequestError, InternalServerError } from '../../../errors';
+import { CustomClient } from '../../../custom-client';
 import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
 import { Config } from '../../../../config';
@@ -57,7 +57,10 @@ async function getBotData(req: Request, res: Response): Promise<void> {
     .json({
         readyTimestamp: client.readyTimestamp,
         avatar: client.user?.avatarURL(),
-        presence: Config.activityName,
+        activity: {
+            type: Config.activityType,
+            name: Config.activityName,
+        },
     })
 }
 
