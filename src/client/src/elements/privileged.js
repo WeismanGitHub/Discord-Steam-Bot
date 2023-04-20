@@ -2,12 +2,17 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import axios, * as others from 'axios'
 import { errorToast } from './toasts'
+import '../css/Privileged.css';
 
 export default function Privileged() {
 	const userData = localStorage.getItem('userData')
+	const [botData, setBotData] = useState(null)
 	const [guilds, setGuilds] = useState([])
 	const [users, setUsers] = useState([])
 	const navigate = useNavigate();
+
+	const [admins, setAdmins] = useState([])
+	const [owners, setOwners] = useState([])
 
     useEffect(() => {
 		if (!userData || userData.level == 'user') {
@@ -17,12 +22,18 @@ export default function Privileged() {
 
 		Promise.all([
 			axios.get('/api/v1/admin/guilds'),
-			axios.get('/api/v1/admin/users')
+			axios.get('/api/v1/admin/users'),
+			axios.get('/api/v1/admin/bot'),
+			userData.level == 'owner' ? axios.get('/api/v1/owner/admins') : null,
+			userData.level == 'owner' ? axios.get('/api/v1/owner/owners') : null,
 		])
-		.then(([guildsRes, usersRes]) => {
-			console.log(guildsRes, usersRes)
-			setGuilds(guildsRes)
-			setUsers(usersRes)
+		.then(([guildsRes, usersRes, botRes, adminsRes, ownersRes]) => {
+			setGuilds(guildsRes.data)
+			setUsers(usersRes.data)
+			setBotData(botRes.data)
+			setAdmins(adminsRes)
+			setOwners(ownersRes)
+			console.log(guilds, guildsRes.data)
 		})
 		.catch(err => {
 			errorToast(err.response.data.error || err.message)
@@ -30,9 +41,17 @@ export default function Privileged() {
     }, [])
     
 	return <>
-		<h1>Guilds: {guilds.length} Users: {users.length}</h1>
-		{ guilds.map(guild => {
-			return <h3>{guild.name}</h3>
-		})}
+		<div class='guilds'>
+			<h3>Guilds: {guilds?.length}</h3>
+
+			<hr class="divider"/>
+
+			{guilds?.map(guild => {
+				return <div class='guild'>
+					{guild.name}
+				</div>
+			})}
+
+		</div>
 	</>
 }
