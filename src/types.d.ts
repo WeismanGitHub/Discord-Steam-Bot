@@ -1,34 +1,3 @@
-interface configuration {
-    // Discord
-    discordToken: undefined | string
-    testGuildID: undefined | string
-    discordClientID: undefined | string
-    discordClientSecret: undefined | string
-    mainAccountID: undefined | string
-    discordStatus: string
-    
-    // App
-    appPort: number
-    jwtSecret: undefined | string
-    authRedirectURI: undefined | string
-    loginRedirectURI: undefined | string
-    buyMeACofeeLink: undefined | string
-    sourceCodeLink: undefined | string
-    steamAPIKey: undefined | string
-    
-    // POSTGRESQL
-    mongoURI: string | undefined
-    mongoMaxPoolSize: number
-    mongoWtimeoutMS: number
-
-    // Rate Limiter
-    limiterWindowMs: number
-    limiterMax: number
-    limiterMessage: string
-    limiterStandardHeaders: boolean
-    limiterLegacyHeaders: boolean,
-}
-
 interface connection {
     type: string
     id: string
