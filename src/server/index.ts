@@ -3,7 +3,7 @@ import { CustomClient } from './custom-client';
 import { GatewayIntentBits } from 'discord.js';
 import v1Router from './api/v1/routers/';
 import { connectDB } from './db/connect';
-import { config } from '../config'
+import { Config } from '../config'
 require('express-async-errors')
 import { resolve } from 'path'
 import express, {
@@ -44,4 +44,4 @@ app.use((err: Error | CustomError, req: Request, res: Response, next: NextFuncti
 })
 
 connectDB()
-app.listen(config.appPort, (): void => console.log(`listening on port ${config.appPort}...`));
+app.listen(Config.appPort, (): void => console.log(`listening on port ${Config.appPort}...`));
