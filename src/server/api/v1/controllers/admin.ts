@@ -18,7 +18,7 @@ async function getBotGuilds(req: Request, res: Response): Promise<void> {
         }
     })
 
-    res.status(200).json(guilds)
+    res.status(200).json({ guilds })
 }
 
 async function getUsers(req: Request, res: Response): Promise<void> {
@@ -47,7 +47,7 @@ async function getUsers(req: Request, res: Response): Promise<void> {
         }
     }))
 
-    res.status(200).json(users)
+    res.status(200).json({ users })
 }
 
 async function getBotData(req: Request, res: Response): Promise<void> {
