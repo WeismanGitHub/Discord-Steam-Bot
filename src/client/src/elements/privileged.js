@@ -15,6 +15,14 @@ export default function Privileged() {
 	const [admins, setAdmins] = useState([])
 	const [owners, setOwners] = useState([])
 
+	function stopProcess() {
+		
+	}
+
+	function restartProcess() {
+
+	}
+	
     useEffect(() => {
 		if (!userData || userData.level == 'user') {
 			errorToast('You must be an admin or owner.')
@@ -55,6 +63,11 @@ export default function Privileged() {
 				</div>
 			})}
 
+		</div>
+
+		<div class='process-buttons'>
+			<button onClick={stopProcess}>Stop Process</button>
+			<button onClick={restartProcess}>Restart Process</button>
 		</div>
 	</>
 }
