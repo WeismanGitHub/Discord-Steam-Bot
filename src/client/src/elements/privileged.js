@@ -58,14 +58,31 @@ export default function Privileged() {
 		<Navbar/>
 
 		<div class='guilds'>
-			<h3>Guilds: {guilds?.length}</h3>
+			Guilds: {guilds?.length}
 
 			<hr class="divider"/>
 
 			{guilds?.map(guild => {
-				return <div class='guild'>
-					{guild.name}
-				</div>
+				const joinedDate = new Date(Number(guild.joinedTimestamp))
+				const formattedDate = joinedDate.toLocaleDateString("en-US", {
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric'
+				})
+
+				return <>
+					<div class='guild'>
+						<img src={guild.iconURL} alt='guild icon' width={60} height={60} class='guild-icon'/>
+						{guild.name}
+						<div class='guild-info'>
+							joined: {formattedDate}
+							<br/>
+							members: {guild.memberCount}
+							<br/>
+							locale: {guild.preferredLocale}
+						</div>
+					</div>
+				</>
 			})}
 
 		</div>
