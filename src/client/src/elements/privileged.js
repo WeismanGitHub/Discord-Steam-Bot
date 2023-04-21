@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import Navbar from '../elements/nav-bar';
 import axios, * as others from 'axios'
-import { errorToast } from './toasts'
+import { errorToast, successToast } from './toasts'
 import '../css/Privileged.css';
 
 export default function Privileged() {
@@ -16,13 +16,19 @@ export default function Privileged() {
 	const [owners, setOwners] = useState([])
 
 	function stopProcess() {
-		
+		axios.post('/api/v1/owner/process/kill')
+		.then(res => successToast('Request was acknowledged.'))
+		.catch(err => {
+			errorToast(err.response.data.error || err.message)
+		});
 	}
 
 	function restartProcess() {
-
+		axios.post('/api/v1/owner/process/restart')
+		.then(res => successToast('Request was acknowledged.'))
+		.catch(err => errorToast(err.response.data.error || err.message));
 	}
-	
+
     useEffect(() => {
 		if (!userData || userData.level == 'user') {
 			errorToast('You must be an admin or owner.')
@@ -37,12 +43,11 @@ export default function Privileged() {
 			userData.level == 'owner' ? axios.get('/api/v1/owner/owners') : null,
 		])
 		.then(([guildsRes, usersRes, botRes, adminsRes, ownersRes]) => {
-			setGuilds(guildsRes.data)
-			setUsers(usersRes.data)
+			setGuilds(guildsRes.data.guilds)
+			setUsers(usersRes.data.users)
 			setBotData(botRes.data)
-			setAdmins(adminsRes)
-			setOwners(ownersRes)
-			console.log(guilds, guildsRes.data)
+			setAdmins(adminsRes.admins)
+			setOwners(ownersRes.owners)
 		})
 		.catch(err => {
 			errorToast(err.response.data.error || err.message)
@@ -65,9 +70,11 @@ export default function Privileged() {
 
 		</div>
 
+		{level == 'owner' &&
 		<div class='process-buttons'>
 			<button onClick={stopProcess}>Stop Process</button>
 			<button onClick={restartProcess}>Restart Process</button>
-		</div>
+		</div>}
+		
 	</>
 }
