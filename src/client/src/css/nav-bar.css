@@ -1,7 +1,6 @@
 .navbar {
   border-radius: 0px;
-  top: 0;
-  margin: 0px;
+  height: 6vh;
   padding: 2px;
   background-color: #202225;
 }
