@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { errorToast } from '../toasts';
 import { useState } from 'react'
 import '../css/nav-bar.css';
@@ -6,6 +7,7 @@ import axios from 'axios';
 export default function NavBar() {
     const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('userData')))
     const [loggedIn, setLoggedIn] = useState(Boolean(userData))
+    const navigate = useNavigate();
 
     function logout() {
         axios.post('/api/v1/auth/logout')
@@ -13,6 +15,7 @@ export default function NavBar() {
             setLoggedIn(false)
             localStorage.removeItem('userData')
             setUserData({})
+            navigate('/')
         })
         .catch(err => errorToast('Could not log out.'))
     }
