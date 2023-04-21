@@ -19,11 +19,11 @@ export default function NavBar() {
 
     return (<>
         <div class='navbar'>
+            {window.location.pathname !== '/' && <a class='navbar-button' href="/">home</a>}
             {['owner', 'admin'].includes(userData?.level) && <a class='navbar-button' href="/privileged">dashboard</a>}
-            {loggedIn && <a class='navbar-button' href="/about">about</a>}
             {loggedIn ? <button class='navbar-button' onClick={logout}>logout</button> : <>
-                <a class='navbar-button' href="/auth/login">login</a>
-                <a class='navbar-button' href="/auth/discord">register</a>
+                {window.location.pathname !== '/auth/login' && <a class='navbar-button' href="/auth/login">login</a>}
+                {window.location.pathname !== '/auth/discord' && <a class='navbar-button' href="/auth/discord">register</a>}
             </>}
         </div>
     </>)
