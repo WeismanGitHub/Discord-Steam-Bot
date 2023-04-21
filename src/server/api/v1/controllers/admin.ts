@@ -11,7 +11,7 @@ async function getBotGuilds(req: Request, res: Response): Promise<void> {
     const guilds = client.guilds.cache.map((guild): GuildData => {
         return {
             name: guild.name,
-            icon: guild.iconURL(),
+            iconURL: guild.iconURL(),
             memberCount: guild.memberCount,
             joinedTimestamp: guild.joinedTimestamp,
             preferredLocale: guild.preferredLocale,
@@ -43,7 +43,7 @@ async function getUsers(req: Request, res: Response): Promise<void> {
 
         return {
             username: user.username,
-            avatar: user.avatarURL(),
+            avatarURL: user.avatarURL(),
         }
     }))
 
