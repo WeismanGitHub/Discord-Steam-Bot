@@ -1,8 +1,8 @@
 .guilds {
-  width: 30%;
+  width: 25%;
   overflow-y: scroll;
   align-content: center;
-  height: 93vh;
+  height: 93.5vh;
   scrollbar-width: none;
   background-color: #202225;
   overflow-x: hidden;
@@ -21,12 +21,29 @@
 .guild {
   float: left;
   font-size: large;
+  display: inline;
+  position: relative;
+  object-fit: cover;
+  left: 5%;
+  width: 95%;
+  margin-bottom: 5px;
 }
 
 .guild-icon {
   border-radius: 50%;
+  float: left;
 }
 
 .guild-info {
   font-size: medium;
+  text-align: left;
+  float: left;
+  margin-left: 15px;
+}
+
+.guild-name {
+  float: left;
+  display: flex;
+  margin-left: 5px;
+  text-align: left;
 }
