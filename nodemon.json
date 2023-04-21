@@ -1,6 +1,6 @@
 {
     "ignore": [
-        "src",
-        "dist/client"
+        "src/*",
+        "dist/client/*"
     ]
 }
