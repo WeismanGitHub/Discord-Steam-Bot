@@ -28,8 +28,8 @@ export default function Privileged() {
 		.then(res => successToast('Request was acknowledged.'))
 		.catch(err => errorToast(err.response.data.error || err.message));
 	}
-
-    useEffect(() => {
+	
+	useEffect(() => {
 		if (!userData || userData.level == 'user') {
 			errorToast('You must be an admin or owner.')
 			return navigate('/')
@@ -53,7 +53,7 @@ export default function Privileged() {
 			errorToast(err.response.data.error || err.message)
 		});
     }, [])
-    
+
 	return <>
 		<Navbar/>
 
@@ -70,11 +70,10 @@ export default function Privileged() {
 
 		</div>
 
-		{userData.level == 'owner' &&
+		{userData?.level == 'owner' &&
 		<div class='process-buttons'>
 			<button onClick={stopProcess}>Stop Process</button>
 			<button onClick={restartProcess}>Restart Process</button>
 		</div>}
-		
 	</>
 }
