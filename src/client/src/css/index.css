@@ -5,11 +5,6 @@ body {
   color: #a4a7aa;
   text-align: center;
   font-size: xx-large;
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  top: 50%;
-  justify-content: center;
 }
 
 .gray-button {
