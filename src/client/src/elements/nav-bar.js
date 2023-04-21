@@ -1,8 +1,7 @@
-import { errorToast } from './elements/toasts';
-import About from './elements/about';
+import { errorToast } from '../toasts';
 import { useState } from 'react'
+import '../css/nav-bar.css';
 import axios from 'axios';
-import './css/main.css';
 
 export default function NavBar() {
     const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('userData')))

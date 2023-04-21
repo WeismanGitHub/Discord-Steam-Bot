@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import Navbar from '../elements/nav-bar';
 import axios, * as others from 'axios'
-import { errorToast, successToast } from './toasts'
+import { errorToast, successToast } from '../toasts'
 import '../css/Privileged.css';
 
 export default function Privileged() {

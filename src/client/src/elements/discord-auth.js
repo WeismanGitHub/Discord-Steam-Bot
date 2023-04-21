@@ -1,7 +1,7 @@
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import axios, * as others from 'axios'
-import { errorToast } from './toasts'
+import { errorToast } from '../toasts'
 
 function generateRandomString() {
 	let randomString = '';
