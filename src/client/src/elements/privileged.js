@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
+import Navbar from '../elements/nav-bar';
 import axios, * as others from 'axios'
 import { errorToast } from './toasts'
 import '../css/Privileged.css';
@@ -41,6 +42,8 @@ export default function Privileged() {
     }, [])
     
 	return <>
+		<Navbar/>
+
 		<div class='guilds'>
 			<h3>Guilds: {guilds?.length}</h3>
 
