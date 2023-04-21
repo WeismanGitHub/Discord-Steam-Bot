@@ -35,3 +35,18 @@ a, a:hover, a:focus, a:active {
   height: 0;
 }
 
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #2b2d31;
+  border-radius: 3px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1a1b1e;
+  border-radius: 3px;
+}
