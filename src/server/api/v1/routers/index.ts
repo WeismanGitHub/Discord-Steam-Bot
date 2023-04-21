@@ -55,4 +55,4 @@ v1Router.use('/admin', adminRouter)
 v1Router.use('/owner', ownerRouter)
 v1Router.use('/auth', authRouter)
 
-export default v1Router
+export { v1Router }
