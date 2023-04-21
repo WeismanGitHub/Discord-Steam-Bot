@@ -20,7 +20,7 @@ export default function NavBar() {
     return (<>
         <div class='navbar'>
             {window.location.pathname !== '/' && <a class='navbar-button' href="/">home</a>}
-            {['owner', 'admin'].includes(userData?.level) && <a class='navbar-button' href="/privileged">dashboard</a>}
+            {(['owner', 'admin'].includes(userData?.level) && window.location.pathname !== '/privileged') && <a class='navbar-button' href="/privileged">dashboard</a>}
             {loggedIn ? <button class='navbar-button' onClick={logout}>logout</button> : <>
                 {window.location.pathname !== '/auth/login' && <a class='navbar-button' href="/auth/login">login</a>}
                 {window.location.pathname !== '/auth/discord' && <a class='navbar-button' href="/auth/discord">register</a>}
