@@ -2,6 +2,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import axios, * as others from 'axios'
 import { errorToast } from '../toasts'
+import NavBar from './nav-bar';
 
 function generateRandomString() {
 	let randomString = '';
@@ -38,7 +39,10 @@ export default function Login() {
 		});
     }, [])
     
-	return <a href={process.env.REACT_APP_LOGIN_OAUTH_URL + `&state=${btoa(randomString)}`} class='gray-button'>
-		Login
-	</a>
+	return <>
+		<NavBar/>
+		<a href={process.env.REACT_APP_LOGIN_OAUTH_URL + `&state=${btoa(randomString)}`} class='gray-button'>
+			Login
+		</a>
+	</>
 }
