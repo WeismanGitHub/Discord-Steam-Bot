@@ -26,3 +26,7 @@
 .guild-icon {
   border-radius: 50%;
 }
+
+.guild-info {
+  font-size: medium;
+}
