@@ -70,10 +70,13 @@ export default function Privileged() {
 					day: 'numeric'
 				})
 
+				const name = `${guild.name?.substring(0, 32)}${guild.name?.length > 35 ? '...' : ''}`
 				return <>
-					<div class='guild'>
+					<div class='guild' title={guild.name}>
 						<img src={guild.iconURL} alt='guild icon' width={60} height={60} class='guild-icon'/>
-						{guild.name}
+						<div class='guild-name'>{name}</div>
+						<br/>
+						
 						<div class='guild-info'>
 							joined: {formattedDate}
 							<br/>
@@ -84,7 +87,6 @@ export default function Privileged() {
 					</div>
 				</>
 			})}
-
 		</div>
 
 		{userData?.level == 'owner' &&
