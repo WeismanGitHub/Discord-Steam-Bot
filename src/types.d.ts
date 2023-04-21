@@ -95,7 +95,7 @@ declare namespace Express {
 
 interface GuildData {
     name: string
-    icon: string | null
+    iconURL: string | null
     memberCount: number
     joinedTimestamp: number
     preferredLocale: string
