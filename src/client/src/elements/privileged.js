@@ -70,7 +70,7 @@ export default function Privileged() {
 
 		</div>
 
-		{level == 'owner' &&
+		{userData.level == 'owner' &&
 		<div class='process-buttons'>
 			<button onClick={stopProcess}>Stop Process</button>
 			<button onClick={restartProcess}>Restart Process</button>
