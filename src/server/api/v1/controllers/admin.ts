@@ -50,7 +50,7 @@ async function getUsers(req: Request, res: Response): Promise<void> {
     res.status(200).json(users)
 }
 
-async function getBotData(req: Request, res: Response): Promise<void> {
+async function getBot(req: Request, res: Response): Promise<void> {
     const client: CustomClient = req.app.get('discordClient')
 
     res.status(200)
@@ -66,4 +66,4 @@ async function getBotData(req: Request, res: Response): Promise<void> {
     })
 }
 
-export { getBotGuilds, getUsers, getBotData }
+export { getBotGuilds, getUsers, getBot }
