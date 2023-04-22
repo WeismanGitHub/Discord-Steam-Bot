@@ -50,3 +50,12 @@ a, a:hover, a:focus, a:active {
   background: #1a1b1e;
   border-radius: 3px;
 }
+
+.divider {
+  width: 90%;
+  margin-left: 5%;
+  background-color: #373a3f;
+  height: 5px;
+  border: none;
+  border-radius: 5px;
+}
