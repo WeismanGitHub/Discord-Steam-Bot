@@ -13,7 +13,7 @@ async function getAdmins(req: Request, res: Response): Promise<void> {
 
     const admins = await UserModel.find({ level: 'admin' }).skip(page).limit(10).lean()
 
-    res.status(200).json({ admins })
+    res.status(200).json(admins)
 }
 
 async function getOwners(req: Request, res: Response): Promise<void> {
@@ -25,7 +25,7 @@ async function getOwners(req: Request, res: Response): Promise<void> {
 
     const owners = await UserModel.find({ level: 'owner' }).skip(page).limit(10).lean()
 
-    res.status(200).json({ owners })
+    res.status(200).json(owners)
 }
 
 function killProcess(req: Request, res: Response): void {
