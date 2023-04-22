@@ -49,6 +49,7 @@
 
 .pagination-button {
   display: inline-block;
+  min-width: 35px;
   font-size: medium;
   margin: 5px;
   padding: 4px;
@@ -67,6 +68,22 @@
   filter: brightness(80%);
 }
 
-/* .people-type-button {
-  
-} */
+.people-type-button {
+  display: inline-block;
+  font-size: large;
+  margin: 5px;
+  padding: 4px;
+  border-radius: 5px;
+  background-color: #40444b;
+  color: #a4a7aa;
+  cursor: pointer;
+  all: unset;
+}
+
+.people-type-button:hover{
+  filter: brightness(90%);
+}
+
+.people-type-button:active {
+  filter: brightness(80%);
+}
