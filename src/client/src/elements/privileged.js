@@ -131,15 +131,15 @@ export default function Privileged() {
 					>Owners</button>
 				</div>}
 			<div>
-				<button class='pagination-button' onClick={() => fetchPeople(peoplePage - 1)}>Before</button>
+				<button class='pagination-button' onClick={() => fetchPeople(peoplePage - 1)}>{`<`}</button>
 				{peoplePage + 1}
-				<button class='pagination-button' onClick={() => fetchPeople(peoplePage + 1)}>Next</button>
+				<button class='pagination-button' onClick={() => fetchPeople(peoplePage + 1)}>{`>`}</button>
 			</div>
 			<hr class="divider"/>
 
 			{people?.map(person => {
 				return <div class='column-item' title={person.name}>
-					<img src={person.avatarURL} alt='person avatar' width={50} height={50} class='icon'/>
+					<img src={person.avatarURL} alt='person avatar' width={53} height={53} class='icon'/>
 					<div class='name'>{person.name}</div>
 				</div>
 			})}
