@@ -58,3 +58,15 @@
   cursor: pointer;
   all: unset;
 }
+
+.pagination-button:hover{
+  filter: brightness(90%);
+}
+
+.pagination-button:active {
+  filter: brightness(80%);
+}
+
+/* .people-type-button {
+  
+} */
