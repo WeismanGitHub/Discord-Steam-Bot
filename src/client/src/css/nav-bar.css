@@ -2,11 +2,14 @@
   border-radius: 0px;
   height: 6vh;
   background-color: #202225;
-  display: flex;
   padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar-button {
+  display: inline-block;
   font-size: x-large;
   margin: 5px;
   padding: 4px;
