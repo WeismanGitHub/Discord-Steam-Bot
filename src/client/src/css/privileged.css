@@ -46,3 +46,15 @@
   float: left;
   margin-left: 20px;
 }
+
+.pagination-button {
+  display: inline-block;
+  font-size: medium;
+  margin: 5px;
+  padding: 4px;
+  border-radius: 5px;
+  background-color: #40444b;
+  color: #a4a7aa;
+  cursor: pointer;
+  all: unset;
+}
