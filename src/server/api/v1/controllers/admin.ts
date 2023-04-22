@@ -42,7 +42,7 @@ async function getUsers(req: Request, res: Response): Promise<void> {
         })
 
         return {
-            username: user.username,
+            name: user.username,
             avatarURL: user.avatarURL(),
         }
     }))
