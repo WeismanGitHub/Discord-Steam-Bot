@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import Navbar from '../elements/nav-bar';
 import axios, * as others from 'axios'
-import '../css/Privileged.css';
+import '../css/privileged.css';
 
 export default function Privileged() {
 	const [personType, setPersonType] = useState(localStorage.getItem('personType') || 'users')
@@ -117,9 +117,18 @@ export default function Privileged() {
 		<div class='column' style={{ width: '20%' }}>
 				{userData?.level == 'admin' ? 'Users' :
 				<div>
-					<button class='people-type-button' onClick={() => personTypeClick('users')}>Users</button>
-					<button class='people-type-button' onClick={() => personTypeClick('admins')}>Admins</button>
-					<button class='people-type-button' onClick={() => personTypeClick('owners')}>Owners</button>
+					<button
+						class={`people-type-button ${personType == 'users' ? 'highlighted' : 'unhighlighted'}`}
+						onClick={() => personTypeClick('users')}
+					>Users</button>
+					<button
+						class={`people-type-button ${personType == 'admins' ? 'highlighted' : 'unhighlighted'}`}
+						onClick={() => personTypeClick('admins')}
+					>Admins</button>
+					<button
+						class={`people-type-button ${personType == 'owners' ? 'highlighted' : 'unhighlighted'}`}
+						onClick={() => personTypeClick('owners')}
+					>Owners</button>
 				</div>}
 			<div>
 				<button class='pagination-button' onClick={() => fetchPeople(peoplePage - 1)}>Before</button>
