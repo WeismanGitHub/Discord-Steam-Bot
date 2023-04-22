@@ -58,7 +58,7 @@ async function getBot(req: Request, res: Response): Promise<void> {
         name: client.user?.username,
         createdTimestamp: client.user?.createdTimestamp,
         readyTimestamp: client.readyTimestamp,
-        avatar: client.user?.avatarURL(),
+        avatarURL: client.user?.avatarURL(),
         activity: {
             type: Config.activityType,
             name: Config.activityName,
