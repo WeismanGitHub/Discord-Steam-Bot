@@ -87,3 +87,8 @@
 .people-type-button:active {
   filter: brightness(80%);
 }
+
+.highlighted {
+  filter: brightness(115%);
+  border-radius: 5px;
+}
