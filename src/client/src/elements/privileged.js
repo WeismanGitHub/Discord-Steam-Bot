@@ -54,16 +54,16 @@ export default function Privileged() {
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
 
-	function fetchPeople(page, type=personType, lessThanTenToast=true) {
+	function fetchPeople(page) {
 		if (page < 0) {
 			return errorToast('Cannot go below 1.')
 		}
 
-		if (lessThanTenToast && people.length < 10) {
+		if (people.length < 10) {
 			return errorToast('No more people left.')
 		}
 
-		axios.get(`/api/v1/${type === 'users' ? 'admin' : 'owner'}/${type}`)
+		axios.get(`/api/v1/${personType === 'users' ? 'admin' : 'owner'}/${personType}`)
 		.then(res => {
 			if (!res?.data) {
 				return errorToast('Something went wrong getting more people.')
@@ -78,7 +78,17 @@ export default function Privileged() {
 	function personTypeClick(type) {
 		localStorage.setItem('personType', type)
 		setPersonType(type)
-		fetchPeople(0, type, false)
+		
+		axios.get(`/api/v1/${type === 'users' ? 'admin' : 'owner'}/${type}`)
+		.then(res => {
+			if (!res?.data) {
+				return errorToast('Something went wrong getting more people.')
+			}
+			
+			setPeoplePage(0)
+			setPeople(res.data)
+		})
+		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
 
 	function formatTimestamp(timestamp) {
