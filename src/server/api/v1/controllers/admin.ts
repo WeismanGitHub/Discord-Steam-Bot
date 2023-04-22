@@ -55,6 +55,8 @@ async function getBotData(req: Request, res: Response): Promise<void> {
 
     res.status(200)
     .json({
+        name: client.user?.username,
+        createdTimestamp: client.user?.createdTimestamp,
         readyTimestamp: client.readyTimestamp,
         avatar: client.user?.avatarURL(),
         activity: {
