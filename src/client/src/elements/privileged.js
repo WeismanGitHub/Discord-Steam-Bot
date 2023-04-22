@@ -9,9 +9,9 @@ export default function Privileged() {
 	const [personType, setPersonType] = useState(localStorage.getItem('personType') || 'users')
 	const userData = localStorage.getItem('userData')
 	const [peoplePage, setPeoplePage] = useState(0)
-	const [botData, setBotData] = useState(null)
 	const [guilds, setGuilds] = useState([])
 	const [people, setPeople] = useState([])
+	const [bot, setBot] = useState(null)
 	const navigate = useNavigate();
 
 	const [admins, setAdmins] = useState([])
@@ -33,7 +33,7 @@ export default function Privileged() {
 		.then(([guildsRes, usersRes, botRes, adminsRes, ownersRes]) => {
 			setGuilds(guildsRes.data.guilds)
 			setPeople(usersRes.data)
-			setBotData(botRes.data)
+			setBot(botRes.data)
 			setAdmins(adminsRes?.admins)
 			setOwners(ownersRes?.owners)
 		})
@@ -54,12 +54,12 @@ export default function Privileged() {
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
 
-	function fetchPeople(page, type=personType) {
+	function fetchPeople(page, type=personType, lessThanTenToast=true) {
 		if (page < 0) {
 			return errorToast('Cannot go below 1.')
 		}
 
-		if (people.length < 10) {
+		if (lessThanTenToast && people.length < 10) {
 			return errorToast('No more people left.')
 		}
 
@@ -78,7 +78,17 @@ export default function Privileged() {
 	function personTypeClick(type) {
 		localStorage.setItem('personType', type)
 		setPersonType(type)
-		fetchPeople(0, type)
+		fetchPeople(0, type, false)
+	}
+
+	function formatTimestamp(timestamp) {
+		const date = new Date(Number(timestamp))
+
+		return date.toLocaleDateString("en-US", {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		})
 	}
 
 	return <>
@@ -90,20 +100,14 @@ export default function Privileged() {
 
 			{guilds?.map(guild => {
 				const name = `${guild.name?.substring(0, 32)}${guild.name?.length > 35 ? '...' : ''}`
-
-				const joinedDate = new Date(Number(guild.joinedTimestamp))
-				const formattedDate = joinedDate.toLocaleDateString("en-US", {
-					year: 'numeric',
-					month: 'long',
-					day: 'numeric'
-				})
+				const formattedDate = formatTimestamp(guild.joinedTimestamp)
 
 				return <div class='column-item' title={guild.name}>
 					<img src={guild.iconURL} alt='guild icon' width={60} height={60} class='icon'/>
 					<div class='name'>{name}</div>
 					<br/>
 					
-					<div class='guild-info'>
+					<div class='item-info'>
 						joined: {formattedDate}
 						<br/>
 						members: {guild.memberCount}
@@ -145,10 +149,31 @@ export default function Privileged() {
 			})}
 		</div>
 
-		{userData?.level == 'owner' &&
-		<div class='process-buttons'>
-			<button onClick={stopProcess}>Stop Process</button>
-			<button onClick={restartProcess}>Restart Process</button>
-		</div>}
+		<div class='column' style={{ height: '46.25v', width: '20%' }}>
+			Bot:
+			<hr class="divider"/>
+			
+			<div class='column-item' title={bot?.name}>
+				<img src={bot?.avatarURL} alt='bot avatar' width={53} height={53} class='icon'/>
+				<div class='name'>{bot?.name}</div>
+
+				<div class='item-info'>
+					created: {formatTimestamp(bot?.createdTimestamp)}
+					<br/>
+					online: {formatTimestamp(bot?.readyTimestamp)}
+					<br/>
+					activity: {`${bot?.activity.type} ${bot?.activity.name}`}
+				</div>
+			</div>
+		</div>
+
+		<div class='column' style={{ height: '46.25v' }}>
+			{userData?.level == 'owner' &&
+			<div class='process-buttons'>
+				<button onClick={stopProcess}>Stop Process</button>
+				<button onClick={restartProcess}>Restart Process</button>
+			</div>}
+		</div>
+
 	</>
 }
