@@ -39,33 +39,12 @@ a, a:hover, a:focus, a:active {
   width: 15px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: #2b2d31;
   border-radius: 3px;
 }
  
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #1a1b1e;
   border-radius: 3px;
-}
-
-.divider {
-  width: 90%;
-  margin-left: 5%;
-  background-color: #373a3f;
-  height: 5px;
-  border: none;
-  border-radius: 5px;
-}
-
-.column {
-  overflow-y: scroll;
-  align-content: center;
-  height: 92.5vh;
-  scrollbar-width: none;
-  background-color: #2e3035;
-  overflow-x: hidden;
-  float: left;
 }

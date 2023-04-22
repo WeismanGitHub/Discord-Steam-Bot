@@ -1,5 +1,4 @@
-.guilds {
-  width: 25%;
+.column {
   overflow-y: scroll;
   align-content: center;
   height: 92.5vh;
@@ -18,7 +17,7 @@
   border-radius: 5px;
 }
 
-.guild {
+.column-item {
   float: left;
   font-size: large;
   display: inline;
@@ -29,21 +28,21 @@
   margin-bottom: 5px;
 }
 
-.guild-icon {
+.icon {
   border-radius: 50%;
   float: left;
+}
+
+.name {
+  float: left;
+  display: flex;
+  margin-left: 5px;
+  text-align: left;
 }
 
 .guild-info {
   font-size: medium;
   text-align: left;
   float: left;
-  margin-left: 15px;
-}
-
-.guild-name {
-  float: left;
-  display: flex;
-  margin-left: 5px;
-  text-align: left;
+  margin-left: 20px;
 }
