@@ -46,23 +46,24 @@ export default function Privileged() {
 			setGuilds(guildsRes.data.guilds)
 			setUsers(usersRes.data.users)
 			setBotData(botRes.data)
-			setAdmins(adminsRes.admins)
-			setOwners(ownersRes.owners)
+			setAdmins(adminsRes?.admins)
+			setOwners(ownersRes?.owners)
 		})
 		.catch(err => {
-			errorToast(err.response.data.error || err.message)
+			errorToast(err?.response?.data?.error || err.message)
 		});
     }, [])
 
 	return <>
 		<Navbar/>
 
-		<div class='guilds'>
+		<div class='column' style={{ width: '25%' }}>
 			Guilds: {guilds?.length}
-
 			<hr class="divider"/>
 
 			{guilds?.map(guild => {
+				const name = `${guild.name?.substring(0, 32)}${guild.name?.length > 35 ? '...' : ''}`
+
 				const joinedDate = new Date(Number(guild.joinedTimestamp))
 				const formattedDate = joinedDate.toLocaleDateString("en-US", {
 					year: 'numeric',
@@ -70,22 +71,31 @@ export default function Privileged() {
 					day: 'numeric'
 				})
 
-				const name = `${guild.name?.substring(0, 32)}${guild.name?.length > 35 ? '...' : ''}`
-				return <>
-					<div class='guild' title={guild.name}>
-						<img src={guild.iconURL} alt='guild icon' width={60} height={60} class='guild-icon'/>
-						<div class='guild-name'>{name}</div>
+				return <div class='column-item' title={guild.name}>
+					<img src={guild.iconURL} alt='guild icon' width={60} height={60} class='icon'/>
+					<div class='name'>{name}</div>
+					<br/>
+					
+					<div class='guild-info'>
+						joined: {formattedDate}
 						<br/>
-						
-						<div class='guild-info'>
-							joined: {formattedDate}
-							<br/>
-							members: {guild.memberCount}
-							<br/>
-							locale: {guild.preferredLocale}
-						</div>
+						members: {guild.memberCount}
+						<br/>
+						locale: {guild.preferredLocale}
 					</div>
-				</>
+				</div>
+			})}
+		</div>
+
+		<div class='column' style={{ width: '20%' }}>
+			Users
+			<hr class="divider"/>
+
+			{users?.map(user => {
+				return <div class='column-item' title={user.name}>
+					<img src={user.avatarURL} alt='user avatar' width={50} height={50} class='icon'/>
+					<div class='name'>{user.name}</div>
+				</div>
 			})}
 		</div>
 
