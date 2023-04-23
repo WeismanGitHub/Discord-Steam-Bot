@@ -7,7 +7,7 @@ import '../css/privileged.css';
 
 export default function Privileged() {
 	const [personType, setPersonType] = useState(localStorage.getItem('personType') || 'users')
-	const userData = localStorage.getItem('userData')
+	const userData = JSON.parse(localStorage.getItem('userData'))
 	const [peoplePage, setPeoplePage] = useState(0)
 	const [guilds, setGuilds] = useState([])
 	const [people, setPeople] = useState([])
@@ -159,7 +159,7 @@ export default function Privileged() {
 			})}
 		</div>
 
-		<div class='column' style={{ height: '46.25v', width: '20%' }}>
+		<div class='column' style={{ width: '20%' }}>
 			Bot:
 			<hr class="divider"/>
 			
@@ -175,15 +175,12 @@ export default function Privileged() {
 					activity: {`${bot?.activity.type} ${bot?.activity.name}`}
 				</div>
 			</div>
-		</div>
 
-		<div class='column' style={{ height: '46.25v' }}>
 			{userData?.level == 'owner' &&
 			<div class='process-buttons'>
 				<button onClick={stopProcess}>Stop Process</button>
 				<button onClick={restartProcess}>Restart Process</button>
 			</div>}
 		</div>
-
 	</>
 }
