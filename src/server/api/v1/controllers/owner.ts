@@ -31,11 +31,7 @@ async function getOwners(req: Request, res: Response): Promise<void> {
 function killProcess(req: Request, res: Response): void {
     console.log('owner killed process...')
     res.status(202).end()
-    process.exit()
-}
-
-function restartProcess(req: Request, res: Response): void {
-    res.status(202).end()
+    process.exit(0)
 }
 
 async function setStatus(req: Request, res: Response): Promise<void> {
@@ -58,6 +54,5 @@ export {
     getAdmins,
     getOwners,
     killProcess,
-    restartProcess,
     setStatus,
 }
