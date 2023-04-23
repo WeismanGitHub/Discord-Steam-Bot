@@ -161,6 +161,7 @@ export default function Privileged() {
 
 		<div class='column' style={{ width: '20%' }}>
 			Bot:
+			
 			<hr class="divider"/>
 			
 			<div class='column-item' title={bot?.name}>
@@ -176,11 +177,11 @@ export default function Privileged() {
 				</div>
 			</div>
 
+			<hr class="divider"/>
+
 			{userData?.level == 'owner' &&
-			<div class='process-buttons'>
-				<button onClick={stopProcess}>Stop Process</button>
-				<button onClick={restartProcess}>Restart Process</button>
-			</div>}
+				<button onClick={stopProcess} class='people-type-button'>Stop Process</button>
+			}
 		</div>
 	</>
 }
