@@ -29,7 +29,7 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "push": "git push -u origin master",
-    "app": "nodemon dist/server/index.js"
+    "app": "forever dist/server/index.js"
   },
   "eslintConfig": {
     "extends": [
@@ -56,8 +56,8 @@
     "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "^18.15.11",
+    "forever": "^4.0.3",
     "jest": "^27.5.1",
-    "nodemon": "^2.0.21",
     "react-app-rewired": "^2.2.1",
     "supertest": "^6.3.3",
     "ts-node": "^10.9.1",
