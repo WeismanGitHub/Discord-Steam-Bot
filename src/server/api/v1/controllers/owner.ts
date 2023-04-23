@@ -29,8 +29,9 @@ async function getOwners(req: Request, res: Response): Promise<void> {
 }
 
 function killProcess(req: Request, res: Response): void {
+    console.log('owner killed process...')
     res.status(202).end()
-    process.exit(1)
+    process.exit()
 }
 
 function restartProcess(req: Request, res: Response): void {
