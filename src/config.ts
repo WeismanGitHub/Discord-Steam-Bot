@@ -1,5 +1,5 @@
 import { InternalServerError } from "./server/errors";
-const { ActivityType } = require('discord.js');
+import { ActivityType } from "discord.js";
 require("dotenv").config();
 
 class Configuration {
@@ -9,7 +9,7 @@ class Configuration {
     discordClientSecret: string
     mainAccountID: string
     activityName: string
-    activityType: typeof ActivityType
+    activityType: Exclude<ActivityType, ActivityType.Custom>
     appPort: number
     jwtSecret: string
     authRedirectURI: string
