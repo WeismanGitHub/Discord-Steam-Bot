@@ -12,6 +12,6 @@ const ownerRouter: Router = Router();
 ownerRouter.get('/admins', ownerAuth, getAdmins)
 ownerRouter.get('/owners', ownerAuth, getOwners)
 ownerRouter.post('/activity', ownerAuth, setActivity)
-ownerRouter.post('/process/kill', killProcess)
+ownerRouter.post('/process/kill', ownerAuth, killProcess)
 
 export default ownerRouter
