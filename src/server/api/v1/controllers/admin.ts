@@ -28,7 +28,7 @@ async function getUsers(req: Request, res: Response): Promise<void> {
         throw new BadRequestError('Page is invalid.')
     }
     
-    const userIDs = (await UserModel.find({}).skip(page).limit(10).select('_id').lean()
+    const userIDs = (await UserModel.find({ level: 'user' }).skip(page).limit(10).select('_id').lean()
     .catch(err => {
         throw new InternalServerError('Could not get user ids.')
     })).map(user => user._id)
