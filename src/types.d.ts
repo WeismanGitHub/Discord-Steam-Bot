@@ -100,3 +100,10 @@ interface GuildData {
     joinedTimestamp: number
     preferredLocale: string
 }
+
+type CustomActivityType = Exclude<ActivityType, ActivityType.Custom>
+
+interface CustomActivity {
+    type: CustomActivityType | undefined
+    name: string | undefined
+}
