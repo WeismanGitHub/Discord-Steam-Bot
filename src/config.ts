@@ -1,6 +1,8 @@
 import { InternalServerError } from "./server/errors";
 import { ActivityType } from "discord.js";
 require("dotenv").config();
+import path from "path";
+import fs from 'fs'
 
 class Configuration {
     discordToken: string
@@ -25,16 +27,23 @@ class Configuration {
     limiterMessage: string
     limiterStandardHeaders: boolean
     limiterLegacyHeaders: boolean
-    
+
     constructor() {
+        const rawActivity = fs.readFileSync(path.resolve('./activity.json'), 'utf8')
+        const activity: { type: number, name: string } = JSON.parse(rawActivity)
+        
+        if (!ActivityType[activity.type]) {
+            throw new InternalServerError('Invalid activity type.')
+        }
+
         // Discord
         this.discordToken = process.env.DISCORD_TOKEN!
         this.testGuildID = process.env.TEST_GUILD_ID!
         this.discordClientID = process.env.DISCORD_CLIENT_ID!
         this.discordClientSecret = process.env.DISCORD_CLIENT_SECRET!
         this.mainAccountID = process.env.DISCORD_MAIN_ACCOUNT_ID!
-        this.activityType = ActivityType.Playing
-        this.activityName = 'something'
+        this.activityType = activity.type
+        this.activityName = activity.name
 
         // App
         this.appPort = 5000
