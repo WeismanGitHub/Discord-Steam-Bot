@@ -32,7 +32,7 @@ class Configuration {
         const rawActivity = fs.readFileSync(path.resolve('./activity.json'), 'utf8')
         const activity: CustomActivity = JSON.parse(rawActivity)
         
-        if (!activity.type || !activity.name || !ActivityType[activity.type]) {
+        if (!activity.type || !activity.name || ActivityType[activity.type] === undefined) {
             throw new InternalServerError('Invalid activity type.')
         }
 
