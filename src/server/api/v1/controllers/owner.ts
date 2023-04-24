@@ -4,7 +4,8 @@ import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
 import { ActivityType } from 'discord.js';
 require('express-async-errors')
-import fs from 'fs'
+// import path from 'path';
+// import fs from 'fs'
 
 async function getAdmins(req: Request, res: Response): Promise<void> {
     const page = Number(req.query.page) || 0
@@ -70,20 +71,30 @@ function killProcess(req: Request, res: Response): void {
     process.exit(0)
 }
 
-async function setStatus(req: Request, res: Response): Promise<void> {
-    const { name, type }: { name: string | undefined, type: ActivityType | undefined } = req.body
+async function setActivity(req: Request, res: Response): Promise<void> {
+    const client: CustomClient = req.app.get('discordClient')
+    const { name, type }: CustomActivity = req.body
 
-    if (!name || !type) {
+    if (!name || type === undefined) {
         throw new BadRequestError('Missing name or type.')
     }
 
-    if (name.length > 50) {
-        throw new BadRequestError('Name must be less than 50 characters.')
+    if (!ActivityType[type]) {
+        throw new InternalServerError('Invalid activity type.')
     }
 
-    fs.writeFile('../../../../../activity.json', JSON.stringify({ name: 'sdfs', }), (err) => {
-        console.log(err)
-    })
+    if (name.length > 100 || name.length < 0) {
+        throw new BadRequestError('Name must between 0 and 100 characters.')
+    }
+
+    client.setPresence(type, name)
+    // .catch(err => {
+    //     throw new BadRequestError('Could not set presence.')
+    // })
+
+    // fs.writeFile(path.parse('../../../../activity.json'), JSON.stringify({ name: 'sdfs', }), (err) => {
+    //     console.log(err)
+    // })
 
     res.status(200).end()
 }
@@ -92,5 +103,5 @@ export {
     getAdmins,
     getOwners,
     killProcess,
-    setStatus,
+    setActivity,
 }

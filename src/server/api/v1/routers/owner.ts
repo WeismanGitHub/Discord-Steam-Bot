@@ -4,14 +4,14 @@ import {
     getOwners,
     getAdmins,
     killProcess,
-    setStatus
+    setActivity
 } from '../controllers/owner'
 
 const ownerRouter: Router = Router();
 
 ownerRouter.get('/admins', ownerAuth, getAdmins)
 ownerRouter.get('/owners', ownerAuth, getOwners)
-ownerRouter.post('/status', ownerAuth, setStatus)
+ownerRouter.post('/activity', ownerAuth, setActivity)
 ownerRouter.post('/process/kill', killProcess)
 
 export default ownerRouter
