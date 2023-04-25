@@ -142,22 +142,22 @@ export default function Privileged() {
 				{userData?.level == 'admin' ? 'Users' :
 				<div>
 					<button
-						class={`people-type-button ${personType == 'users' ? 'highlighted' : 'unhighlighted'}`}
+						class={`generic-button ${personType == 'users' ? 'highlighted' : 'unhighlighted'}`}
 						onClick={() => personTypeClick('users')}
 					>Users</button>
 					<button
-						class={`people-type-button ${personType == 'admins' ? 'highlighted' : 'unhighlighted'}`}
+						class={`generic-button ${personType == 'admins' ? 'highlighted' : 'unhighlighted'}`}
 						onClick={() => personTypeClick('admins')}
 					>Admins</button>
 					<button
-						class={`people-type-button ${personType == 'owners' ? 'highlighted' : 'unhighlighted'}`}
+						class={`generic-button ${personType == 'owners' ? 'highlighted' : 'unhighlighted'}`}
 						onClick={() => personTypeClick('owners')}
 					>Owners</button>
 				</div>}
 			<div>
-				<button class='pagination-button' onClick={() => fetchPeople(peoplePage - 1)}>{`<`}</button>
+				<button class='generic-button' style={{ 'font-size': 'medium' }} onClick={() => fetchPeople(peoplePage - 1)}>{`<`}</button>
 				{peoplePage + 1}
-				<button class='pagination-button' onClick={() => fetchPeople(peoplePage + 1)}>{`>`}</button>
+				<button class='generic-button' style={{ 'font-size': 'medium' }} onClick={() => fetchPeople(peoplePage + 1)}>{`>`}</button>
 			</div>
 			<hr class="divider"/>
 
@@ -191,20 +191,20 @@ export default function Privileged() {
 
 			{userData?.level == 'owner' &&
 				<div>
-					<button onClick={stopProcess} class='people-type-button'>Stop Process</button>
+					<button onClick={stopProcess} class='generic-button'>Stop Process</button>
 
 					<hr class="divider"/>
 
 					<div class='statuses'>
-						<button onClick={() => setActivity({ type: 'Playing', name: activity?.name})} class={`people-type-button ${activity.type == 'Playing' ? 'highlighted' : 'unhighlighted'}`}>Playing</button>
+						<button onClick={() => setActivity({ type: 'Playing', name: activity?.name})} class={`generic-button ${activity.type == 'Playing' ? 'highlighted' : 'unhighlighted'}`}>Playing</button>
 
-						<button onClick={() => setActivity({ type: 'Streaming', name: activity?.name})} class={`people-type-button ${activity.type == 'Streaming' ? 'highlighted' : 'unhighlighted'}`}>Streaming</button>
+						<button onClick={() => setActivity({ type: 'Streaming', name: activity?.name})} class={`generic-button ${activity.type == 'Streaming' ? 'highlighted' : 'unhighlighted'}`}>Streaming</button>
 
-						<button onClick={() => setActivity({ type: 'Listening', name: activity?.name})} class={`people-type-button ${activity.type == 'Listening' ? 'highlighted' : 'unhighlighted'}`}>Listening</button>
+						<button onClick={() => setActivity({ type: 'Listening', name: activity?.name})} class={`generic-button ${activity.type == 'Listening' ? 'highlighted' : 'unhighlighted'}`}>Listening</button>
 
-						<button onClick={() => setActivity({ type: 'Watching', name: activity?.name})} class={`people-type-button ${activity.type == 'Watching' ? 'highlighted' : 'unhighlighted'}`}>Watching</button>
+						<button onClick={() => setActivity({ type: 'Watching', name: activity?.name})} class={`generic-button ${activity.type == 'Watching' ? 'highlighted' : 'unhighlighted'}`}>Watching</button>
 
-						<button onClick={() => setActivity({ type: 'Competing', name: activity?.name})} class={`people-type-button ${activity.type == 'Competing' ? 'highlighted' : 'unhighlighted'}`}>Competing</button>
+						<button onClick={() => setActivity({ type: 'Competing', name: activity?.name})} class={`generic-button ${activity.type == 'Competing' ? 'highlighted' : 'unhighlighted'}`}>Competing</button>
 
 						<input
 							type='text'
@@ -212,7 +212,7 @@ export default function Privileged() {
 							value={activity.name}
 							onChange={ (e)=> {
 								if (e.target.value.length > 50) {
-									return errorToast('Must be less than x')
+									return errorToast('Must be less than 100')
 								}
 
 								setActivity({ type: activity.type, name: e.target.value })
@@ -220,7 +220,7 @@ export default function Privileged() {
 							onKeyPress={ (e) => e.key === 'Enter' && updateActivity()}
 						/>
 						<br/>
-						<button class='people-type-button' onClick={updateActivity}>Update</button>
+						<button class='generic-button' onClick={updateActivity}>Update</button>
 					</div>
 
 					<hr class="divider"/>
