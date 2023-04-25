@@ -4,8 +4,7 @@ import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
 import { ActivityType } from 'discord.js';
 require('express-async-errors')
-// import path from 'path';
-// import fs from 'fs'
+import fs from 'fs'
 
 async function getAdmins(req: Request, res: Response): Promise<void> {
     const page = Number(req.query.page) || 0
@@ -74,29 +73,27 @@ function killProcess(req: Request, res: Response): void {
 async function setActivity(req: Request, res: Response): Promise<void> {
     const client: CustomClient = req.app.get('discordClient')
     const { name, type }: CustomActivity = req.body
+    const numberType = Number(type)
 
     if (!name || type === undefined) {
         throw new BadRequestError('Missing name or type.')
     }
 
-    if (!ActivityType[type]) {
+    if (ActivityType[numberType] === undefined || numberType === ActivityType.Custom) {
         throw new InternalServerError('Invalid activity type.')
     }
 
-    if (name.length > 100 || name.length < 0) {
-        throw new BadRequestError('Name must between 0 and 100 characters.')
+    if (name.length > 100 || name.length <= 0) {
+        throw new BadRequestError('Name must between 1 and 100 characters.')
     }
 
-    client.setPresence(type, name)
-    // .catch(err => {
-    //     throw new BadRequestError('Could not set presence.')
-    // })
+    client.setPresence(numberType, name)
 
-    // fs.writeFile(path.parse('../../../../activity.json'), JSON.stringify({ name: 'sdfs', }), (err) => {
-    //     console.log(err)
-    // })
+    fs.writeFile('activity.json', JSON.stringify({ type: numberType, name }, null, 2), (err) => {
+        if (err) throw new InternalServerError('Could not save to activity.json.')
 
-    res.status(200).end()
+        res.status(200).end()
+    })
 }
 
 export {
