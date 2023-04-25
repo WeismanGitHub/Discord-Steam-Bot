@@ -91,3 +91,12 @@
   filter: brightness(115%);
   border-radius: 5px;
 }
+
+.activity-input {
+  padding: 3px;
+  border-radius: 5px;
+  background-color: #40444b;
+  color: #a4a7aa;
+  box-shadow: none;
+  text-align: center;
+}
