@@ -1,6 +1,7 @@
 {
     "ignore": [
         "src/*",
-        "dist/client/*"
+        "dist/client/*",
+        "activity.json"
     ]
 }
