@@ -2,7 +2,6 @@ import { BadRequestError, InternalServerError } from '../../../errors';
 import { CustomClient } from '../../../custom-client';
 import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
-import { ActivityType } from 'discord.js';
 require('express-async-errors')
 
 async function getBotGuilds(req: Request, res: Response): Promise<void> {
@@ -61,7 +60,7 @@ async function getBot(req: Request, res: Response): Promise<void> {
         readyTimestamp: client.readyTimestamp,
         avatarURL: client.user?.avatarURL(),
         activity: {
-            type: activity?.type !== undefined ? ActivityType[activity?.type] : 'unknown',
+            type: activity?.type,
             name: activity?.name,
         },
     })
