@@ -47,19 +47,7 @@
   margin-left: 20px;
 }
 
-.pagination-button {
-  display: inline-block;
-  font-size: medium;
-  margin: 5px;
-  padding: 4px;
-  border-radius: 5px;
-  background-color: #40444b;
-  color: #a4a7aa;
-  cursor: pointer;
-  all: unset;
-}
-
-.people-type-button {
+.generic-button {
   display: inline-block;
   font-size: large;
   margin: 5px;
@@ -85,10 +73,10 @@
   text-align: center;
 }
 
-.people-type-button, .pagination-button :hover{
+.generic-button:hover{
   filter: brightness(90%);
 }
 
-.people-type-button, .pagination-button :active {
+.generic-button:active {
   filter: brightness(80%);
 }
