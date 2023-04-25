@@ -15,9 +15,6 @@ export default function Privileged() {
 	const [bot, setBot] = useState(null)
 	const navigate = useNavigate();
 
-	const [admins, setAdmins] = useState([])
-	const [owners, setOwners] = useState([])
-	
 	useEffect(() => {
 		if (!userData || userData.level == 'user') {
 			errorToast('You must be an admin or owner.')
@@ -28,16 +25,12 @@ export default function Privileged() {
 			axios.get('/api/v1/admin/guilds'),
 			axios.get(`/api/v1/${personType === 'users' ? 'admin' : 'owner'}/${personType}`),
 			axios.get('/api/v1/admin/bot'),
-			userData.level == 'owner' ? axios.get('/api/v1/owner/admins') : null,
-			userData.level == 'owner' ? axios.get('/api/v1/owner/owners') : null,
 		])
 		.then(([guildsRes, usersRes, botRes, adminsRes, ownersRes]) => {
 			setGuilds(guildsRes.data.guilds)
 			setPeople(usersRes.data)
 			setBot(botRes.data)
 			setActivity(botRes.data.activity)
-			setAdmins(adminsRes?.admins)
-			setOwners(ownersRes?.owners)
 		})
 		.catch(err => {
 			errorToast(err?.response?.data?.error || err.message)
