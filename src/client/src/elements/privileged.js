@@ -102,7 +102,20 @@ export default function Privileged() {
 			return errorToast('Must be greater than 0.')
 		}
 		
-		console.log(activity)
+		const ActivityTypes = {
+			'Playing': 0,
+			'Streaming': 1,
+			'Listening': 2,
+			'Watching': 3,
+			'Competing': 5,
+		}
+
+		axios.post('/api/v1/owner/activity', {
+			name: activity.name,
+			type: ActivityTypes[activity.type]
+		})
+		.then(res => successToast(`Set activity to: ${activity.type} ${activity.name}`))
+		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
 
 	return <>
@@ -218,7 +231,7 @@ export default function Privileged() {
 					</div>
 
 					<hr class="divider"/>
-					
+
 				</div>
 			}
 		</div>
