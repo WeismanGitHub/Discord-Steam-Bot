@@ -11,7 +11,7 @@ class Configuration {
     discordClientSecret: string
     mainAccountID: string
     activityName: string
-    activityType: CustomActivityType
+    activityType: number
     appPort: number
     jwtSecret: string
     authRedirectURI: string
@@ -32,7 +32,7 @@ class Configuration {
         const rawActivity = fs.readFileSync(path.resolve('./activity.json'), 'utf8')
         const activity: CustomActivity = JSON.parse(rawActivity)
         
-        if (!activity.type || !activity.name || ActivityType[activity.type] === undefined) {
+        if (activity.type === undefined || !activity.name || ActivityType[Number(activity.type)] === undefined) {
             throw new InternalServerError('Invalid activity type.')
         }
 
@@ -42,7 +42,7 @@ class Configuration {
         this.discordClientID = process.env.DISCORD_CLIENT_ID!
         this.discordClientSecret = process.env.DISCORD_CLIENT_SECRET!
         this.mainAccountID = process.env.DISCORD_MAIN_ACCOUNT_ID!
-        this.activityType = activity.type
+        this.activityType = Number(activity.type)
         this.activityName = activity.name
 
         // App
