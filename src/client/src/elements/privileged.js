@@ -92,7 +92,7 @@ export default function Privileged() {
 
 	function updateActivity() {
 		if (activity.name <= 0) {
-			return errorToast('Must be greater than 0.')
+			return errorToast('Activity name must be greater than 0.')
 		}
 		
 		const ActivityTypes = {
@@ -212,7 +212,7 @@ export default function Privileged() {
 							value={activity.name}
 							onChange={ (e)=> {
 								if (e.target.value.length > 50) {
-									return errorToast('Must be less than 100')
+									return errorToast('Must be less than 100.')
 								}
 
 								setActivity({ type: activity.type, name: e.target.value })
