@@ -127,7 +127,7 @@ export class CustomClient extends Client {
                     .catch((err: Error) => {
                         console.log(err)
 
-                        if (event.default.name == Events.InteractionCreate) {
+                        if (event.default.name === Events.InteractionCreate) {
                             const interaction = args[0]
             
                             if (err instanceof CustomError) {

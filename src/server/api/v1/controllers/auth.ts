@@ -37,7 +37,7 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
         throw new InternalServerError('Could not get user ID.')
     }
 
-    const steamConnection: connection | undefined = connections.find((connection: connection) => connection.type == 'steam')
+    const steamConnection: connection | undefined = connections.find((connection: connection) => connection.type === 'steam')
 
     if (!steamConnection) {
         throw new BadRequestError('No Steam connection.')

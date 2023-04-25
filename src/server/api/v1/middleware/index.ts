@@ -41,7 +41,7 @@ async function adminAuth(req: Request, res: Response, next: NextFunction): Promi
 
 	const user = await UserModel.findById(idJWT.userID).lean()
 
-	if (!user || user.level == 'user') {
+	if (!user || user.level === 'user') {
 		throw new ForbiddenError('You are not an admin or owner.')
 	}
 

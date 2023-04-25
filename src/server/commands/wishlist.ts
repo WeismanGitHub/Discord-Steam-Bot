@@ -69,11 +69,11 @@ export default {
         const freeOption = interaction.options.getBoolean('free')
 
         if (freeOption !== null) {
-            wishlistItems = wishlistItems.filter((item): boolean => Boolean(item.is_free_game) == freeOption)
+            wishlistItems = wishlistItems.filter((item): boolean => Boolean(item.is_free_game) === freeOption)
         }
 
         if (reviewsOption) {
-            wishlistItems = wishlistItems.filter((item): boolean => item.review_desc == reviewsOption)
+            wishlistItems = wishlistItems.filter((item): boolean => item.review_desc === reviewsOption)
         }
 
         const wishlistEmbeds: EmbedBuilder[] = wishlistItems.map((item): EmbedBuilder => {

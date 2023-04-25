@@ -44,11 +44,11 @@ export default {
         }
 
         if (filters?.free !== null) {
-            wishlistItems = wishlistItems.filter((item): boolean => Boolean(item.is_free_game) == filters?.free)
+            wishlistItems = wishlistItems.filter((item): boolean => Boolean(item.is_free_game) === filters?.free)
         }
 
         if (filters?.reviews) {
-            wishlistItems = wishlistItems.filter((item): boolean => item.review_desc == filters?.reviews)
+            wishlistItems = wishlistItems.filter((item): boolean => item.review_desc === filters?.reviews)
         }
 
         const wishlistEmbeds: EmbedBuilder[] = wishlistItems.map((item): EmbedBuilder => {
