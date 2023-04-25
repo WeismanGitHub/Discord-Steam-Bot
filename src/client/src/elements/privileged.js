@@ -9,6 +9,7 @@ export default function Privileged() {
 	const [personType, setPersonType] = useState(localStorage.getItem('personType') || 'users')
 	const userData = JSON.parse(localStorage.getItem('userData'))
 	const [peoplePage, setPeoplePage] = useState(0)
+	const [activity, setActivity] = useState({})
 	const [guilds, setGuilds] = useState([])
 	const [people, setPeople] = useState([])
 	const [bot, setBot] = useState(null)
@@ -34,6 +35,7 @@ export default function Privileged() {
 			setGuilds(guildsRes.data.guilds)
 			setPeople(usersRes.data)
 			setBot(botRes.data)
+			setActivity(botRes.data.activity)
 			setAdmins(adminsRes?.admins)
 			setOwners(ownersRes?.owners)
 		})
@@ -44,12 +46,6 @@ export default function Privileged() {
 
 	function stopProcess() {
 		axios.post('/api/v1/owner/process/kill')
-		.then(res => successToast('Request was acknowledged.'))
-		.catch(err => errorToast(err?.response?.data?.error || err.message));
-	}
-
-	function restartProcess() {
-		axios.post('/api/v1/owner/process/restart')
 		.then(res => successToast('Request was acknowledged.'))
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
@@ -99,6 +95,14 @@ export default function Privileged() {
 			month: 'long',
 			day: 'numeric'
 		})
+	}
+
+	function updateActivity() {
+		if (activity.name <= 0) {
+			return errorToast('Must be greater than 0.')
+		}
+		
+		console.log(activity)
 	}
 
 	return <>
@@ -173,14 +177,49 @@ export default function Privileged() {
 					<br/>
 					online: {formatTimestamp(bot?.readyTimestamp)}
 					<br/>
-					activity: {`${bot?.activity.type} ${bot?.activity.name}`}
+					activity: {`${activity?.type} ${activity?.name}`}
 				</div>
 			</div>
 
 			<hr class="divider"/>
 
 			{userData?.level == 'owner' &&
-				<button onClick={stopProcess} class='people-type-button'>Stop Process</button>
+				<div>
+					<button onClick={stopProcess} class='people-type-button'>Stop Process</button>
+
+					<hr class="divider"/>
+
+					<div class='statuses'>
+						<button onClick={() => setActivity({ type: 'Playing', name: activity?.name})} class={`people-type-button ${activity.type == 'Playing' ? 'highlighted' : 'unhighlighted'}`}>Playing</button>
+
+						<button onClick={() => setActivity({ type: 'Streaming', name: activity?.name})} class={`people-type-button ${activity.type == 'Streaming' ? 'highlighted' : 'unhighlighted'}`}>Streaming</button>
+
+						<button onClick={() => setActivity({ type: 'Listening', name: activity?.name})} class={`people-type-button ${activity.type == 'Listening' ? 'highlighted' : 'unhighlighted'}`}>Listening</button>
+
+						<button onClick={() => setActivity({ type: 'Watching', name: activity?.name})} class={`people-type-button ${activity.type == 'Watching' ? 'highlighted' : 'unhighlighted'}`}>Watching</button>
+
+						<button onClick={() => setActivity({ type: 'Competing', name: activity?.name})} class={`people-type-button ${activity.type == 'Competing' ? 'highlighted' : 'unhighlighted'}`}>Competing</button>
+
+						<input
+							type='text'
+							class='activity-input'
+							value={activity.name}
+							onChange={ (e)=> {
+								if (e.target.value.length > 50) {
+									return errorToast('Must be less than x')
+								}
+
+								setActivity({ type: activity.type, name: e.target.value })
+							} }
+							onKeyPress={ (e) => e.key === 'Enter' && updateActivity()}
+						/>
+						<br/>
+						<button class='people-type-button' onClick={updateActivity}>Update</button>
+					</div>
+
+					<hr class="divider"/>
+					
+				</div>
 			}
 		</div>
 	</>
