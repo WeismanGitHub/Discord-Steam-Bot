@@ -59,14 +59,6 @@
   all: unset;
 }
 
-.pagination-button:hover{
-  filter: brightness(90%);
-}
-
-.pagination-button:active {
-  filter: brightness(80%);
-}
-
 .people-type-button {
   display: inline-block;
   font-size: large;
@@ -77,14 +69,6 @@
   color: #a4a7aa;
   cursor: pointer;
   all: unset;
-}
-
-.people-type-button:hover{
-  filter: brightness(90%);
-}
-
-.people-type-button:active {
-  filter: brightness(80%);
 }
 
 .highlighted {
@@ -99,4 +83,12 @@
   color: #a4a7aa;
   box-shadow: none;
   text-align: center;
+}
+
+.people-type-button, .pagination-button :hover{
+  filter: brightness(90%);
+}
+
+.people-type-button, .pagination-button :active {
+  filter: brightness(80%);
 }
