@@ -101,9 +101,7 @@ interface GuildData {
     preferredLocale: string
 }
 
-type CustomActivityType = Exclude<ActivityType, ActivityType.Custom>
-
 interface CustomActivity {
-    type: CustomActivityType | undefined
+    type: number | undefined | string
     name: string | undefined
 }
