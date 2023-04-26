@@ -1,4 +1,4 @@
-import { userAuth } from '../middleware';
+import { userAuth } from '../middleware/auth';
 import { Router } from 'express';
 import {
     discordAuth,

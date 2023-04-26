@@ -1,5 +1,5 @@
 import { getBot, getBotGuilds, getUsers } from '../controllers/admin'
-import { adminAuth } from '../middleware';
+import { adminAuth } from '../middleware/auth';
 import { Router } from 'express';
 
 const adminRouter: Router = Router();

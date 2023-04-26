@@ -1,4 +1,4 @@
-import { ownerAuth } from '../middleware';
+import { ownerAuth } from '../middleware/auth';
 import { Router } from 'express';
 import {
     getOwners,
