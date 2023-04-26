@@ -1,3 +1,4 @@
+import { TooManyRequestsError } from '../../../errors';
 import { Config } from '../../../../config';
 import rateLimit from 'express-rate-limit';
 import fetchMetadata from 'fetch-metadata';
@@ -19,7 +20,7 @@ const limiter = rateLimit({
 	max: Config.limiterMax,
 	standardHeaders: true,
 	legacyHeaders: false,
-	message: Config.limiterMessage
+	handler: (req, res, next, options) => { throw new TooManyRequestsError(Config.limiterMessage) }
 })
 
 v1Router.use(helmet({
