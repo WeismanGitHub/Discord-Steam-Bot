@@ -5,6 +5,7 @@ import NotFoundError from "./not-found";
 import UnauthorizedError from "./unauthorized";
 import InternalServerError from "./internal-server";
 import BadGatewayError from "./bad-gateway";
+import TooManyRequestsError from "./too-many-requests";
 
 export {
     BadRequestError,
@@ -14,4 +15,5 @@ export {
     UnauthorizedError,
     InternalServerError,
     BadGatewayError,
+    TooManyRequestsError,
 }
