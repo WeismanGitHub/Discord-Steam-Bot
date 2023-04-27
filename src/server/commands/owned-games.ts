@@ -33,6 +33,10 @@ export default {
         const playedFreeGamesOption = interaction.options.getString('played_free_games')
         const user: User = interaction.options.getUser('user')!
 
+        if (user.bot) {
+            throw new BadRequestError('User is a bot.')
+        }
+        
         const steamID = (await UserModel.findById(user.id).select('-_id steamID').lean())?.steamID
 
         if (!steamID) {
