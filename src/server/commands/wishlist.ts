@@ -44,17 +44,19 @@ export default {
         )
 	,
 	async execute(interaction: ChatInputCommandInteraction) {
-        if (!interaction.isCommand()) return;
+        const user: User = interaction.options.getUser('user')!
+        
+        if (user.bot) {
+            throw new BadRequestError('User is a bot.')
+        }
+        
+        const steamID = (await UserModel.findById(user.id).select('-_id steamID').lean())?.steamID
 
-        const selectedUser: User = interaction.options.getUser('user')!
-
-        const user = await UserModel.findById(selectedUser.id).select('-_id steamID').lean()
-
-        if (!user) {
+        if (!steamID) {
             throw new BadRequestError('User is not in database.')
         }
 
-        const res = await axios.get(`https://store.steampowered.com/wishlist/profiles/${user.steamID}/wishlistdata/?p=0`)
+        const res = await axios.get(`https://store.steampowered.com/wishlist/profiles/${steamID}/wishlistdata/?p=0`)
         .catch(err => {
             throw new BadGatewayError('Error getting wishlist.')
         })
@@ -125,7 +127,7 @@ export default {
                 type: 'wishlist',
                 data: {
                     page: 0,
-                    steamID: user.steamID,
+                    steamID: steamID,
                     filters: {
                         free: freeOption,
                         reviews: reviewsOption
