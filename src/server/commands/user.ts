@@ -25,7 +25,11 @@ export default {
 	,
 	async execute(interaction: CommandInteraction): Promise<void> {
         const user: User = interaction.options.getUser('user')!
-
+        
+        if (user.bot) {
+            throw new BadRequestError('User is a bot.')
+        }
+        
         const steamID = (await UserModel.findById(user.id).select('-_id steamID').lean())?.steamID
 
         if (!steamID) {
