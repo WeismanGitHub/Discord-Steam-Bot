@@ -1,5 +1,5 @@
 import { BadGatewayError, BadRequestError, InternalServerError } from '../errors';
-import { getPlayerSummaries, getSteamLevel } from '../utils/steam-queries';
+import { getPlayerSummaries, getSteamLevel } from '../utils/steam';
 import { UserModel } from '../db/models';
 import {
     SlashCommandBuilder,
