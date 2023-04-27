@@ -25,23 +25,28 @@ export default {
         )
 	,
 	async execute(interaction: ChatInputCommandInteraction) {
-        const selectedUser: User = interaction.options.getUser('user')!
+        const user: User = interaction.options.getUser('user')!
+        
+        if (user.bot) {
+            throw new BadRequestError('User is a bot.')
+        }
 
-        const user = await UserModel.findById(selectedUser.id).select('-_id steamID').lean()
+        const steamID = (await UserModel.findById(user.id).select('-_id steamID').lean())?.steamID
 
-        if (!user) {
+        if (!steamID) {
             throw new BadRequestError('User is not in database.')
         }
 
         const res = await axios.get(`
             http://api.steampowered.com/ISteamUser/GetFriendList/v0001/
             ?key=${Config.steamAPIKey}
-            &steamid=${user.steamID}
+            &steamid=${steamID}
             &relationship=friend
         `)
         .catch(err => {
             throw new BadGatewayError('Error getting friends list.')
         })
+
         console.log(res)
 
         return
