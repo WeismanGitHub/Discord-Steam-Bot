@@ -1,7 +1,6 @@
 import { BadGatewayError, BadRequestError, InternalServerError } from '../errors';
+import { getPlayerSummaries, getSteamLevel } from '../utils/steam-queries';
 import { UserModel } from '../db/models';
-import { Config } from '../../config';
-import axios, * as _ from 'axios'
 import {
     SlashCommandBuilder,
     CommandInteraction,
@@ -36,17 +35,10 @@ export default {
             throw new BadRequestError('User is not in database.')
         }
 
-        async function GetPlayerSummaries(): Promise<player | undefined> {
-            return (await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${Config.steamAPIKey}&steamids=${steamID}`))?.data?.response?.players?.[0]
-        }
-
-        async function GetSteamLevel(): Promise<number | undefined> {
-            return (await axios.get(`https://api.steampowered.com/IPlayerService/GetSteamLevel/v1/?key=${Config.steamAPIKey}&steamid=${steamID}`)).data?.response?.player_level
-        }
 
         const results = await Promise.all([
-            GetPlayerSummaries(),
-            GetSteamLevel()
+            getPlayerSummaries(steamID),
+            getSteamLevel(steamID)
         ])
         .catch((err: Error): void => {
             throw new BadGatewayError('Could not get user data.')
