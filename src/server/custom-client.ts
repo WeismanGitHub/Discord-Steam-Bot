@@ -104,10 +104,12 @@ export class CustomClient extends Client {
             } catch (err) {
                 console.error(err);
 
-                if (err instanceof CustomError) {
-                    interaction.reply({ embeds: [errorEmbed(err.message)], ephemeral: true });
+                const embed = err instanceof CustomError ? errorEmbed(err.message) : errorEmbed()
+                
+                if (interaction.replied || interaction.deferred) {
+                    interaction.followUp({ embeds: [embed], ephemeral: true });
                 } else {
-                    interaction.reply({ embeds: [errorEmbed()], ephemeral: true });
+                    interaction.reply({ embeds: [embed], ephemeral: true });
                 }
             }
         });
@@ -127,14 +129,17 @@ export class CustomClient extends Client {
                     .catch((err: Error) => {
                         console.log(err)
 
-                        if (event.default.name === Events.InteractionCreate) {
-                            const interaction = args[0]
-            
-                            if (err instanceof CustomError) {
-                                interaction.reply({ embeds: [errorEmbed(err.message)], ephemeral: true })!;
-                            } else {
-                                interaction.reply({ embeds: [errorEmbed()], ephemeral: true });
-                            }
+                        if (event.default.name !== Events.InteractionCreate) {
+                            return
+                        }
+
+                        const embed = err instanceof CustomError ? errorEmbed(err.message) : errorEmbed()
+                        const interaction = args[0]
+                        
+                        if (interaction.replied || interaction.deferred) {
+                            interaction.followUp({ embeds: [embed], ephemeral: true });
+                        } else {
+                            interaction.reply({ embeds: [embed], ephemeral: true });
                         }
                     })
                 });
