@@ -1,8 +1,7 @@
-import { BadGatewayError, BadRequestError, InternalServerError } from '../errors';
+import { BadRequestError, InternalServerError } from '../errors';
+import { getOwnedGames } from '../utils/steam';
 import { titleEmbed } from '../utils/embeds';
 import { UserModel } from '../db/models';
-import { Config } from '../../config';
-import axios, * as _ from 'axios'
 import {
     SlashCommandBuilder,
     ChatInputCommandInteraction,
@@ -20,17 +19,13 @@ export default {
             .setDescription("The user you want to target.")
             .setRequired(true)
         )
-        .addStringOption(option => option
-            .setName('played_free_games')
+        .addBooleanOption(option => option
+            .setName('include_played_free_games')
             .setDescription("Include or exclude a user's played free games.")
-            .addChoices(
-                { name: 'include', value: 'true' },
-                { name: 'exclude', value: 'false' },
-            )
         )
 	,
 	async execute(interaction: ChatInputCommandInteraction) {
-        const playedFreeGamesOption = interaction.options.getString('played_free_games')
+        const playedFreeGamesOption = interaction.options.getBoolean('include_played_free_games')
         const user: User = interaction.options.getUser('user')!
 
         if (user.bot) {
@@ -43,24 +38,9 @@ export default {
             throw new BadRequestError('User is not in database.')
         }
 
-        interface res {
-            game_count: number | undefined
-            games: ownedGame[] | undefined
-        }
-
-        const res: res = (await axios.get(
-            `https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/
-            ?key=${Config.steamAPIKey}
-            &steamid=${steamID}
-            &include_appinfo=true
-            ${playedFreeGamesOption !== null ? `&include_played_free_games=${playedFreeGamesOption}` : ''}`
-        )
-        .catch((err: Error) => {
-            throw new BadGatewayError('Error getting owned games.')
-        })).data?.response
-
-        const gameCount = res.game_count
-        const ownedGames= res.games
+        const ownedGamesData = await getOwnedGames(steamID, playedFreeGamesOption)
+        const gameCount = ownedGamesData.game_count
+        const ownedGames= ownedGamesData.games
 
         if (!ownedGames) {
             throw new InternalServerError('Could not get owned games.')
