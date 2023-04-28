@@ -50,13 +50,7 @@ interface ownedGamesData {
 }
 
 async function getOwnedGames(steamID: string, includeFreeGames: boolean | null): Promise<ownedGamesData> {
-    return (await axios.get(
-        `https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/
-        ?key=${Config.steamAPIKey}
-        &steamid=${steamID}
-        &include_appinfo=true
-        ${includeFreeGames !== null ? `&include_played_free_games=${includeFreeGames}` : ''}`
-    )
+    return (await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${Config.steamAPIKey}&steamid=${steamID}&include_appinfo=true${includeFreeGames !== null ? `&include_played_free_games=${includeFreeGames}` : ''}`)
     .catch((err: Error) => {
         throw new BadGatewayError('Error getting owned games.')
     })).data?.response
