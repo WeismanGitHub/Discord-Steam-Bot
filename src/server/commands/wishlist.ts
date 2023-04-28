@@ -1,6 +1,6 @@
-import { BadGatewayError, BadRequestError } from '../errors';
+import { getWishlist } from '../utils/steam';
+import { BadRequestError } from '../errors';
 import { UserModel } from '../db/models';
-import axios, * as _ from 'axios'
 import {
     SlashCommandBuilder,
     ChatInputCommandInteraction,
@@ -56,12 +56,7 @@ export default {
             throw new BadRequestError('User is not in database.')
         }
 
-        const res = await axios.get(`https://store.steampowered.com/wishlist/profiles/${steamID}/wishlistdata/?p=0`)
-        .catch(err => {
-            throw new BadGatewayError('Error getting wishlist.')
-        })
-
-        let wishlistItems: wishlistItem[] = Object.values(res.data)
+        let wishlistItems = await getWishlist(steamID, 0)
 
         if (!wishlistItems.length) {
             throw new BadRequestError('User has empty wishlist.')
