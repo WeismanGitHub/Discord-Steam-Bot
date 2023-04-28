@@ -24,7 +24,7 @@ interface player {
     loccityid: number | undefined
 }
 
-async function getPlayerSummaries(steamIDs: string | string[]): Promise<player | undefined> {
+async function getPlayerSummaries(steamIDs: string | string[]): Promise<player[] | undefined> {
     steamIDs = Array.isArray(steamIDs) ? steamIDs.join(',') : steamIDs
 
     const res = await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${Config.steamAPIKey}&steamids=${steamIDs}`)
@@ -32,7 +32,7 @@ async function getPlayerSummaries(steamIDs: string | string[]): Promise<player |
         throw new BadGatewayError('Error getting player(s) data.')
     })
 
-    return res.data?.response?.players?.[0]
+    return res.data?.response?.players
 }
 
 async function getSteamLevel(steamID: string): Promise<number | undefined> {
