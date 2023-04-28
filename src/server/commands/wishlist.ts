@@ -128,10 +128,8 @@ export default {
                 data: {
                     page: 0,
                     steamID: steamID,
-                    filters: {
-                        free: freeOption,
-                        reviews: reviewsOption
-                    }
+                    free: freeOption,
+                    reviews: reviewsOption
                 }
             }))
             .setStyle(ButtonStyle.Primary)
