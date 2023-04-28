@@ -18,17 +18,14 @@ export default {
             return
         }
 
-        interface wishlistCustomID {
-            type: string
-            data: {
-                page: number
-                steamID: string
-                free: boolean | null
-                reviews: string | null
-            }
+        interface wishlistData {
+            page: number
+            steamID: string
+            free: boolean | null
+            reviews: string | null
         }
 
-        const { type, data }: wishlistCustomID = JSON.parse(interaction.customId)
+        const { type, data }: CustomID<wishlistData> = JSON.parse(interaction.customId)
         const { page, steamID, free, reviews } = data
 
         if (type !== 'wishlist') {
