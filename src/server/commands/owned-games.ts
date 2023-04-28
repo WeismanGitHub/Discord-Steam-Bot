@@ -78,7 +78,7 @@ export default {
         })
 
         if (!ownedGamesEmbeds.length) {
-            throw new BadRequestError('No wishlist items found.')
+            throw new BadRequestError('No owned games found.')
         }
 
         const embedGroups = [];
