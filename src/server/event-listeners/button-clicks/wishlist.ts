@@ -18,8 +18,18 @@ export default {
             return
         }
 
-        const { type, data } = JSON.parse(interaction.customId)
-        const { page, steamID, filters } = data
+        interface wishlistCustomID {
+            type: string
+            data: {
+                page: number
+                steamID: string
+                free: boolean | null
+                reviews: string | null
+            }
+        }
+
+        const { type, data }: wishlistCustomID = JSON.parse(interaction.customId)
+        const { page, steamID, free, reviews } = data
 
         if (type !== 'wishlist') {
             return
@@ -43,12 +53,12 @@ export default {
             })
         }
 
-        if (filters?.free !== null) {
-            wishlistItems = wishlistItems.filter((item): boolean => Boolean(item.is_free_game) === filters?.free)
+        if (free !== null) {
+            wishlistItems = wishlistItems.filter((item): boolean => Boolean(item.is_free_game) === free)
         }
 
-        if (filters?.reviews) {
-            wishlistItems = wishlistItems.filter((item): boolean => item.review_desc === filters?.reviews)
+        if (reviews) {
+            wishlistItems = wishlistItems.filter((item): boolean => item.review_desc === reviews)
         }
 
         const wishlistEmbeds: EmbedBuilder[] = wishlistItems.map((item): EmbedBuilder => {
@@ -100,12 +110,12 @@ export default {
             new ButtonBuilder()
             .setLabel(`Next Page ⏩`)
             .setCustomId(JSON.stringify({
-                page: page + 1,
-                steamID: steamID,
                 type: 'wishlist',
-                filters: {
-                    free: filters?.free || null,
-                    reviews: filters?.reviews || null
+                data: {
+                    steamID: steamID,
+                    page: page + 1,
+                    free: free,
+                    reviews: reviews
                 }
             }))
             .setStyle(ButtonStyle.Primary)
