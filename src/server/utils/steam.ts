@@ -59,6 +59,40 @@ interface ownedGamesData {
     }[]
 }
 
+interface wishlistItem {
+    name: undefined | string
+    capsule: undefined | string
+    review_score: undefined | number
+    review_desc: undefined | 'Overwhelmingly Positive' | 'Very Positive' | 'Positive' | 'Mostly Positive' | 'Mixed' |'Mostly Negative' | 'Negative' | 'Very Negative' | 'Overwhelmingly Negative' | 'No user reviews'
+    reviews_total: undefined | string
+    reviews_percent: number | undefined
+    release_date: string | undefined
+    release_string: string | undefined
+    platform_icons: string | undefined
+    subs: wishlistSub[] | undefined
+    type: string | undefined
+    screenshots: string[] | undefined
+    review_css: string | undefined
+    priority: number | undefined
+    added: number | undefined
+    background: string | undefined
+    rank: number | undefined
+    tags: string[] | undefined
+    is_free_game: boolean | undefined
+    deck_compat: string | undefined
+    early_access: number | undefined
+    win: number | undefined
+    mac: number | undefined
+    linux: number | undefined
+}
+
+interface wishlistSub {
+    id: number | undefined
+    discount_block: string | undefined
+    discount_pct: number | undefined
+    price: number | undefined
+}
+
 async function getOwnedGames(steamID: string, includeFreeGames: boolean | null): Promise<ownedGamesData> {
     const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${Config.steamAPIKey}&steamid=${steamID}&include_appinfo=true${includeFreeGames !== null ? `&include_played_free_games=${includeFreeGames}` : ''}`)
     .catch((err: Error) => {
@@ -68,8 +102,18 @@ async function getOwnedGames(steamID: string, includeFreeGames: boolean | null):
     return res.data?.response
 }
 
+async function getWishlist(steamID: string, page: number | string): Promise<wishlistItem[]> {
+    const res = await axios.get(`https://store.steampowered.com/wishlist/profiles/${steamID}/wishlistdata/?p=${page}`)
+    .catch(err => {
+        throw new BadGatewayError('Error getting wishlist.')
+    })
+
+    return Object.values(res.data)
+}
+
 export {
     getPlayerSummaries,
     getSteamLevel,
     getOwnedGames,
+    getWishlist
 }
