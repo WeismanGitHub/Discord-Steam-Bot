@@ -58,7 +58,7 @@ export default {
 
         let wishlistItems = await getWishlist(steamID, 0)
 
-        if (!wishlistItems.length) {
+        if (!wishlistItems?.length) {
             throw new BadRequestError('User has empty wishlist.')
         }
 

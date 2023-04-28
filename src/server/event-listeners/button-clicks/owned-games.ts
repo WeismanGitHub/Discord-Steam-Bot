@@ -23,8 +23,8 @@ export default {
         }
 
         const ownedGamesData = await getOwnedGames(steamID, null)
-        const gameCount = ownedGamesData.game_count
-        const ownedGames= ownedGamesData.games
+        const gameCount = ownedGamesData?.game_count
+        const ownedGames= ownedGamesData?.games
 
         if (!ownedGames) {
             throw new InternalServerError('Could not get owned games.')
