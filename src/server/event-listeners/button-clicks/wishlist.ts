@@ -38,7 +38,7 @@ export default {
 
         let wishlistItems = await getWishlist(steamID, page + 1)
 
-        if (!wishlistItems.length) {
+        if (!wishlistItems?.length) {
             return interaction.reply({
                 embeds: [titleEmbed('No more items in wishlist.')],
                 ephemeral: true
