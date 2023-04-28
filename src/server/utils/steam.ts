@@ -27,11 +27,21 @@ interface player {
 async function getPlayerSummaries(steamIDs: string | string[]): Promise<player | undefined> {
     steamIDs = Array.isArray(steamIDs) ? steamIDs.join(',') : steamIDs
 
-    return (await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${Config.steamAPIKey}&steamids=${steamIDs}`))?.data?.response?.players?.[0]
+    const res = await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${Config.steamAPIKey}&steamids=${steamIDs}`)
+    .catch(err => {
+        throw new BadGatewayError('Error getting player(s) data.')
+    })
+
+    return res.data?.response?.players?.[0]
 }
 
 async function getSteamLevel(steamID: string): Promise<number | undefined> {
-    return (await axios.get(`https://api.steampowered.com/IPlayerService/GetSteamLevel/v1/?key=${Config.steamAPIKey}&steamid=${steamID}`)).data?.response?.player_level
+    const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetSteamLevel/v1/?key=${Config.steamAPIKey}&steamid=${steamID}`)
+    .catch(err => {
+        throw new BadGatewayError('Error getting steam level.')
+    })
+
+    return res.data?.response?.player_level
 }
 
 interface ownedGamesData {
@@ -50,10 +60,12 @@ interface ownedGamesData {
 }
 
 async function getOwnedGames(steamID: string, includeFreeGames: boolean | null): Promise<ownedGamesData> {
-    return (await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${Config.steamAPIKey}&steamid=${steamID}&include_appinfo=true${includeFreeGames !== null ? `&include_played_free_games=${includeFreeGames}` : ''}`)
+    const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${Config.steamAPIKey}&steamid=${steamID}&include_appinfo=true${includeFreeGames !== null ? `&include_played_free_games=${includeFreeGames}` : ''}`)
     .catch((err: Error) => {
         throw new BadGatewayError('Error getting owned games.')
-    })).data?.response
+    })
+
+    return res.data?.response
 }
 
 export {
