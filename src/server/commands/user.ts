@@ -78,9 +78,34 @@ export default {
         const row = new ActionRowBuilder<ButtonBuilder>()
 		.addComponents([
 			new ButtonBuilder()
-			.setLabel('Profile')
+			.setLabel('profile')
 			.setURL(playerData.profileurl)
 			.setStyle(ButtonStyle.Link)
+		])
+		.addComponents([
+			new ButtonBuilder()
+			.setLabel('wishlist')
+            .setCustomId(JSON.stringify({
+                type: 'wishlist',
+                data: {
+                    steamID: steamID,
+                    page: 0,
+                    free: null,
+                    reviews: null,
+                }
+            }))
+			.setStyle(ButtonStyle.Primary)
+		])
+		.addComponents([
+			new ButtonBuilder()
+			.setLabel('games')
+            .setCustomId(JSON.stringify({
+                type: 'owned-games',
+                data: {
+                    steamID: steamID
+                }
+            }))
+			.setStyle(ButtonStyle.Primary)
 		])
 
 		interaction.reply({
