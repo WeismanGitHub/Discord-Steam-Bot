@@ -35,3 +35,8 @@ interface CustomActivity {
     type: number | undefined | string
     name: string | undefined
 }
+
+interface CustomID<data> {
+    type: string
+    data: data
+}
