@@ -1,6 +1,6 @@
-import { BadGatewayError, InternalServerError } from "../../errors"
+import { InternalServerError } from "../../errors"
+import { getWishlist } from "../../utils/steam"
 import { titleEmbed } from "../../utils/embeds"
-import axios, * as _ from 'axios'
 import {
     ActionRowBuilder,
     ButtonBuilder,
@@ -39,12 +39,7 @@ export default {
             throw new InternalServerError('The server messed up this button.')
         }
 
-        const res = await axios.get(`https://store.steampowered.com/wishlist/profiles/${steamID}/wishlistdata/?p=${page + 1}`)
-        .catch((err: Error) => {
-            throw new BadGatewayError('Error getting wishlist.')
-        })
-
-        let wishlistItems: wishlistItem[] = Object.values(res.data)
+        let wishlistItems = await getWishlist(steamID, page + 1)
 
         if (!wishlistItems.length) {
             return interaction.reply({
