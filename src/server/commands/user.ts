@@ -43,7 +43,7 @@ export default {
             throw new BadGatewayError('Could not get user data.')
         })
 
-        const playerData = results?.[0]
+        const playerData = results?.[0]?.[0]
         const playerLevel = results?.[1]
         
         if (!playerData) {
