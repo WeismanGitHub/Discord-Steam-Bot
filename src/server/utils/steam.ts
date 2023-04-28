@@ -93,7 +93,7 @@ interface wishlistSub {
     price: number | undefined
 }
 
-async function getOwnedGames(steamID: string, includeFreeGames: boolean | null): Promise<ownedGamesData> {
+async function getOwnedGames(steamID: string, includeFreeGames: boolean | null): Promise<ownedGamesData | undefined> {
     const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${Config.steamAPIKey}&steamid=${steamID}&include_appinfo=true${includeFreeGames !== null ? `&include_played_free_games=${includeFreeGames}` : ''}`)
     .catch((err: Error) => {
         throw new BadGatewayError('Error getting owned games.')
@@ -102,7 +102,7 @@ async function getOwnedGames(steamID: string, includeFreeGames: boolean | null):
     return res.data?.response
 }
 
-async function getWishlist(steamID: string, page: number | string): Promise<wishlistItem[]> {
+async function getWishlist(steamID: string, page: number | string): Promise<wishlistItem[] | undefined> {
     const res = await axios.get(`https://store.steampowered.com/wishlist/profiles/${steamID}/wishlistdata/?p=${page}`)
     .catch(err => {
         throw new BadGatewayError('Error getting wishlist.')
@@ -111,9 +111,25 @@ async function getWishlist(steamID: string, page: number | string): Promise<wish
     return Object.values(res.data)
 }
 
+interface friend {
+    steamid: string
+    relationship: 'friend'
+    friendSince: number
+}
+
+async function getFriendsList(steamID: string): Promise<friend[] | undefined> {
+    const res = await axios.get(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${Config.steamAPIKey}&steamid=${steamID}&relationship=friend&p=0`)
+    .catch(err => {
+        throw new BadGatewayError('Error getting wishlist.')
+    })
+
+    return res.data?.friendslist?.friends
+}
+
 export {
     getPlayerSummaries,
     getSteamLevel,
     getOwnedGames,
-    getWishlist
+    getWishlist,
+    getFriendsList,
 }
