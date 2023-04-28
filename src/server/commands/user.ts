@@ -35,7 +35,6 @@ export default {
             throw new BadRequestError('User is not in database.')
         }
 
-
         const results = await Promise.all([
             getPlayerSummaries(steamID),
             getSteamLevel(steamID)
