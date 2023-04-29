@@ -61,7 +61,7 @@ async function getBot(req: Request, res: Response): Promise<void> {
         readyTimestamp: client.readyTimestamp,
         avatarURL: client.user?.avatarURL(),
         activity: {
-            type: activity?.type ? ActivityType[activity?.type] : 'unknown',
+            type: activity?.type !== undefined ? ActivityType[activity?.type] : 'unknown',
             name: activity?.name,
         },
     })
