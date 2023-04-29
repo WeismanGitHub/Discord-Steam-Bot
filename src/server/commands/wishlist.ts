@@ -6,7 +6,6 @@ import {
     ChatInputCommandInteraction,
     User,
     EmbedBuilder,
-    ChannelType,
     ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle,
@@ -104,10 +103,6 @@ export default {
 
         while (wishlistEmbeds.length > 0) {
             embedGroups.push(wishlistEmbeds.splice(0, 10))
-        }
-
-        if (interaction.channel?.type !== ChannelType.GuildText) {
-            return
         }
 
         await interaction.reply({ embeds: embedGroups[0], ephemeral: true })
