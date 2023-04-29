@@ -1,4 +1,5 @@
 import { EmbedBuilder } from "discord.js";
+import { player } from './steam'
 
 function errorEmbed(description: string | null = null): EmbedBuilder {
     return new EmbedBuilder()
@@ -13,7 +14,30 @@ function titleEmbed(title: string): EmbedBuilder {
         .setColor('#8F00FF') // Purple
 }
 
+function playerProfileEmbed(player: player): EmbedBuilder {
+    const birthday = new Date(Number(`${player.timecreated}000`))
+    const formattedBirthday = birthday.toLocaleDateString("en-US", {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    })
+
+    return new EmbedBuilder()
+        .setImage(player.avatarfull || null)
+        .addFields({
+            inline: true,
+            name: 'Name:',
+            value: player.personaname || 'unknown'
+        })
+        .addFields({
+            name: 'Account Birthday:',
+            value: formattedBirthday
+        })
+}
+
 export {
     errorEmbed,
     titleEmbed,
+    playerProfileEmbed
 }
