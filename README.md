@@ -1,6 +1,6 @@
 <div align="center">
   
-  # Steam Bot
+  # Discord-Steam-App
 
   ## [Website]()
 
