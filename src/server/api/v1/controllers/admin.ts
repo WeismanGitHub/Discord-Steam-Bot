@@ -1,4 +1,4 @@
-import { BadRequestError, InternalServerError } from '../../../errors';
+import { BadRequestError, InternalServerError, NotFoundError } from '../../../errors';
 import { CustomClient } from '../../../custom-client';
 import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
@@ -67,4 +67,27 @@ async function getBot(req: Request, res: Response): Promise<void> {
     })
 }
 
-export { getBotGuilds, getUsers, getBot }
+async function banUser(req: Request, res: Response): Promise<void> {
+    const { userID } = req.body
+
+    if (!userID) {
+        throw new BadRequestError('No user ID.')
+    }
+
+    const user = await UserModel.findById(userID)
+
+    if (!user) {
+        throw new NotFoundError('Could not find user.')
+    }
+
+    user.ban()
+
+    res.status(200).end()
+}
+
+export {
+    getBotGuilds,
+    getUsers,
+    getBot,
+    banUser,
+}
