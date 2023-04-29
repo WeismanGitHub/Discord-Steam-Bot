@@ -95,10 +95,6 @@ export default {
             })
         })
 
-        if (!wishlistEmbeds.length) {
-            throw new BadRequestError('No wishlist items found.')
-        }
-
         const embedGroups = [];
 
         while (wishlistEmbeds.length > 0) {
