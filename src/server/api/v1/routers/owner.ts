@@ -1,4 +1,3 @@
-import { ownerAuth } from '../middleware/auth';
 import { Router } from 'express';
 import {
     getOwners,
@@ -9,9 +8,9 @@ import {
 
 const ownerRouter: Router = Router();
 
-ownerRouter.get('/admins', ownerAuth, getAdmins)
-ownerRouter.get('/owners', ownerAuth, getOwners)
-ownerRouter.post('/activity', ownerAuth, setActivity)
-ownerRouter.post('/process/kill', ownerAuth, killProcess)
+ownerRouter.get('/admins', getAdmins)
+ownerRouter.get('/owners', getOwners)
+ownerRouter.post('/activity', setActivity)
+ownerRouter.post('/process/kill', killProcess)
 
 export default ownerRouter
