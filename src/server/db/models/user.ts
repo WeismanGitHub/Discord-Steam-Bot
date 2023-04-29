@@ -3,7 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 interface User extends Document {
     _id: string
     steamID: string,
-    level: 'user' | 'admin' | 'owner'
+    type: 'banned' | 'user' | 'admin' | 'owner'
 }
 
 const UserSchema: Schema = new Schema({
@@ -15,11 +15,11 @@ const UserSchema: Schema = new Schema({
         type: String,
         required: true
     },
-    level: {
+    type: {
         type: String,
         required: true,
         default: 'user',
-        enum: ['user', 'admin', 'owner']
+        enum: ['banned', 'user', 'admin', 'owner']
     }
 });
 
