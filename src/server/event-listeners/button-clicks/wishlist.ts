@@ -36,7 +36,7 @@ export default {
             throw new InternalServerError('The server messed up this button.')
         }
 
-        let wishlistItems = await getWishlist(steamID, page + 1)
+        let wishlistItems = await getWishlist(steamID, page)
 
         if (!wishlistItems?.length) {
             return interaction.reply({
