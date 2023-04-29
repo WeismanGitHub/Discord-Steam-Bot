@@ -9,6 +9,7 @@ require('express-async-errors')
 import helmet from 'helmet'
 import cors from 'cors'
 
+import { adminAuth, ownerAuth } from '../middleware/auth';
 import adminRouter from './admin';
 import ownerRouter from './owner';
 import authRouter from './auth';
@@ -52,8 +53,8 @@ v1Router.use(express.urlencoded({ extended: true }))
 v1Router.use(express.json())
 v1Router.use(cookieParser())
 
-v1Router.use('/admin', adminRouter)
-v1Router.use('/owner', ownerRouter)
+v1Router.use('/admin', adminAuth, adminRouter)
+v1Router.use('/owner', ownerAuth, ownerRouter)
 v1Router.use('/auth', authRouter)
 
 export { v1Router }
