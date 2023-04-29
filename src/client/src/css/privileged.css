@@ -71,6 +71,7 @@
   color: #a4a7aa;
   box-shadow: none;
   text-align: center;
+  border-style:solid;
 }
 
 .generic-button:hover{
