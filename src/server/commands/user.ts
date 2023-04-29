@@ -8,8 +8,8 @@ import {
     ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle,
-    EmbedBuilder
 } from 'discord.js'
+import { playerProfileEmbed } from '../utils/embeds';
 
 export default {
 	data: new SlashCommandBuilder()
@@ -50,29 +50,11 @@ export default {
             throw new InternalServerError('Could not get user data.')
         }
 
-        const birthday = new Date(Number(`${playerData.timecreated}000`))
-        const formattedBirthday = birthday.toLocaleDateString("en-US", {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        })
-
-        const embed = new EmbedBuilder()
-        .setImage(playerData.avatarfull || null)
-        .addFields({
-            inline: true,
-            name: 'Name:',
-            value: playerData.personaname || 'unknown'
-        })
+        const embed = playerProfileEmbed(playerData)
         .addFields({
             inline: true,
             name: 'Level:',
             value: String(playerLevel)
-        })
-        .addFields({
-            name: 'Account Birthday:',
-            value: formattedBirthday
         })
 
         const row = new ActionRowBuilder<ButtonBuilder>()
