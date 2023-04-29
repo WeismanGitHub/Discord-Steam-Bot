@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema, Model } from 'mongoose';
 
 interface User extends Document {
     _id: string
@@ -6,7 +6,15 @@ interface User extends Document {
     type: 'banned' | 'user' | 'admin' | 'owner'
 }
 
-const UserSchema: Schema = new Schema({
+interface UserMethods {
+    ban(): User
+    promote(): User
+    demote(): User
+}
+
+type UserModel = Model<User, {}, UserMethods>;
+
+const UserSchema: Schema = new Schema<User, UserModel, UserMethods>({
     _id: { // Discord ID
         type: String,
         required: true
@@ -23,4 +31,16 @@ const UserSchema: Schema = new Schema({
     }
 });
 
-export default mongoose.model<User>('users', UserSchema)
+UserSchema.method('ban', async function ban() {
+    console.log(this)
+})
+
+UserSchema.method('promote', async function promote(level: 'admin' | 'owner') {
+    console.log(this, level)
+})
+
+UserSchema.method('demote', async function demote() {
+    console.log(this)
+})
+
+export default mongoose.model<User, UserModel>('users', UserSchema)
