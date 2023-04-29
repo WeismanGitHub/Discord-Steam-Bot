@@ -16,7 +16,7 @@ export default function Privileged() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!userData || userData.level == 'user') {
+		if (!userData || userData.type == 'user') {
 			errorToast('You must be an admin or owner.')
 			return navigate('/')
 		}
@@ -139,7 +139,7 @@ export default function Privileged() {
 		</div>
 		
 		<div class='column' style={{ width: '20%' }}>
-				{userData?.level == 'admin' ? 'Users' :
+				{userData?.type == 'admin' ? 'Users' :
 				<div>
 					<button
 						class={`generic-button ${personType == 'users' ? 'highlighted' : 'unhighlighted'}`}
@@ -189,7 +189,7 @@ export default function Privileged() {
 
 			<hr class="divider"/>
 
-			{userData?.level == 'owner' &&
+			{userData?.type == 'owner' &&
 				<div>
 					<button onClick={stopProcess} class='generic-button'>Stop Process</button>
 
