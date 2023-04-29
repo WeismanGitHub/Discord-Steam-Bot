@@ -132,4 +132,5 @@ export {
     getOwnedGames,
     getWishlist,
     getFriendsList,
+    player,
 }
