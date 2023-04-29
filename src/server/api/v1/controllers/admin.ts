@@ -68,7 +68,7 @@ async function getBot(req: Request, res: Response): Promise<void> {
 }
 
 async function banUser(req: Request, res: Response): Promise<void> {
-    const { userID } = req.body
+    const { userID } = req.params
 
     if (!userID) {
         throw new BadRequestError('No user ID.')
@@ -85,9 +85,19 @@ async function banUser(req: Request, res: Response): Promise<void> {
     res.status(200).end()
 }
 
+async function promoteUser(req: Request, res: Response): Promise<void> {
+
+}
+
+async function demoteUser(req: Request, res: Response): Promise<void> {
+    
+}
+
 export {
     getBotGuilds,
     getUsers,
     getBot,
     banUser,
+    promoteUser,
+    demoteUser,
 }
