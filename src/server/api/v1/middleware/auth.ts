@@ -41,7 +41,7 @@ async function adminAuth(req: Request, res: Response, next: NextFunction): Promi
 
 	const user = await UserModel.findById(idJWT.userID).lean()
 
-	if (!user || user.level === 'user') {
+	if (!user || !['owner', 'admin'].includes(user.type)) {
 		throw new ForbiddenError('You are not an admin or owner.')
 	}
 
@@ -67,7 +67,7 @@ async function ownerAuth(req: Request, res: Response, next: NextFunction): Promi
 
 	const user = await UserModel.findById(idJWT.userID).lean()
 
-	if (!user || user.level !== 'owner') {
+	if (!user || user.type !== 'owner') {
 		throw new ForbiddenError('You are not an owner.')
 	}
 

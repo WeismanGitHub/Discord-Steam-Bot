@@ -112,7 +112,7 @@ async function login(req: Request, res: Response): Promise<void> {
 		sameSite: 'strict',
 		expires: expiration
 	})
-	.json({ level: user.level }).end()
+	.json({ type: user.type }).end()
 }
 
 async function unauthorize(req: Request, res: Response): Promise<void> {
