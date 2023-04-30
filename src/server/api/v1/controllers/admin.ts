@@ -81,14 +81,6 @@ async function banUser(req: Request, res: Response): Promise<void> {
     res.status(200).end()
 }
 
-async function promoteUser(req: Request, res: Response): Promise<void> {
-
-}
-
-async function demoteUser(req: Request, res: Response): Promise<void> {
-    
-}
-
 async function getUser(req: Request, res: Response): Promise<void> {
     const client: CustomClient = req.app.get('discordClient')
 
@@ -117,7 +109,5 @@ export {
     getUsers,
     getBot,
     banUser,
-    promoteUser,
-    demoteUser,
     getUser,
 }

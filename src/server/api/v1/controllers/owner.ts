@@ -96,9 +96,18 @@ async function setActivity(req: Request, res: Response): Promise<void> {
     })
 }
 
+async function promoteUser(req: Request, res: Response): Promise<void> {
+
+}
+
+async function demoteUser(req: Request, res: Response): Promise<void> {
+    
+}
 export {
     getAdmins,
     getOwners,
     killProcess,
     setActivity,
+    promoteUser,
+    demoteUser
 }
