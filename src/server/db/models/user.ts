@@ -7,9 +7,9 @@ interface User extends Document {
 }
 
 interface UserMethods {
-    ban(): User
-    promote(): User
-    demote(): User
+    ban(): Promise<User>
+    promote(): Promise<User>
+    demote(): Promise<User>
 }
 
 type UserModel = Model<User, {}, UserMethods>;
