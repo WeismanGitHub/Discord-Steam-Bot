@@ -105,7 +105,7 @@ async function promoteUser(req: Request, res: Response): Promise<void> {
         throw new NotFoundError('Could not find user.')
     }
 
-    user.promote()
+    await user.promote()
 
     res.status(200).end()
 }
@@ -119,7 +119,7 @@ async function demoteUser(req: Request, res: Response): Promise<void> {
         throw new NotFoundError('Could not find user.')
     }
 
-    user.demote()
+    await user.demote()
 
     res.status(200).end()
 }

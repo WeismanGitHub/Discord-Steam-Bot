@@ -76,7 +76,7 @@ async function banUser(req: Request, res: Response): Promise<void> {
         throw new NotFoundError('Could not find user.')
     }
 
-    user.ban()
+    await user.ban()
 
     res.status(200).end()
 }
