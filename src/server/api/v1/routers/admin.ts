@@ -5,6 +5,7 @@ import {
     getBotGuilds,
     getUsers,
     getUser,
+    unbanUser,
 } from '../controllers/admin'
 
 const adminRouter: Router = Router();
@@ -15,5 +16,6 @@ adminRouter.get('/bot', getBot)
 adminRouter.get('/users', getUsers)
 adminRouter.get('/users/:userID', getUser)
 adminRouter.post('/users/:userID/ban', banUser)
+adminRouter.post('/users/:userID/unban', unbanUser)
 
 export default adminRouter
