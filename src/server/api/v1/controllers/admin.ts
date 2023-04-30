@@ -100,7 +100,9 @@ async function getUser(req: Request, res: Response): Promise<void> {
     res.status(200).json({
         name: user.username,
         avatarURL: user.avatarURL(),
-        discriminator: user.discriminator
+        discriminator: user.discriminator,
+        createdTimestamp: user.createdTimestamp,
+        ID: user.id
     })
 }
 
