@@ -8,6 +8,8 @@ import '../css/privileged.css';
 export default function Privileged() {
 	const [personType, setPersonType] = useState(localStorage.getItem('personType') || 'users')
 	const userData = JSON.parse(localStorage.getItem('userData'))
+	const [inputtedUserID, setInputtedUserID] = useState('')
+	const [searchedUser, setSearchedUser] = useState(null)
 	const [peoplePage, setPeoplePage] = useState(0)
 	const [activity, setActivity] = useState({})
 	const [guilds, setGuilds] = useState([])
@@ -26,8 +28,8 @@ export default function Privileged() {
 			axios.get(`/api/v1/${personType === 'users' ? 'admin' : 'owner'}/${personType}`),
 			axios.get('/api/v1/admin/bot'),
 		])
-		.then(([guildsRes, usersRes, botRes, adminsRes, ownersRes]) => {
-			setGuilds(guildsRes.data.guilds)
+		.then(([guildsRes, usersRes, botRes]) => {
+			setGuilds(guildsRes.data)
 			setPeople(usersRes.data)
 			setBot(botRes.data)
 			setActivity(botRes.data.activity)
@@ -111,10 +113,32 @@ export default function Privileged() {
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
 
+	async function searchUser() {
+		try {
+			const user = (await axios.get('/api/v1/admin/users/' + inputtedUserID))?.data
+			setSearchedUser(user)
+		} catch(err) {
+			errorToast(err?.response?.data?.error || err.message)
+		}
+	}
+
+	function promote() {
+
+	}
+	
+	function demote() {
+
+	}
+
+	function ban() {
+		
+	}
+
 	return <>
 		<Navbar/>
 
-		<div class='column' style={{ width: '25%' }}>
+		{ /* Guilds */ }
+		<div class='column' style={{ width: '20%' }}>
 			Guilds: {guilds?.length}
 			<hr class="divider"/>
 
@@ -137,7 +161,8 @@ export default function Privileged() {
 				</div>
 			})}
 		</div>
-		
+
+		{ /* Users */ }
 		<div class='column' style={{ width: '20%' }}>
 				{userData?.type == 'admin' ? 'Users' :
 				<div>
@@ -169,6 +194,7 @@ export default function Privileged() {
 			})}
 		</div>
 
+		{ /* Bot */ }
 		<div class='column' style={{ width: '20%' }}>
 			Bot:
 			
@@ -177,7 +203,8 @@ export default function Privileged() {
 			<div class='column-item' title={bot?.name}>
 				<img src={bot?.avatarURL} alt='bot avatar' width={53} height={53} class='icon'/>
 				<div class='name'>{bot?.name}</div>
-
+				<br/>
+				
 				<div class='item-info'>
 					created: {formatTimestamp(bot?.createdTimestamp)}
 					<br/>
@@ -195,7 +222,7 @@ export default function Privileged() {
 
 					<hr class="divider"/>
 
-					<div class='statuses'>
+					<div>
 						<button onClick={() => setActivity({ type: 'Playing', name: activity?.name})} class={`generic-button ${activity.type == 'Playing' ? 'highlighted' : 'unhighlighted'}`}>Playing</button>
 
 						<button onClick={() => setActivity({ type: 'Streaming', name: activity?.name})} class={`generic-button ${activity.type == 'Streaming' ? 'highlighted' : 'unhighlighted'}`}>Streaming</button>
@@ -224,9 +251,57 @@ export default function Privileged() {
 					</div>
 
 					<hr class="divider"/>
-
 				</div>
 			}
 		</div>
+
+		{ /* User */ }
+		{userData?.type == 'owner' &&
+			<div class='column' style={{ width: '20%' }}>
+				<div>
+					<input
+						type='text'
+						class='user-input'
+						value={inputtedUserID}
+						placeholder='enter a user ID'
+						onChange={(e)=> {
+							if (e.target.value.length > 25) {
+								return
+							}
+
+							setInputtedUserID(e.target.value)
+						}}
+						onKeyPress={ (e) => e.key === 'Enter' && searchUser()}
+					/>
+					<br/>
+
+					<button class='generic-button' onClick={searchUser}>Search</button>
+					
+					<hr class="divider"/>
+
+					{searchedUser && <>
+						<div class='column-item' title={searchedUser?.name}>
+							<img src={searchedUser?.avatarURL} alt='bot avatar' width={53} height={53} class='icon'/>
+							<div class='name'>{searchedUser?.name}</div>
+							<br/>
+
+							<div class='item-info'>
+								discriminator: {`#${searchedUser?.discriminator}`}
+							</div>
+						</div>
+						
+						<br/>
+
+						<div>
+							<button onClick={() => promote()} class='generic-button'>Promote</button>
+							<button onClick={() => demote()} class='generic-button'>Demote</button>
+							<button onClick={() => ban()} class='generic-button'>Ban</button>
+						</div>
+						<hr class="divider"/>
+					</>}
+
+				</div>
+			</div>
+		}
 	</>
 }
