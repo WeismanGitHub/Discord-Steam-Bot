@@ -69,9 +69,8 @@
   border-radius: 5px;
   background-color: #40444b;
   color: #a4a7aa;
-  box-shadow: none;
   text-align: center;
-  border-style:solid;
+  border: #a4a7aa 1px solid;
 }
 
 .generic-button:hover{
