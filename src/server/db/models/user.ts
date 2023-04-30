@@ -1,4 +1,5 @@
 import mongoose, { Schema, Model } from 'mongoose';
+import { BadRequestError } from '../../errors';
 
 interface User extends Document {
     _id: string
@@ -32,18 +33,30 @@ const UserSchema: Schema = new Schema<User, UserModel, UserMethods>({
 });
 
 UserSchema.method('ban', async function ban() {
+    if (this.type !== 'user') {
+        throw new BadRequestError('You can only ban users.')
+    }
+
     this.type = 'banned'
 
     return this
 })
 
 UserSchema.method('promote', async function promote() {
+    if (this.type !== 'user') {
+        throw new BadRequestError('You can only promote users.')
+    }
+
     this.type = 'admin'
 
     return this
 })
 
 UserSchema.method('demote', async function demote() {
+    if (this.type !== 'admin') {
+        throw new BadRequestError('You can only demote admins.')
+    }
+
     this.type = 'user'
 
     return this
