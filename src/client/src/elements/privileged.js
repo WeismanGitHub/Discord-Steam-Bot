@@ -149,7 +149,6 @@ export default function Privileged() {
 				return <div class='column-item' title={guild.name}>
 					<img src={guild.iconURL} alt='guild icon' width={60} height={60} class='icon'/>
 					<div class='name'>{name}</div>
-					<br/>
 					
 					<div class='item-info'>
 						joined: {formattedDate}
@@ -197,14 +196,13 @@ export default function Privileged() {
 		{ /* Bot */ }
 		<div class='column' style={{ width: '20%' }}>
 			Bot:
-			
 			<hr class="divider"/>
 			
 			<div class='column-item' title={bot?.name}>
 				<img src={bot?.avatarURL} alt='bot avatar' width={53} height={53} class='icon'/>
 				<div class='name'>{bot?.name}</div>
 				<br/>
-				
+
 				<div class='item-info'>
 					created: {formatTimestamp(bot?.createdTimestamp)}
 					<br/>
@@ -281,21 +279,26 @@ export default function Privileged() {
 
 					{searchedUser && <>
 						<div class='column-item' title={searchedUser?.name}>
-							<img src={searchedUser?.avatarURL} alt='bot avatar' width={53} height={53} class='icon'/>
+							<img src={searchedUser?.avatarURL} alt='user avatar' width={53} height={53} class='icon'/>
 							<div class='name'>{searchedUser?.name}</div>
-							<br/>
 
-							<div class='item-info'>
+							<div class='item-info' style={{ 'padding-top': '5px' }}>
 								discriminator: {`#${searchedUser?.discriminator}`}
+								<br/>
+								joined: {formatTimestamp(searchedUser?.createdTimestamp)}
+								<br/>
+								id: {searchedUser?.ID}
 							</div>
 						</div>
 						
 						<br/>
 
 						<div>
-							<button onClick={() => promote()} class='generic-button'>Promote</button>
-							<button onClick={() => demote()} class='generic-button'>Demote</button>
-							<button onClick={() => ban()} class='generic-button'>Ban</button>
+							{userData?.type === 'owner' && <>
+								<button onClick={() => promote()} class='generic-button'>Promote</button>
+								<button onClick={() => demote()} class='generic-button'>Demote</button>
+							</>}
+							<button style={{width: '50px' }} onClick={() => ban() } class='generic-button'>Ban</button>
 						</div>
 						<hr class="divider"/>
 					</>}
