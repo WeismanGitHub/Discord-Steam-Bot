@@ -81,6 +81,20 @@ async function banUser(req: Request, res: Response): Promise<void> {
     res.status(200).end()
 }
 
+async function unbanUser(req: Request, res: Response): Promise<void> {
+    const { userID } = req.params
+
+    const user = await UserModel.findById(userID)
+
+    if (!user) {
+        throw new NotFoundError('Could not find user.')
+    }
+
+    await user.unban()
+
+    res.status(200).end()
+}
+
 async function getUser(req: Request, res: Response): Promise<void> {
     const client: CustomClient = req.app.get('discordClient')
 
@@ -112,4 +126,5 @@ export {
     getBot,
     banUser,
     getUser,
+    unbanUser,
 }
