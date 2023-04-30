@@ -123,15 +123,21 @@ export default function Privileged() {
 	}
 
 	function promote() {
-
+		axios.post(`/api/v1/owner/users/${searchedUser?.ID}/promote`)
+		.then(res => successToast(`Promoted ${searchedUser.name} to admin.`))
+		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
 	
 	function demote() {
-
+		axios.post(`/api/v1/owner/users/${searchedUser?.ID}/demote`)
+		.then(res => successToast(`Demoted ${searchedUser.name} to user.`))
+		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
 
 	function ban() {
-		
+		axios.post(`/api/v1/owner/users/${searchedUser?.ID}/ban`)
+		.then(res => successToast(`Banned ${searchedUser.name}.`))
+		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
 
 	return <>
