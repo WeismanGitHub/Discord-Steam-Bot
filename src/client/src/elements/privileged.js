@@ -271,9 +271,9 @@ export default function Privileged() {
 						}}
 						onKeyPress={ (e) => e.key === 'Enter' && searchUser()}
 					/>
-					<br/>
-
-					<button class='generic-button' onClick={searchUser}>Search</button>
+					<div>
+						<button class='generic-button' onClick={searchUser}>Search</button>
+					</div>
 					
 					<hr class="divider"/>
 

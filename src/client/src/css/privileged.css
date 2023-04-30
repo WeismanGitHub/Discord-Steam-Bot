@@ -85,3 +85,13 @@
 .generic-button:active {
   filter: brightness(80%);
 }
+
+.user-input {
+  font-size: large;
+  margin-top: 5px;
+  border-radius: 5px;
+  background-color: #40444b;
+  color: #a4a7aa;
+  text-align: center;
+  border: #a4a7aa 1px solid;
+}
