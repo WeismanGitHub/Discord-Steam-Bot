@@ -2,7 +2,7 @@ import { BadRequestError, InternalServerError, NotFoundError } from '../../../er
 import { CustomClient } from '../../../custom-client';
 import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
-import { ActivityType } from 'discord.js';
+import { ActivityType, DiscordAPIError } from 'discord.js';
 require('express-async-errors')
 
 async function getBotGuilds(req: Request, res: Response): Promise<void> {
@@ -70,10 +70,6 @@ async function getBot(req: Request, res: Response): Promise<void> {
 async function banUser(req: Request, res: Response): Promise<void> {
     const { userID } = req.params
 
-    if (!userID) {
-        throw new BadRequestError('No user ID.')
-    }
-
     const user = await UserModel.findById(userID)
 
     if (!user) {
@@ -93,6 +89,29 @@ async function demoteUser(req: Request, res: Response): Promise<void> {
     
 }
 
+async function getUser(req: Request, res: Response): Promise<void> {
+    const client: CustomClient = req.app.get('discordClient')
+
+    const user = await client.users.fetch(req.params.userID)
+    .catch((err: DiscordAPIError) => {
+        if (err.status >= 400 && err.status < 500) {
+            throw new BadRequestError(err.message)
+        }
+
+        throw new InternalServerError(err.message)
+    })
+
+    if (user.bot) {
+        throw new BadRequestError('User is a bot')
+    }
+
+    res.status(200).json({
+        name: user.username,
+        avatarURL: user.avatarURL(),
+        discriminator: user.discriminator
+    })
+}
+
 export {
     getBotGuilds,
     getUsers,
@@ -100,4 +119,5 @@ export {
     banUser,
     promoteUser,
     demoteUser,
+    getUser,
 }
