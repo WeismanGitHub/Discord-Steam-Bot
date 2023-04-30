@@ -9,6 +9,7 @@ interface User extends Document {
 
 interface UserMethods {
     ban(): Promise<User>
+    unban(): Promise<User>
     promote(): Promise<User>
     demote(): Promise<User>
 }
@@ -38,6 +39,18 @@ UserSchema.method('ban', async function ban() {
     }
 
     this.type = 'banned'
+    await this.save()
+
+    return this
+})
+
+UserSchema.method('unban', async function ban() {
+    if (this.type !== 'banned') {
+        throw new BadRequestError('You can only unban banned users.')
+    }
+
+    this.type = 'user'
+    await this.save()
 
     return this
 })
@@ -48,6 +61,7 @@ UserSchema.method('promote', async function promote() {
     }
 
     this.type = 'admin'
+    await this.save()
 
     return this
 })
@@ -58,7 +72,8 @@ UserSchema.method('demote', async function demote() {
     }
 
     this.type = 'user'
-
+    await this.save()
+    
     return this
 })
 
