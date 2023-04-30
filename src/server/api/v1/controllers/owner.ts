@@ -1,4 +1,4 @@
-import { BadRequestError, InternalServerError } from '../../../errors';
+import { BadRequestError, InternalServerError, NotFoundError } from '../../../errors';
 import { CustomClient } from '../../../custom-client';
 import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
@@ -97,12 +97,33 @@ async function setActivity(req: Request, res: Response): Promise<void> {
 }
 
 async function promoteUser(req: Request, res: Response): Promise<void> {
+    const { userID } = req.params
 
+    const user = await UserModel.findById(userID)
+
+    if (!user) {
+        throw new NotFoundError('Could not find user.')
+    }
+
+    user.promote()
+
+    res.status(200).end()
 }
 
 async function demoteUser(req: Request, res: Response): Promise<void> {
-    
+    const { userID } = req.params
+
+    const user = await UserModel.findById(userID)
+
+    if (!user) {
+        throw new NotFoundError('Could not find user.')
+    }
+
+    user.demote()
+
+    res.status(200).end()
 }
+
 export {
     getAdmins,
     getOwners,
