@@ -135,7 +135,7 @@ export default function Privileged() {
 	}
 
 	function ban() {
-		axios.post(`/api/v1/owner/users/${searchedUser?.ID}/ban`)
+		axios.post(`/api/v1/admin/users/${searchedUser?.ID}/ban`)
 		.then(res => successToast(`Banned ${searchedUser.name}.`))
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
