@@ -32,15 +32,21 @@ const UserSchema: Schema = new Schema<User, UserModel, UserMethods>({
 });
 
 UserSchema.method('ban', async function ban() {
-    console.log(this)
+    this.type = 'banned'
+
+    return this
 })
 
-UserSchema.method('promote', async function promote(level: 'admin' | 'owner') {
-    console.log(this, level)
+UserSchema.method('promote', async function promote() {
+    this.type = 'admin'
+
+    return this
 })
 
 UserSchema.method('demote', async function demote() {
-    console.log(this)
+    this.type = 'user'
+
+    return this
 })
 
 export default mongoose.model<User, UserModel>('users', UserSchema)
