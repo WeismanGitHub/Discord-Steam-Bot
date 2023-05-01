@@ -120,6 +120,35 @@ async function getUser(req: Request, res: Response): Promise<void> {
     })
 }
 
+async function getBannedUsers(req: Request, res: Response): Promise<void> {
+    const page = Number(req.query.page) || 0
+
+    if (!Number.isSafeInteger(page) || page < 0) {
+        throw new BadRequestError('Page is invalid.')
+    }
+    
+    const userIDs = (await UserModel.find({ type: 'banned' }).skip(page).limit(10).select('_id').lean()
+    .catch(err => {
+        throw new InternalServerError('Could not get user ids.')
+    })).map(user => user._id)
+
+    const users = await Promise.all(userIDs.map(async (userID) => {
+        const client: CustomClient = req.app.get('discordClient')
+
+        const user = await client.users.fetch(userID)
+        .catch(err => {
+            throw new InternalServerError('Could not get users.')
+        })
+
+        return {
+            name: user.username,
+            avatarURL: user.avatarURL(),
+        }
+    }))
+
+    res.status(200).json(users)
+}
+
 export {
     getBotGuilds,
     getUsers,
@@ -127,4 +156,5 @@ export {
     banUser,
     getUser,
     unbanUser,
+    getBannedUsers
 }
