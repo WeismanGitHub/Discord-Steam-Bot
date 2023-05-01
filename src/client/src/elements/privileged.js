@@ -140,6 +140,12 @@ export default function Privileged() {
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
 
+	function unban() {
+		axios.post(`/api/v1/admin/users/${searchedUser?.ID}/unban`)
+		.then(res => successToast(`Unbanned ${searchedUser.name}.`))
+		.catch(err => errorToast(err?.response?.data?.error || err.message));
+	}
+
 	return <>
 		<Navbar/>
 
@@ -305,6 +311,7 @@ export default function Privileged() {
 								<button onClick={() => demote()} class='generic-button'>Demote</button>
 							</>}
 							<button style={{width: '50px' }} onClick={() => ban() } class='generic-button'>Ban</button>
+							<button style={{width: '50px' }} onClick={() => unban() } class='generic-button'>Unban</button>
 						</div>
 						<hr class="divider"/>
 					</>}
