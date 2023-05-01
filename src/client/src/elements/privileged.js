@@ -6,7 +6,6 @@ import axios, * as others from 'axios'
 import '../css/privileged.css';
 
 export default function Privileged() {
-	const [personType, setPersonType] = useState(localStorage.getItem('personType') || 'users')
 	const userData = JSON.parse(localStorage.getItem('userData'))
 	const [inputtedUserID, setInputtedUserID] = useState('')
 	const [searchedUser, setSearchedUser] = useState(null)
@@ -17,6 +16,10 @@ export default function Privileged() {
 	const [bot, setBot] = useState(null)
 	const navigate = useNavigate();
 
+	const [personDisplaySetting, setPersonDisplaySetting] = useState(
+		JSON.parse(localStorage.getItem('personDisplaySetting')) || { apiRoute: 'admin', type: 'users' }
+	)
+
 	useEffect(() => {
 		if (!userData || userData.type == 'user') {
 			errorToast('You must be an admin or owner.')
@@ -25,7 +28,7 @@ export default function Privileged() {
 
 		Promise.all([
 			axios.get('/api/v1/admin/guilds'),
-			axios.get(`/api/v1/${personType === 'users' ? 'admin' : 'owner'}/${personType}`),
+			axios.get(`/api/v1/${personDisplaySetting.apiRoute}/${personDisplaySetting.type}`),
 			axios.get('/api/v1/admin/bot'),
 		])
 		.then(([guildsRes, usersRes, botRes]) => {
@@ -54,7 +57,7 @@ export default function Privileged() {
 			return errorToast('No more people left.')
 		}
 
-		axios.get(`/api/v1/${personType === 'users' ? 'admin' : 'owner'}/${personType}`)
+		axios.get(`/api/v1/${personDisplaySetting.apiRoute}/${personDisplaySetting.type}`)
 		.then(res => {
 			if (!res?.data) {
 				return errorToast('Something went wrong getting more people.')
@@ -66,11 +69,11 @@ export default function Privileged() {
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
 
-	function personTypeClick(type) {
-		localStorage.setItem('personType', type)
-		setPersonType(type)
+	function personSettingClick(setting) {
+		localStorage.setItem('personDisplaySetting', JSON.stringify(setting))
+		setPersonDisplaySetting(setting)
 		
-		axios.get(`/api/v1/${type === 'users' ? 'admin' : 'owner'}/${type}`)
+		axios.get(`/api/v1/${setting.apiRoute}/${setting.type}`)
 		.then(res => {
 			if (!res?.data) {
 				return errorToast('Something went wrong getting more people.')
@@ -178,16 +181,20 @@ export default function Privileged() {
 				{userData?.type == 'admin' ? 'Users' :
 				<div>
 					<button
-						class={`generic-button ${personType == 'users' ? 'highlighted' : 'unhighlighted'}`}
-						onClick={() => personTypeClick('users')}
+						class={`generic-button ${personDisplaySetting.type == 'users' ? 'highlighted' : 'unhighlighted'}`}
+						onClick={() => personSettingClick({ apiRoute: 'admin', type: 'users' })}
 					>Users</button>
 					<button
-						class={`generic-button ${personType == 'admins' ? 'highlighted' : 'unhighlighted'}`}
-						onClick={() => personTypeClick('admins')}
+						class={`generic-button ${personDisplaySetting.type == 'banned' ? 'highlighted' : 'unhighlighted'}`}
+						onClick={() => personSettingClick({ apiRoute: 'admin/users', type: 'banned' })}
+					>Banned</button>
+					<button
+						class={`generic-button ${personDisplaySetting.type == 'admins' ? 'highlighted' : 'unhighlighted'}`}
+						onClick={() => personSettingClick({ apiRoute: 'owner', type: 'admins' })}
 					>Admins</button>
 					<button
-						class={`generic-button ${personType == 'owners' ? 'highlighted' : 'unhighlighted'}`}
-						onClick={() => personTypeClick('owners')}
+						class={`generic-button ${personDisplaySetting.type == 'owners' ? 'highlighted' : 'unhighlighted'}`}
+						onClick={() => personSettingClick({ apiRoute: 'owner', type: 'owners' })}
 					>Owners</button>
 				</div>}
 			<div>
