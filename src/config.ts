@@ -27,6 +27,8 @@ class Configuration {
     limiterMessage: string
     limiterStandardHeaders: boolean
     limiterLegacyHeaders: boolean
+    botInviteLink: string
+    websiteLink: string
 
     constructor() {
         const rawActivity = fs.readFileSync(path.resolve('./activity.json'), 'utf8')
@@ -44,6 +46,8 @@ class Configuration {
         this.mainAccountID = process.env.DISCORD_MAIN_ACCOUNT_ID!
         this.activityType = Number(activity.type)
         this.activityName = activity.name
+        this.botInviteLink = process.env.BOT_INVITE_LINK!
+        this.websiteLink = process.env.WEBSITE_LINK!
 
         // App
         this.appPort = 5000
