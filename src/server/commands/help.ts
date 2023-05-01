@@ -26,6 +26,10 @@ export default {
 			.setURL(Config.authRedirectURI!)
 			.setStyle(ButtonStyle.Link),
 			new ButtonBuilder()
+			.setLabel('Website')
+			.setURL(Config.websiteLink)
+			.setStyle(ButtonStyle.Link),
+			new ButtonBuilder()
 			.setLabel('Source Code')
 			.setURL(Config.sourceCodeLink!)
 			.setStyle(ButtonStyle.Link),
