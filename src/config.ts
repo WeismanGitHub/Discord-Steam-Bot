@@ -46,7 +46,7 @@ class Configuration {
         this.mainAccountID = process.env.DISCORD_MAIN_ACCOUNT_ID!
         this.activityType = Number(activity.type)
         this.activityName = activity.name
-        this.botInviteLink = process.env.BOT_INVITE_LINK!
+        this.botInviteLink = process.env.REACT_APP_BOT_INVITE_LINK!
         this.websiteLink = process.env.WEBSITE_LINK!
 
         // App
@@ -54,8 +54,8 @@ class Configuration {
         this.jwtSecret = process.env.JWT_SECRET!
         this.authRedirectURI = process.env.AUTH_REDIRECT_URI!
         this.loginRedirectURI = process.env.LOGIN_REDIRECT_URI!
-        this.buyMeACofeeLink = process.env.BUY_ME_A_COFFEE_LINK!
-        this.sourceCodeLink = process.env.SOURCE_CODE_LINK!
+        this.buyMeACofeeLink = process.env.REACT_APP_BUY_ME_A_COFFEE_LINK!
+        this.sourceCodeLink = process.env.REACT_APP_SOURCE_CODE_LINK!
         this.steamAPIKey = process.env.STEAM_API_KEY!
 
         // Mongodb
