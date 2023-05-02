@@ -29,7 +29,7 @@ export default function Privileged() {
 		Promise.all([
 			axios.get('/api/v1/admin/guilds').catch(err => errorToast('Could not get guilds.')),
 			axios.get(`/api/v1/${personDisplaySetting.apiRoute}/${personDisplaySetting.type}`).catch(err => errorToast('Could not get peoeple.')),
-			axios.get('/api/v1/admins/bot').catch(err => errorToast('Could not get bot data.')),
+			axios.get('/api/v1/admin/bot').catch(err => errorToast('Could not get bot data.')),
 		])
 		.then(([guildsRes, usersRes, botRes]) => {
 			setGuilds(guildsRes?.data)
