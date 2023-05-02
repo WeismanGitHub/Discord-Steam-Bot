@@ -16,7 +16,7 @@ export default {
 	async execute(interaction: CommandInteraction): Promise<void> {
 		const embed: EmbedBuilder = new EmbedBuilder()
 		.setColor('#8F00FF') // Purple
-		.setDescription("Click the link to allow this bot to save your Steam connection. Use the `/unauthorize` command to delete all your data stored by the bot.")
+		.setDescription("Use slash commands to conveniently view other users' public Steam information. Allow access to view your connected Steam account through the link below so others can use commands on you. Use `/unauthorize` to delete all data stored by the bot.")
 		.addFields({ name: 'Contact the Creator:', value: `<@${Config.mainAccountID}>` })
 	
 		const row = new ActionRowBuilder<ButtonBuilder>()
