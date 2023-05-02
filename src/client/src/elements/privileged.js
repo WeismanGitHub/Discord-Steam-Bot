@@ -27,15 +27,15 @@ export default function Privileged() {
 		}
 
 		Promise.all([
-			axios.get('/api/v1/admin/guilds'),
-			axios.get(`/api/v1/${personDisplaySetting.apiRoute}/${personDisplaySetting.type}`),
-			axios.get('/api/v1/admin/bot'),
+			axios.get('/api/v1/admin/guilds').catch(err => errorToast('Could not get guilds.')),
+			axios.get(`/api/v1/${personDisplaySetting.apiRoute}/${personDisplaySetting.type}`).catch(err => errorToast('Could not get peoeple.')),
+			axios.get('/api/v1/admins/bot').catch(err => errorToast('Could not get bot data.')),
 		])
 		.then(([guildsRes, usersRes, botRes]) => {
-			setGuilds(guildsRes.data)
-			setPeople(usersRes.data)
-			setBot(botRes.data)
-			setActivity(botRes.data.activity)
+			setGuilds(guildsRes?.data)
+			setPeople(usersRes?.data)
+			setBot(botRes?.data)
+			setActivity(botRes?.data?.activity)
 		})
 		.catch(err => {
 			errorToast(err?.response?.data?.error || err.message)
@@ -96,7 +96,7 @@ export default function Privileged() {
 	}
 
 	function updateActivity() {
-		if (activity.name <= 0) {
+		if (activity?.name <= 0) {
 			return errorToast('Activity name must be greater than 0.')
 		}
 		
@@ -109,10 +109,10 @@ export default function Privileged() {
 		}
 
 		axios.post('/api/v1/owner/activity', {
-			name: activity.name,
-			type: ActivityTypes[activity.type]
+			name: activity?.name,
+			type: ActivityTypes[activity?.type]
 		})
-		.then(res => successToast(`Set activity to: ${activity.type} ${activity.name}`))
+		.then(res => successToast(`Set activity to: ${activity?.type} ${activity?.name}`))
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
 
@@ -240,26 +240,26 @@ export default function Privileged() {
 					<hr class="divider"/>
 
 					<div>
-						<button onClick={() => setActivity({ type: 'Playing', name: activity?.name})} class={`generic-button ${activity.type == 'Playing' ? 'highlighted' : 'unhighlighted'}`}>Playing</button>
+						<button onClick={() => setActivity({ type: 'Playing', name: activity?.name})} class={`generic-button ${activity?.type == 'Playing' ? 'highlighted' : 'unhighlighted'}`}>Playing</button>
 
-						<button onClick={() => setActivity({ type: 'Streaming', name: activity?.name})} class={`generic-button ${activity.type == 'Streaming' ? 'highlighted' : 'unhighlighted'}`}>Streaming</button>
+						<button onClick={() => setActivity({ type: 'Streaming', name: activity?.name})} class={`generic-button ${activity?.type == 'Streaming' ? 'highlighted' : 'unhighlighted'}`}>Streaming</button>
 
-						<button onClick={() => setActivity({ type: 'Listening', name: activity?.name})} class={`generic-button ${activity.type == 'Listening' ? 'highlighted' : 'unhighlighted'}`}>Listening</button>
+						<button onClick={() => setActivity({ type: 'Listening', name: activity?.name})} class={`generic-button ${activity?.type == 'Listening' ? 'highlighted' : 'unhighlighted'}`}>Listening</button>
 
-						<button onClick={() => setActivity({ type: 'Watching', name: activity?.name})} class={`generic-button ${activity.type == 'Watching' ? 'highlighted' : 'unhighlighted'}`}>Watching</button>
+						<button onClick={() => setActivity({ type: 'Watching', name: activity?.name})} class={`generic-button ${activity?.type == 'Watching' ? 'highlighted' : 'unhighlighted'}`}>Watching</button>
 
-						<button onClick={() => setActivity({ type: 'Competing', name: activity?.name})} class={`generic-button ${activity.type == 'Competing' ? 'highlighted' : 'unhighlighted'}`}>Competing</button>
+						<button onClick={() => setActivity({ type: 'Competing', name: activity?.name})} class={`generic-button ${activity?.type == 'Competing' ? 'highlighted' : 'unhighlighted'}`}>Competing</button>
 
 						<input
 							type='text'
 							class='activity-input'
-							value={activity.name}
+							value={activity?.name}
 							onChange={ (e)=> {
 								if (e.target.value.length > 50) {
 									return errorToast('Must be less than 100.')
 								}
 
-								setActivity({ type: activity.type, name: e.target.value })
+								setActivity({ type: activity?.type, name: e.target.value })
 							} }
 							onKeyPress={ (e) => e.key === 'Enter' && updateActivity()}
 						/>
