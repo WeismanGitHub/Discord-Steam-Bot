@@ -9,10 +9,11 @@ require('express-async-errors')
 import helmet from 'helmet'
 import cors from 'cors'
 
-import { adminAuth, ownerAuth } from '../middleware/auth';
+import { adminAuth, ownerAuth, userAuth } from '../middleware/auth';
 import adminRouter from './admin';
 import ownerRouter from './owner';
 import authRouter from './auth';
+import userRouter from './user';
 
 const v1Router: Router = Router();
 
@@ -55,6 +56,7 @@ v1Router.use(cookieParser())
 
 v1Router.use('/admin', adminAuth, adminRouter)
 v1Router.use('/owner', ownerAuth, ownerRouter)
+v1Router.use('/user', userAuth, userRouter)
 v1Router.use('/auth', authRouter)
 
 export { v1Router }
