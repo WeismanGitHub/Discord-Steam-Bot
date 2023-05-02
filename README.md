@@ -19,6 +19,8 @@
   `npm i` to install dependencies.
 
   `npm run build` to build the client.
+
+  `npm run push` to push to Github.
   
   `tsc` to build the server.
   
