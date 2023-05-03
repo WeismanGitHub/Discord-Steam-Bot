@@ -51,7 +51,7 @@ export default {
         const playerData = results?.[0]?.[0]
         const playerLevel = results?.[1]
         
-        if (!playerData) {
+        if (!playerData || playerLevel === undefined) {
             throw new InternalServerError('Could not get user data.')
         }
 
