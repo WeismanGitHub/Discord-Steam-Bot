@@ -30,7 +30,7 @@ export default {
         const userDoc = await UserModel.findById(user.id).select('-_id steamID type').lean()
         
         if (!userDoc) {
-            throw new BadRequestError('User is not in database.')
+            return titleEmbed('User is not in database.')
         }
 
         if (userDoc.type === 'banned') {
@@ -46,7 +46,7 @@ export default {
         const friendsProfiles = await getPlayerSummaries(friends.map(friend => friend.steamid))
 
         if (!friendsProfiles?.length) {
-            throw new BadRequestError('User has no friends.')
+            return titleEmbed('User has no friends.')
         }
 
         const friendsEmbeds = friendsProfiles.map((friend): EmbedBuilder => {
