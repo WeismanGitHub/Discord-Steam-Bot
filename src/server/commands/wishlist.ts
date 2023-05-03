@@ -54,7 +54,7 @@ export default {
         const steamID = userDoc?.steamID
 
         if (!userDoc || !steamID) {
-            throw new BadRequestError('User is not in database.')
+            return titleEmbed('User is not in database.')
         }
 
         if (userDoc.type === 'banned') {
@@ -64,7 +64,7 @@ export default {
         let wishlistItems = await getWishlist(steamID, 0)
 
         if (!wishlistItems?.length) {
-            throw new BadRequestError('User has empty wishlist.')
+            return titleEmbed('User has empty wishlist.')
         }
 
         const reviewsOption = interaction.options.getString('reviews')
