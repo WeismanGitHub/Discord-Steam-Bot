@@ -69,6 +69,31 @@ async function getSelf(req: Request, res: Response): Promise<void> {
     })
 }
 
+async function deleteSelf(req: Request, res: Response): Promise<void> {
+    const discordID = req.userID
+
+    if (!discordID) {
+        throw new UnauthorizedError('Missing ID.')
+    }
+
+    const userDoc = await UserModel.findById(discordID)
+
+    if (!userDoc) {
+        throw new NotFoundError('Could not find user in database.')
+    }
+
+    if (userDoc.type == 'banned') {
+        const res = await userDoc.updateOne({ steamID: null })
+        console.log(res)
+    } else {
+        const res = await userDoc.deleteOne()
+        console.log(res)
+    }
+
+    res.status(200).end()
+}
+
 export {
-    getSelf
+    getSelf,
+    deleteSelf,
 }
