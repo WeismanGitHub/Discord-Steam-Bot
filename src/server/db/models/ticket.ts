@@ -1,13 +1,13 @@
 import mongoose, { Schema } from 'mongoose';
 
-interface User extends Document {
+interface Ticket extends Document {
     userID: string
     message: string
     status: 'closed' | 'open'
     assignee: string | null
 }
 
-const TicketSchema: Schema = new Schema<User>({
+const TicketSchema: Schema = new Schema<Ticket>({
     userID: {
         type: String,
         required: true
@@ -29,4 +29,4 @@ const TicketSchema: Schema = new Schema<User>({
     }
 });
 
-export default mongoose.model<User>('tickets', TicketSchema)
+export default mongoose.model<Ticket>('tickets', TicketSchema)
