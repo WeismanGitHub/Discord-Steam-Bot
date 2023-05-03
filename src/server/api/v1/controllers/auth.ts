@@ -115,24 +115,8 @@ async function login(req: Request, res: Response): Promise<void> {
 	.json({ type: user.type }).end()
 }
 
-async function unauthorize(req: Request, res: Response): Promise<void> {
-    if (!req.userID) {
-        throw new UnauthorizedError("Please login.")
-    }
-
-    const result = await UserModel.deleteOne({ _id:  req.userID })
-    .catch(err => { throw new InternalServerError('Could not delete your data.') })
-
-    if (!result.deletedCount) {
-        throw new BadRequestError("Nothing was changed. Maybe this bot already wasn't authorized?")
-    }
-
-	res.status(200).clearCookie('userID').end()
-}
-
 export {
     discordAuth,
     logout,
-    unauthorize,
     login,
 }
