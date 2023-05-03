@@ -1,5 +1,6 @@
 import { BadGatewayError, BadRequestError, InternalServerError } from '../errors';
 import { getPlayerSummaries, getSteamLevel } from '../utils/steam';
+import { playerProfileEmbed, titleEmbed } from '../utils/embeds';
 import { UserModel } from '../db/models';
 import {
     SlashCommandBuilder,
@@ -9,7 +10,6 @@ import {
     ButtonBuilder,
     ButtonStyle,
 } from 'discord.js'
-import { playerProfileEmbed } from '../utils/embeds';
 
 export default {
 	data: new SlashCommandBuilder()
@@ -22,17 +22,22 @@ export default {
             .setRequired(true)
         )
 	,
-	async execute(interaction: CommandInteraction): Promise<void> {
+	async execute(interaction: CommandInteraction) {
         const user: User = interaction.options.getUser('user')!
         
         if (user.bot) {
             throw new BadRequestError('User is a bot.')
         }
         
-        const steamID = (await UserModel.findById(user.id).select('-_id steamID').lean())?.steamID
+        const userDoc = await UserModel.findById(user.id).select('-_id steamID type').lean()
+        const steamID = userDoc?.steamID
 
-        if (!steamID) {
+        if (!userDoc || !steamID) {
             throw new BadRequestError('User is not in database.')
+        }
+
+        if (userDoc.type === 'banned') {
+            return titleEmbed('User is banned.')
         }
 
         const results = await Promise.all([
