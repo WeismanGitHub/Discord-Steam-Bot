@@ -31,14 +31,18 @@ export default {
         if (user.bot) {
             throw new BadRequestError('User is a bot.')
         }
-        
-        const steamID = (await UserModel.findById(user.id).select('-_id steamID').lean())?.steamID
 
-        if (!steamID) {
+        const userDoc = await UserModel.findById(user.id).select('-_id steamID type').lean()
+
+        if (!userDoc) {
             throw new BadRequestError('User is not in database.')
         }
 
-        const ownedGamesData = await getOwnedGames(steamID, playedFreeGamesOption)
+        if (userDoc.type === 'banned') {
+            return titleEmbed('User is banned.')
+        }
+
+        const ownedGamesData = await getOwnedGames(userDoc.steamID, playedFreeGamesOption)
         const gameCount = ownedGamesData?.game_count
         const ownedGames= ownedGamesData?.games
 
