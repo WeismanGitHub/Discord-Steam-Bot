@@ -1,5 +1,6 @@
 import { getFriendsList, getPlayerSummaries } from '../utils/steam';
 import { BadRequestError, InternalServerError } from '../errors';
+import { titleEmbed } from '../utils/embeds';
 import { UserModel } from '../db/models';
 import {
     SlashCommandBuilder,
@@ -7,7 +8,6 @@ import {
     User,
     EmbedBuilder,
 } from 'discord.js'
-import { titleEmbed } from '../utils/embeds';
 
 export default {
 	data: new SlashCommandBuilder()
@@ -27,13 +27,17 @@ export default {
             throw new BadRequestError('User is a bot.')
         }
 
-        const steamID = (await UserModel.findById(user.id).select('-_id steamID').lean())?.steamID
-
-        if (!steamID) {
+        const userDoc = await UserModel.findById(user.id).select('-_id steamID type').lean()
+        
+        if (!userDoc) {
             throw new BadRequestError('User is not in database.')
         }
 
-        const friends = await getFriendsList(steamID)
+        if (userDoc.type === 'banned') {
+            return titleEmbed('User is banned.')
+        }
+
+        const friends = await getFriendsList(userDoc.steamID)
 
         if (!friends) {
             throw new InternalServerError('Could not get friends.')
