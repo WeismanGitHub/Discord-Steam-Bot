@@ -35,7 +35,7 @@ export default {
         const userDoc = await UserModel.findById(user.id).select('-_id steamID type').lean()
 
         if (!userDoc) {
-            throw new BadRequestError('User is not in database.')
+            return titleEmbed('User is not in database.')
         }
 
         if (userDoc.type === 'banned') {
