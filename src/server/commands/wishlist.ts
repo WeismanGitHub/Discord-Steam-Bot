@@ -1,3 +1,4 @@
+import { titleEmbed } from '../utils/embeds';
 import { getWishlist } from '../utils/steam';
 import { BadRequestError } from '../errors';
 import { UserModel } from '../db/models';
@@ -49,10 +50,15 @@ export default {
             throw new BadRequestError('User is a bot.')
         }
         
-        const steamID = (await UserModel.findById(user.id).select('-_id steamID').lean())?.steamID
+        const userDoc = await UserModel.findById(user.id).select('-_id steamID type').lean()
+        const steamID = userDoc?.steamID
 
-        if (!steamID) {
+        if (!userDoc || !steamID) {
             throw new BadRequestError('User is not in database.')
+        }
+
+        if (userDoc.type === 'banned') {
+            return titleEmbed('User is banned.')
         }
 
         let wishlistItems = await getWishlist(steamID, 0)
