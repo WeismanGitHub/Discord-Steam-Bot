@@ -33,7 +33,7 @@ export default {
         const steamID = userDoc?.steamID
 
         if (!userDoc || !steamID) {
-            throw new BadRequestError('User is not in database.')
+            return titleEmbed('User is not in database.')
         }
 
         if (userDoc.type === 'banned') {
