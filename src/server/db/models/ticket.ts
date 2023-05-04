@@ -15,11 +15,15 @@ const TicketSchema: Schema = new Schema<Ticket>({
     },
     title: {
         type: String,
-        required: true
+        required: true,
+        max: 256,
+        min: 1
     },
     text: {
         type: String,
-        required: true
+        required: true,
+        max: 4096,
+        min: 1
     },
     status: {
         type: String,
