@@ -26,7 +26,7 @@ export default {
         .setMinLength(1)
 
         const bodyInput = new TextInputBuilder()
-        .setCustomId('body')
+        .setCustomId('text')
         .setLabel("Body")
         .setStyle(TextInputStyle.Paragraph)
         .setMinLength(1)
