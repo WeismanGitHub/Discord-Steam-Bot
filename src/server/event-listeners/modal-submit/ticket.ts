@@ -2,15 +2,14 @@ import { ModalSubmitInteraction, Events } from "discord.js";
 
 export default {
 	name: Events.InteractionCreate,
-	once: true,
+    once: false,
 	execute(interaction: ModalSubmitInteraction) {
         if (!interaction.isModalSubmit()) return;
 
         const { type }: CustomID<{}> = JSON.parse(interaction.customId)
 
-        if (type !== 'ticket')
-            return
+        if (type !== 'ticket') return
 
-        console.log(interaction)
+        console.log(interaction.fields)
 	},
 };
