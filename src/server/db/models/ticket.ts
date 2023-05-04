@@ -2,7 +2,8 @@ import mongoose, { Schema } from 'mongoose';
 
 interface Ticket extends Document {
     userID: string
-    message: string
+    title: string
+    text: string
     status: 'closed' | 'open'
     assignee: string | null
 }
@@ -12,7 +13,11 @@ const TicketSchema: Schema = new Schema<Ticket>({
         type: String,
         required: true
     },
-    message: {
+    title: {
+        type: String,
+        required: true
+    },
+    text: {
         type: String,
         required: true
     },
