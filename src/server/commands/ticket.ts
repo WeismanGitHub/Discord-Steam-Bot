@@ -22,6 +22,7 @@ export default {
         .setLabel("Title")
         .setStyle(TextInputStyle.Short)
         .setMaxLength(256)
+        .setRequired(true)
         .setMinLength(1)
 
         const bodyInput = new TextInputBuilder()
@@ -29,6 +30,7 @@ export default {
         .setLabel("Body")
         .setStyle(TextInputStyle.Paragraph)
         .setMinLength(1)
+        .setRequired(true)
 
         modal.addComponents(
             new ActionRowBuilder<TextInputBuilder>().addComponents(titleInput),
