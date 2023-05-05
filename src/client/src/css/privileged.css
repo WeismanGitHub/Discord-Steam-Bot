@@ -17,7 +17,7 @@
   border-radius: 5px;
 }
 
-.column-item {
+.user-guild {
   float: left;
   font-size: large;
   display: inline;
@@ -40,7 +40,7 @@
   text-align: left;
 }
 
-.item-info {
+.user-guild-info {
   font-size: medium;
   text-align: left;
   float: left;

@@ -161,11 +161,11 @@ export default function Privileged() {
 				const name = `${guild.name?.substring(0, 32)}${guild.name?.length > 35 ? '...' : ''}`
 				const formattedDate = formatTimestamp(guild.joinedTimestamp)
 
-				return <div class='column-item' title={guild.name}>
+				return <div class='user-guild' title={guild.name}>
 					<img src={guild.iconURL} alt='guild icon' width={60} height={60} class='icon'/>
 					<div class='name'>{name}</div>
 					
-					<div class='item-info'>
+					<div class='user-guild-info'>
 						joined: {formattedDate}
 						<br/>
 						members: {guild.memberCount}
@@ -205,7 +205,7 @@ export default function Privileged() {
 			<hr class="divider"/>
 
 			{people?.map(person => {
-				return <div class='column-item' title={person.name}>
+				return <div class='user-guild' title={person.name}>
 					<img src={person.avatarURL} alt='person avatar' width={53} height={53} class='icon'/>
 					<div class='name'>{person.name}</div>
 				</div>
@@ -217,12 +217,12 @@ export default function Privileged() {
 			Bot:
 			<hr class="divider"/>
 			
-			<div class='column-item' title={bot?.name}>
+			<div class='user-guild' title={bot?.name}>
 				<img src={bot?.avatarURL} alt='bot avatar' width={53} height={53} class='icon'/>
 				<div class='name'>{bot?.name}</div>
 				<br/>
 
-				<div class='item-info'>
+				<div class='user-guild-info'>
 					created: {formatTimestamp(bot?.createdTimestamp)}
 					<br/>
 					online: {formatTimestamp(bot?.readyTimestamp)}
@@ -297,11 +297,11 @@ export default function Privileged() {
 					<hr class="divider"/>
 
 					{searchedUser && <>
-						<div class='column-item' title={searchedUser?.name}>
+						<div class='user-guild' title={searchedUser?.name}>
 							<img src={searchedUser?.avatarURL} alt='user avatar' width={53} height={53} class='icon'/>
 							<div class='name'>{searchedUser?.name}</div>
 
-							<div class='item-info' style={{ 'padding-top': '5px' }}>
+							<div class='user-guild-info' style={{ 'padding-top': '5px' }}>
 								discriminator: {`#${searchedUser?.discriminator}`}
 								<br/>
 								joined: {formatTimestamp(searchedUser?.createdTimestamp)}
