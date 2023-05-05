@@ -33,7 +33,6 @@ const TicketSchema: Schema = new Schema<Ticket>({
     },
     assignee: {
         type: String,
-        required: true,
         default: null
     }
 });
