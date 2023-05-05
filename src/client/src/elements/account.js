@@ -11,8 +11,8 @@ export default function Account() {
 	const [steamData, setSteamData] = useState(null)
 	const [type, setType] = useState(null)
 	const navigate = useNavigate();
-
-    useEffect(() => {
+	
+	useEffect(() => {
 		if (!userData) {
 			errorToast('Please login.')
 			return navigate('/')
@@ -29,17 +29,52 @@ export default function Account() {
 		.catch(err => {
 			errorToast(err?.response?.data?.error || err.message)
 		});
-    }, [])
+	}, [])
 
-	console.log(type, steamData, discordData)
-    return (<>
-        <NavBar/>
-		{/* <div class='column' style={{ width: '20%' }}>
+	function deleteAccount() {
 
+	}
+	
+	return (<>
+		<NavBar/>
+
+		<div class='account-area'>
+			Discord
+			<div class='user-guild' title={discordData?.name}>
+				<img src={discordData?.avatarURL} alt='discord avatar' width={53} height={53} class='icon'/>
+				<div class='name'>{discordData?.name}</div>
+
+				<div class='user-guild-info' style={{ 'padding-top': '5px' }}>
+					discriminator: sdfsfsfaf
+					<br/>
+					joined: asdfasfasfsa
+					<br/>
+					id: sdfsfa
+				</div>
+			</div>
+
+			<hr class='divider' style={{ backGroundColor: '#41454b' }}/>
+
+			Steam
+			<div class='user-guild' title={steamData?.name}>
+				<img src={steamData?.avatarURL} alt='discord avatar' width={53} height={53} class='icon'/>
+				<div class='name'>{steamData?.name}</div>
+
+				<div class='user-guild-info' style={{ 'padding-top': '5px' }}>
+					discriminator: dsfsfgsd
+					<br/>
+					joined: sfafdasfd
+					<br/>
+					id: adsfsafsasadf
+				</div>
+			</div>
+
+			<hr class='divider' style={{ backGroundColor: '#41454b' }}/>
+
+			<button onClick={() => deleteAccount()} class='generic-button'>Delete Data</button>
+			<div style={{ fontSize: 'small' }}>
+				*The Discord IDs of banned users will be stored.
+			</div>
 		</div>
-		<div class='column-item' title={person.name}>
-			<img src={person.avatarURL} alt='person avatar' width={53} height={53} class='icon'/>
-			<div class='name'>{person.name}</div>
-		</div> */}
-    </>)
+	</>)
 }
