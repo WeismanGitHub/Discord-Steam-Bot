@@ -81,6 +81,10 @@ export default function Account() {
 
 			<hr class='divider' style={{ backGroundColor: '#41454b' }}/>
 
+			account type: {type}
+
+			<hr class='divider' style={{ backGroundColor: '#41454b' }}/>
+
 			<button onClick={() => deleteAccount()} class='generic-button'>Delete Data</button>
 			<div style={{ fontSize: 'small' }}>
 				*The Discord IDs of banned users will be stored.
