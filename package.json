@@ -28,7 +28,8 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "push": "git push -u origin master",
-    "app": "nodemon dist/server/index.js"
+    "app": "nodemon dist/server/index.js",
+    "commands": "node reload-commands.js"
   },
   "eslintConfig": {
     "extends": [
