@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import Navbar from '../elements/nav-bar';
 import axios, * as others from 'axios'
-import '../css/privileged.css';
 
 export default function Privileged() {
 	const userData = JSON.parse(localStorage.getItem('userData'))
