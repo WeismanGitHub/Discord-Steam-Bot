@@ -28,12 +28,12 @@
   margin-bottom: 10px;
 }
 
-.icon {
+.user-guild-icon {
   border-radius: 50%;
   float: left;
 }
 
-.name {
+.user-guild-name {
   float: left;
   display: flex;
   margin-left: 5px;

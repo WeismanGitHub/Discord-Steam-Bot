@@ -162,8 +162,8 @@ export default function Privileged() {
 				const formattedDate = formatTimestamp(guild.joinedTimestamp)
 
 				return <div class='user-guild' title={guild.name}>
-					<img src={guild.iconURL} alt='guild icon' width={60} height={60} class='icon'/>
-					<div class='name'>{name}</div>
+					<img src={guild.iconURL} alt='guild icon' width={60} height={60} class='user-guild-icon'/>
+					<div class='user-guild-name'>{name}</div>
 					
 					<div class='user-guild-info'>
 						joined: {formattedDate}
@@ -206,8 +206,8 @@ export default function Privileged() {
 
 			{people?.map(person => {
 				return <div class='user-guild' title={person.name}>
-					<img src={person.avatarURL} alt='person avatar' width={53} height={53} class='icon'/>
-					<div class='name'>{person.name}</div>
+					<img src={person.avatarURL} alt='person avatar' width={53} height={53} class='user-guild-icon'/>
+					<div class='user-guild-name'>{person.name}</div>
 				</div>
 			})}
 		</div>
@@ -218,8 +218,8 @@ export default function Privileged() {
 			<hr class="divider"/>
 			
 			<div class='user-guild' title={bot?.name}>
-				<img src={bot?.avatarURL} alt='bot avatar' width={53} height={53} class='icon'/>
-				<div class='name'>{bot?.name}</div>
+				<img src={bot?.avatarURL} alt='bot avatar' width={53} height={53} class='user-guild-icon'/>
+				<div class='user-guild-name'>{bot?.name}</div>
 				<br/>
 
 				<div class='user-guild-info'>
@@ -298,8 +298,8 @@ export default function Privileged() {
 
 					{searchedUser && <>
 						<div class='user-guild' title={searchedUser?.name}>
-							<img src={searchedUser?.avatarURL} alt='user avatar' width={53} height={53} class='icon'/>
-							<div class='name'>{searchedUser?.name}</div>
+							<img src={searchedUser?.avatarURL} alt='user avatar' width={53} height={53} class='user-guild-icon'/>
+							<div class='user-guild-name'>{searchedUser?.name}</div>
 
 							<div class='user-guild-info' style={{ 'padding-top': '5px' }}>
 								discriminator: {`#${searchedUser?.discriminator}`}
