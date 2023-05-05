@@ -57,7 +57,7 @@ async function getSelf(req: Request, res: Response): Promise<void> {
             level: steamLevel,
             avatarURL: steamUserData.avatarfull,
             name: steamUserData.personaname,
-            createdTimestamp: steamUserData.timecreated
+            createdTimestamp: `${steamUserData.timecreated}000`
         },
         discord: {
             ID: discordID,
