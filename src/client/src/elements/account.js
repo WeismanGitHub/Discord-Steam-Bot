@@ -31,6 +31,16 @@ export default function Account() {
 		});
 	}, [])
 
+	function formatTimestamp(timestamp) {
+		const date = new Date(Number(timestamp))
+
+		return date.toLocaleDateString("en-US", {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		})
+	}
+
 	function deleteAccount() {
 
 	}
@@ -45,11 +55,11 @@ export default function Account() {
 				<div class='name'>{discordData?.name}</div>
 
 				<div class='user-guild-info' style={{ 'padding-top': '5px' }}>
-					discriminator: sdfsfsfaf
+					discriminator: {discordData?.discriminator}
 					<br/>
-					joined: asdfasfasfsa
+					joined: {formatTimestamp(discordData?.createdTimestamp)}
 					<br/>
-					id: sdfsfa
+					id: {discordData?.ID}
 				</div>
 			</div>
 
@@ -61,11 +71,11 @@ export default function Account() {
 				<div class='name'>{steamData?.name}</div>
 
 				<div class='user-guild-info' style={{ 'padding-top': '5px' }}>
-					discriminator: dsfsfgsd
+					level: {steamData?.level}
 					<br/>
-					joined: sfafdasfd
+					joined: {formatTimestamp(steamData?.createdTimestamp)}
 					<br/>
-					id: adsfsafsasadf
+					id: {steamData?.ID}
 				</div>
 			</div>
 
