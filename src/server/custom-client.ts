@@ -6,8 +6,6 @@ import { join } from 'path';
 import {
     Client,
     Collection,
-    REST,
-    Routes,
     ClientOptions,
     ActivityType,
     Presence,
@@ -46,51 +44,27 @@ export class CustomClient extends Client {
         .then(async () => {
             this.setPresence(Config.activityType, Config.activityName)
             this.loadEventListeners()
-            await this.deleteCommands()
             this.loadCommands()
         })
     }
     
-    private async deleteCommands() {
-        try {
-            const rest = new REST({ version: '10' }).setToken(this.token);
+    public async loadCommands() {
+        const commandsPaths: string[] = getPaths(join(__dirname, 'commands')).filter(file => file.endsWith('.js'))
+        const commands = [];
 
-            await rest.put(Routes.applicationCommands(Config.discordClientID!), { body: [] })
-
-            console.log('deleted all commands...')
-        } catch (err) {
-            console.error(err);
-        }
-    }
+        for (const path of commandsPaths) {
+            const command = require(path);
     
-    private async loadCommands() {
-        try {
-            const commandsPaths: string[] = getPaths(join(__dirname, 'commands')).filter(file => file.endsWith('.js'))
-            const commands = [];
-
-            for (const path of commandsPaths) {
-                const command = require(path);
-        
-                if (!command.default.data) {
-                    console.log(`malformed command file...`)
-                    continue
-                }
-        
-                commands.push(command.default.data.toJSON());
-                this.commands.set(command.default.data.name, command.default);
+            if (!command.default.data) {
+                console.log(`malformed command file...`)
+                continue
             }
-
-            const rest = new REST({ version: '10' }).setToken(this.token);
-
-            await rest.put(
-                Routes.applicationCommands(Config.discordClientID!),
-                { body: commands },
-            );
-
-            console.log(`reloaded ${commands.length} commands...`);
-        } catch (err) {
-            console.error(err);
+    
+            commands.push(command.default.data.toJSON());
+            this.commands.set(command.default.data.name, command.default);
         }
+
+        console.log(`loaded ${commands.length} commands...`)
 
         this.on(Events.InteractionCreate, async interaction => {
             if (!interaction.isCommand()) return;
