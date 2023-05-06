@@ -11,14 +11,12 @@ async function getTickets(req: Request, res: Response): Promise<void> {
         throw new BadRequestError('Page is invalid.')
     }
 
-    console.log(typeof TicketModel, status)
-
-    if (false) {
+    if (status && ['closed', 'open'].includes(String(status))) {
         throw new BadGatewayError('Invalid status.')
     }
-    
+
     const tickets = await TicketModel.find(status ? { status } : {})
-    .skip(page).limit(10).select('-text').lean()
+    .skip(page * 10).limit(10).select('-text').lean()
     .catch(err => {
         throw new InternalServerError('Could not get user ids.')
     })

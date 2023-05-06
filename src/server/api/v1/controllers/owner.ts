@@ -13,7 +13,7 @@ async function getAdmins(req: Request, res: Response): Promise<void> {
         throw new BadRequestError('Page is invalid.')
     }
 
-    const adminIDs = (await UserModel.find({ type: 'admin' }).skip(page).limit(10).select('_id').lean()
+    const adminIDs = (await UserModel.find({ type: 'admin' }).skip(page * 10).limit(10).select('_id').lean()
     .catch(err => {
         throw new InternalServerError('Could not get admin ids.')
     })).map(admin => admin._id)
@@ -42,7 +42,7 @@ async function getOwners(req: Request, res: Response): Promise<void> {
         throw new BadRequestError('Page is invalid.')
     }
 
-    const ownerIDs = (await UserModel.find({ type: 'owner' }).skip(page).limit(10).select('_id').lean()
+    const ownerIDs = (await UserModel.find({ type: 'owner' }).skip(page * 10).limit(10).select('_id').lean()
     .catch(err => {
         throw new InternalServerError('Could not get owner ids.')
     })).map(owner => owner._id)
