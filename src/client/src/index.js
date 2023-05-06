@@ -9,6 +9,7 @@ import DiscordAuth from './elements/discord-auth';
 import Privileged from './elements/privileged';
 import NotFound from './elements/not-found';
 import Account from './elements/account';
+import Tickets from './elements/tickets';
 import Login from './elements/login';
 import Main from './main';
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
     {
         path: '/account',
         element: <Account/>
+    },
+    {
+        path: '/tickets',
+        element: <Tickets/>
     },
     {
         path: '/auth/discord',
