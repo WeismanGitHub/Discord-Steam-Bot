@@ -46,7 +46,8 @@ async function adminAuth(req: Request, res: Response, next: NextFunction): Promi
 	}
 
 	req.user = user
-	
+	req.userID = user._id
+
 	next()
 }
 
@@ -72,6 +73,7 @@ async function ownerAuth(req: Request, res: Response, next: NextFunction): Promi
 	}
 
 	req.user = user
+	req.userID = user._id
 	
 	next()
 }
