@@ -32,7 +32,25 @@ async function getTicket(req: Request, res: Response): Promise<void> {
     res.status(200).json(ticket)
 }
 
+async function createTicket(req: Request, res: Response): Promise<void> {
+    const { title, text } = req.params
+    const userID = req.userID
+
+    if (!userID || !title || !text) {
+        throw new BadRequestError('Missing userID, title, or text.')
+    }
+
+    const ticket = await TicketModel.create({
+        userID,
+        title,
+        text
+    })
+
+    res.status(200).json(ticket)
+}
+
 export {
     getTickets,
     getTicket,
+    createTicket,
 }
