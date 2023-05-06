@@ -1,6 +1,6 @@
 import { InternalServerError } from "../../errors"
 import { getWishlist } from "../../utils/steam"
-import { titleEmbed } from "../../utils/embeds"
+import { basicEmbed } from "../../utils/embeds"
 import {
     ActionRowBuilder,
     ButtonBuilder,
@@ -40,7 +40,7 @@ export default {
 
         if (!wishlistItems?.length) {
             return interaction.reply({
-                embeds: [titleEmbed('No more items in wishlist.')],
+                embeds: [basicEmbed('No more items in wishlist.')],
                 ephemeral: true
             })
         }

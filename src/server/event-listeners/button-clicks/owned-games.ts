@@ -1,7 +1,7 @@
 import { ButtonInteraction, EmbedBuilder, Events } from "discord.js"
 import { InternalServerError, BadRequestError } from "../../errors"
 import { getOwnedGames } from "../../utils/steam"
-import { titleEmbed } from "../../utils/embeds"
+import { basicEmbed } from "../../utils/embeds"
 
 export default {
 	name: Events.InteractionCreate,
@@ -32,7 +32,7 @@ export default {
 
         if (!ownedGames.length) {
             return interaction.reply({
-                embeds: [titleEmbed('No owned games.')],
+                embeds: [basicEmbed('No owned games.')],
                 ephemeral: true
             })
         }
@@ -79,7 +79,7 @@ export default {
         await Promise.all(embedGroups.slice(1).map((embedGroup) => interaction.followUp({ embeds: embedGroup, ephemeral: true })))
 
         interaction.followUp({
-            embeds: [titleEmbed(`Game Count: ${gameCount ?? 'unknown'}`)],
+            embeds: [basicEmbed(`Game Count: ${gameCount ?? 'unknown'}`)],
             ephemeral: true
         })
     }
