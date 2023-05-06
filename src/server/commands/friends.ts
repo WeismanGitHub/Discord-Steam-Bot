@@ -1,6 +1,6 @@
 import { getFriendsList, getPlayerSummaries } from '../utils/steam';
 import { BadRequestError, InternalServerError } from '../errors';
-import { titleEmbed } from '../utils/embeds';
+import { basicEmbed } from '../utils/embeds';
 import { UserModel } from '../db/models';
 import {
     SlashCommandBuilder,
@@ -30,11 +30,11 @@ export default {
         const userDoc = await UserModel.findById(user.id).select('-_id steamID type').lean()
         
         if (!userDoc) {
-            return titleEmbed('User is not in database.')
+            return basicEmbed('User is not in database.')
         }
 
         if (userDoc.type === 'banned') {
-            return titleEmbed('User is banned.')
+            return basicEmbed('User is banned.')
         }
 
         const friends = await getFriendsList(userDoc.steamID)
@@ -46,7 +46,7 @@ export default {
         const friendsProfiles = await getPlayerSummaries(friends.map(friend => friend.steamid))
 
         if (!friendsProfiles?.length) {
-            return titleEmbed('User has no friends.')
+            return basicEmbed('User has no friends.')
         }
 
         const friendsEmbeds = friendsProfiles.map((friend): EmbedBuilder => {
@@ -65,7 +65,7 @@ export default {
         await Promise.all(embedGroups.slice(1).map((embedGroup) => interaction.followUp({ embeds: embedGroup, ephemeral: true })))
 
         interaction.followUp({
-            embeds: [titleEmbed(`Friend Count: ${friends.length ?? 'unknown'}`)],
+            embeds: [basicEmbed(`Friend Count: ${friends.length ?? 'unknown'}`)],
             ephemeral: true
         })
     },

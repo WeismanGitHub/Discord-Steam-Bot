@@ -1,4 +1,4 @@
-import { titleEmbed } from '../utils/embeds';
+import { basicEmbed } from '../utils/embeds';
 import { getWishlist } from '../utils/steam';
 import { BadRequestError } from '../errors';
 import { UserModel } from '../db/models';
@@ -54,17 +54,17 @@ export default {
         const steamID = userDoc?.steamID
 
         if (!userDoc || !steamID) {
-            return titleEmbed('User is not in database.')
+            return basicEmbed('User is not in database.')
         }
 
         if (userDoc.type === 'banned') {
-            return titleEmbed('User is banned.')
+            return basicEmbed('User is banned.')
         }
 
         let wishlistItems = await getWishlist(steamID, 0)
 
         if (!wishlistItems?.length) {
-            return titleEmbed('User has empty wishlist.')
+            return basicEmbed('User has empty wishlist.')
         }
 
         const reviewsOption = interaction.options.getString('reviews')

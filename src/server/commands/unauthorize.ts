@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, CommandInteraction } from 'discord.js'
 import { BadRequestError, InternalServerError } from '../errors';
 import { UserModel } from '../db/models';
-import { titleEmbed } from '../utils/embeds';
+import { basicEmbed } from '../utils/embeds';
 
 export default {
 	data: new SlashCommandBuilder()
@@ -17,7 +17,7 @@ export default {
 		}
 
 		interaction.reply({
-			embeds: [titleEmbed('Your data has been deleted!')],
+			embeds: [basicEmbed('Your data has been deleted!')],
 			ephemeral: true
 		})
 	}

@@ -1,6 +1,6 @@
 import { BadGatewayError, BadRequestError, InternalServerError } from '../errors';
 import { getPlayerSummaries, getSteamLevel } from '../utils/steam';
-import { playerProfileEmbed, titleEmbed } from '../utils/embeds';
+import { playerProfileEmbed, basicEmbed } from '../utils/embeds';
 import { UserModel } from '../db/models';
 import {
     SlashCommandBuilder,
@@ -33,11 +33,11 @@ export default {
         const steamID = userDoc?.steamID
 
         if (!userDoc || !steamID) {
-            return titleEmbed('User is not in database.')
+            return basicEmbed('User is not in database.')
         }
 
         if (userDoc.type === 'banned') {
-            return titleEmbed('User is banned.')
+            return basicEmbed('User is banned.')
         }
 
         const results = await Promise.all([
