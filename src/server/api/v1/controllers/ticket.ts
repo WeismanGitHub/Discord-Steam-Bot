@@ -25,6 +25,11 @@ async function getTickets(req: Request, res: Response): Promise<void> {
 }
 
 async function getTicket(req: Request, res: Response): Promise<void> {
+    const { ticketID } = req.params
+
+    const ticket = await TicketModel.findById(ticketID).lean()
+
+    res.status(200).json(ticket)
 }
 
 export {
