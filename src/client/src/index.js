@@ -10,6 +10,7 @@ import Privileged from './elements/privileged';
 import NotFound from './elements/not-found';
 import Account from './elements/account';
 import Tickets from './elements/tickets';
+import Ticket from './elements/ticket';
 import Login from './elements/login';
 import Main from './main';
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
     {
         path: '/tickets',
         element: <Tickets/>
+    },
+    {
+        path: '/tickets/:ticketID',
+        element: <Ticket/>
     },
     {
         path: '/auth/discord',
