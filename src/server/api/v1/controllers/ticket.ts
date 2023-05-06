@@ -5,7 +5,7 @@ require('express-async-errors')
 
 async function getTickets(req: Request, res: Response): Promise<void> {
     const page = Number(req.query.page) || 0
-    const status = req.query.status ?? 'open'
+    const status = req.query.status
 
     if (!Number.isSafeInteger(page) || page < 0) {
         throw new BadRequestError('Page is invalid.')
@@ -17,10 +17,11 @@ async function getTickets(req: Request, res: Response): Promise<void> {
         throw new BadGatewayError('Invalid status.')
     }
     
-    const tickets = (await TicketModel.find({ }).skip(page).limit(10).select('-text').lean()
+    const tickets = await TicketModel.find(status ? { status } : {})
+    .skip(page).limit(10).select('-text').lean()
     .catch(err => {
         throw new InternalServerError('Could not get user ids.')
-    })).map(user => user._id)
+    })
 
     res.status(200).json(tickets)
 }
