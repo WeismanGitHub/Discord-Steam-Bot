@@ -8,19 +8,19 @@ require('express-async-errors')
 
 async function getSelf(req: Request, res: Response): Promise<void> {
     const client: CustomClient = req.app.get('discordClient')
-    const discordID =req.userID
+    const discordID = req.user?._id
 
     if (!discordID) {
         throw new UnauthorizedError('Missing ID.')
     }
 
-    const userDoc = await UserModel.findById(discordID).select('steamID type').lean()
+    const userDoc = await UserModel.findById(discordID).select('steamID').lean()
 
     if (!userDoc) {
         throw new NotFoundError('Could not find user in database.')
     }
 
-    const { type, steamID } = userDoc
+    const { steamID } = userDoc
 
     const discordUserData = await client.users.fetch(discordID)
     .catch((err: DiscordAPIError) => {
@@ -51,7 +51,7 @@ async function getSelf(req: Request, res: Response): Promise<void> {
     }
 
     res.status(200).json({
-        type: type,
+        type: req.user?.type,
         steam: {
             ID: steamID,
             level: steamLevel,
@@ -70,7 +70,7 @@ async function getSelf(req: Request, res: Response): Promise<void> {
 }
 
 async function deleteSelf(req: Request, res: Response): Promise<void> {
-    const discordID = req.userID
+    const discordID = req.user?._id
 
     if (!discordID) {
         throw new UnauthorizedError('Missing ID.')

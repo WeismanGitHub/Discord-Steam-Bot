@@ -34,7 +34,7 @@ async function getTicket(req: Request, res: Response): Promise<void> {
 
 async function createTicket(req: Request, res: Response): Promise<void> {
     const { title, text } = req.params
-    const userID = req.userID
+    const userID = req.user?._id
 
     if (!userID || !title || !text) {
         throw new BadRequestError('Missing userID, title, or text.')
