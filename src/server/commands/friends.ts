@@ -30,11 +30,17 @@ export default {
         const userDoc = await UserModel.findById(user.id).select('-_id steamID type').lean()
         
         if (!userDoc) {
-            return basicEmbed('User is not in database.')
+            return interaction.reply({
+                embeds: [basicEmbed('User is not in database.')],
+                ephemeral: true
+            })
         }
 
         if (userDoc.type === 'banned') {
-            return basicEmbed('User is banned.')
+            return interaction.reply({
+                embeds: [basicEmbed('User is banned.')],
+                ephemeral: true
+            })
         }
 
         const friends = await getFriendsList(userDoc.steamID)
@@ -46,7 +52,10 @@ export default {
         const friendsProfiles = await getPlayerSummaries(friends.map(friend => friend.steamid))
 
         if (!friendsProfiles?.length) {
-            return basicEmbed('User has no friends.')
+            return interaction.reply({
+                embeds: [basicEmbed('User has no friends.')],
+                ephemeral: true
+            })
         }
 
         const friendsEmbeds = friendsProfiles.map((friend): EmbedBuilder => {

@@ -54,17 +54,26 @@ export default {
         const steamID = userDoc?.steamID
 
         if (!userDoc || !steamID) {
-            return basicEmbed('User is not in database.')
+            return interaction.reply({
+                embeds: [basicEmbed('User is not in database.')],
+                ephemeral: true
+            })
         }
 
         if (userDoc.type === 'banned') {
-            return basicEmbed('User is banned.')
+            return interaction.reply({
+                embeds: [basicEmbed('User is banned.')],
+                ephemeral: true
+            })
         }
 
         let wishlistItems = await getWishlist(steamID, 0)
 
         if (!wishlistItems?.length) {
-            return basicEmbed('User has empty wishlist.')
+            return interaction.reply({
+                embeds: [basicEmbed('User has empty wishlist.')],
+                ephemeral: true
+            })
         }
 
         const reviewsOption = interaction.options.getString('reviews')

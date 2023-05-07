@@ -21,6 +21,9 @@ export default {
             userID: interaction.user.id
         })
 
-        interaction.reply({ embeds: [basicEmbed('A ticket has been created.', 'You will be notified once it has been resolved.')] })
+        interaction.reply({
+            embeds: [basicEmbed('A ticket has been created.', 'You will be notified once it has been resolved.')],
+            ephemeral: true
+        })
     }
 }

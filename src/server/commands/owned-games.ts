@@ -35,11 +35,17 @@ export default {
         const userDoc = await UserModel.findById(user.id).select('-_id steamID type').lean()
 
         if (!userDoc) {
-            return basicEmbed('User is not in database.')
+            return interaction.reply({
+                embeds: [basicEmbed('User is not in database.')],
+                ephemeral: true
+            })
         }
 
         if (userDoc.type === 'banned') {
-            return basicEmbed('User is banned.')
+            return interaction.reply({
+                embeds: [basicEmbed('User is banned.')],
+                ephemeral: true
+            })
         }
 
         const ownedGamesData = await getOwnedGames(userDoc.steamID, playedFreeGamesOption)
