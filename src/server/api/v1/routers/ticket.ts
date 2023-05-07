@@ -1,3 +1,4 @@
+import { adminAuth, userAuth } from '../middleware/auth';
 import { Router } from 'express';
 import {
     createTicket,
@@ -7,8 +8,8 @@ import {
 
 const ticketRouter: Router = Router();
 
-ticketRouter.get('/', getTickets)
-ticketRouter.post('/', createTicket)
+ticketRouter.get('/', adminAuth, getTickets)
+ticketRouter.post('/', userAuth, createTicket)
 ticketRouter.get('/:ticketID', getTicket)
 
 export default ticketRouter
