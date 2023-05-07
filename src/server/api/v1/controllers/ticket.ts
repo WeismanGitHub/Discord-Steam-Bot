@@ -49,8 +49,13 @@ async function createTicket(req: Request, res: Response): Promise<void> {
     res.status(200).json(ticket)
 }
 
+async function resolveTicket(req: Request, res: Response): Promise<void> {
+    res.status(200).end()
+}
+
 export {
     getTickets,
     getTicket,
     createTicket,
+    resolveTicket,
 }
