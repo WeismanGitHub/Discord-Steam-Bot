@@ -177,16 +177,16 @@ export default function Privileged() {
 
 		{ /* Users */ }
 		<div class='column' style={{ width: '20%' }}>
-				{userData?.type == 'admin' ? 'Users' :
-				<div>
-					<button
-						class={`generic-button ${personDisplaySetting.type == 'users' ? 'highlighted' : 'unhighlighted'}`}
-						onClick={() => personSettingClick({ apiRoute: 'admin', type: 'users' })}
-					>Users</button>
-					<button
-						class={`generic-button ${personDisplaySetting.type == 'banned' ? 'highlighted' : 'unhighlighted'}`}
-						onClick={() => personSettingClick({ apiRoute: 'admin/users', type: 'banned' })}
-					>Banned</button>
+			<div>
+				<button
+					class={`generic-button ${personDisplaySetting.type == 'users' ? 'highlighted' : 'unhighlighted'}`}
+					onClick={() => personSettingClick({ apiRoute: 'admin', type: 'users' })}
+				>Users</button>
+				<button
+					class={`generic-button ${personDisplaySetting.type == 'banned' ? 'highlighted' : 'unhighlighted'}`}
+					onClick={() => personSettingClick({ apiRoute: 'admin/users', type: 'banned' })}
+				>Banned</button>
+				{userData?.type === 'owner' && <div>
 					<button
 						class={`generic-button ${personDisplaySetting.type == 'admins' ? 'highlighted' : 'unhighlighted'}`}
 						onClick={() => personSettingClick({ apiRoute: 'owner', type: 'admins' })}
@@ -196,6 +196,8 @@ export default function Privileged() {
 						onClick={() => personSettingClick({ apiRoute: 'owner', type: 'owners' })}
 					>Owners</button>
 				</div>}
+			</div>
+
 			<div>
 				<button class='generic-button' style={{ 'font-size': 'medium' }} onClick={() => fetchPeople(peoplePage - 1)}>{`<`}</button>
 				{peoplePage + 1}
