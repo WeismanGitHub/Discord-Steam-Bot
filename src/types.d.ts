@@ -18,8 +18,10 @@ interface User extends Document {
 
 declare namespace Express {
     export interface Request {
-        user?: User
-        userID?: string
+        user?: {
+            _id: string
+            type: 'banned' | 'user' | 'admin' | 'owner'
+        }
     }
 }
 
