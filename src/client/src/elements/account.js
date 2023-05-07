@@ -19,7 +19,7 @@ export default function Account() {
 		}
 
 		Promise.all([
-			axios.get('/api/v1/user/self')
+			axios.get('/api/v1/users/self')
 		])
 		.then(([selfRes]) => {
 			setDiscordData(selfRes?.data.discord)

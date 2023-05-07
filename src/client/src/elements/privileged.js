@@ -5,6 +5,7 @@ import Navbar from '../elements/nav-bar';
 import axios, * as others from 'axios'
 
 export default function Privileged() {
+	const personDisplaySetting = localStorage.getItem('personDisplaySetting') ?? ''
 	const userData = JSON.parse(localStorage.getItem('userData'))
 	const [inputtedUserID, setInputtedUserID] = useState('')
 	const [searchedUser, setSearchedUser] = useState(null)
@@ -15,10 +16,6 @@ export default function Privileged() {
 	const [bot, setBot] = useState(null)
 	const navigate = useNavigate();
 
-	const [personDisplaySetting, setPersonDisplaySetting] = useState(
-		JSON.parse(localStorage.getItem('personDisplaySetting')) || { apiRoute: 'admin', type: 'users' }
-	)
-
 	useEffect(() => {
 		if (!userData || userData.type == 'user') {
 			errorToast('You must be an admin or owner.')
@@ -26,9 +23,9 @@ export default function Privileged() {
 		}
 
 		Promise.all([
-			axios.get('/api/v1/admin/guilds').catch(err => errorToast('Could not get guilds.')),
-			axios.get(`/api/v1/${personDisplaySetting.apiRoute}/${personDisplaySetting.type}`).catch(err => errorToast('Could not get peoeple.')),
-			axios.get('/api/v1/admin/bot').catch(err => errorToast('Could not get bot data.')),
+			axios.get('/api/v1/bot/guilds').catch(err => errorToast('Could not get guilds.')),
+			axios.get(`/api/v1/users/${personDisplaySetting}`).catch(err => errorToast('Could not get people.')),
+			axios.get('/api/v1/bot').catch(err => errorToast('Could not get bot data.')),
 		])
 		.then(([guildsRes, usersRes, botRes]) => {
 			setGuilds(guildsRes?.data)
@@ -42,7 +39,7 @@ export default function Privileged() {
     }, [])
 
 	function stopProcess() {
-		axios.post('/api/v1/owner/process/kill')
+		axios.post('/api/v1/bot/kill')
 		.then(res => successToast('Request was acknowledged.'))
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
@@ -56,7 +53,7 @@ export default function Privileged() {
 			return errorToast('No more people left.')
 		}
 
-		axios.get(`/api/v1/${personDisplaySetting.apiRoute}/${personDisplaySetting.type}`)
+		axios.get(`/api/v1/users/${personDisplaySetting}`)
 		.then(res => {
 			if (!res?.data) {
 				return errorToast('Something went wrong getting more people.')
@@ -69,10 +66,9 @@ export default function Privileged() {
 	}
 
 	function personSettingClick(setting) {
-		localStorage.setItem('personDisplaySetting', JSON.stringify(setting))
-		setPersonDisplaySetting(setting)
+		localStorage.setItem('personDisplaySetting', setting)
 		
-		axios.get(`/api/v1/${setting.apiRoute}/${setting.type}`)
+		axios.get(`/api/v1/users/${setting}`)
 		.then(res => {
 			if (!res?.data) {
 				return errorToast('Something went wrong getting more people.')
@@ -107,7 +103,7 @@ export default function Privileged() {
 			'Competing': 5,
 		}
 
-		axios.post('/api/v1/owner/activity', {
+		axios.post('/api/v1/bot/activity', {
 			name: activity?.name,
 			type: ActivityTypes[activity?.type]
 		})
@@ -117,7 +113,7 @@ export default function Privileged() {
 
 	async function searchUser() {
 		try {
-			const user = (await axios.get('/api/v1/admin/users/' + inputtedUserID))?.data
+			const user = (await axios.get('/api/v1/users/' + inputtedUserID))?.data
 			setSearchedUser(user)
 		} catch(err) {
 			errorToast(err?.response?.data?.error || err.message)
@@ -125,25 +121,25 @@ export default function Privileged() {
 	}
 
 	function promote() {
-		axios.post(`/api/v1/owner/users/${searchedUser?.ID}/promote`)
+		axios.post(`/api/v1/users/${searchedUser?.ID}/promote`)
 		.then(res => successToast(`Promoted ${searchedUser.name} to admin.`))
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
 	
 	function demote() {
-		axios.post(`/api/v1/owner/users/${searchedUser?.ID}/demote`)
+		axios.post(`/api/v1/users/${searchedUser?.ID}/demote`)
 		.then(res => successToast(`Demoted ${searchedUser.name} to user.`))
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
 
 	function ban() {
-		axios.post(`/api/v1/admin/users/${searchedUser?.ID}/ban`)
+		axios.post(`/api/v1/users/${searchedUser?.ID}/ban`)
 		.then(res => successToast(`Banned ${searchedUser.name}.`))
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
 
 	function unban() {
-		axios.post(`/api/v1/admin/users/${searchedUser?.ID}/unban`)
+		axios.post(`/api/v1/users/${searchedUser?.ID}/unban`)
 		.then(res => successToast(`Unbanned ${searchedUser.name}.`))
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
 	}
@@ -179,21 +175,21 @@ export default function Privileged() {
 		<div class='column' style={{ width: '20%' }}>
 			<div>
 				<button
-					class={`generic-button ${personDisplaySetting.type == 'users' ? 'highlighted' : 'unhighlighted'}`}
-					onClick={() => personSettingClick({ apiRoute: 'admin', type: 'users' })}
+					class={`generic-button ${personDisplaySetting == 'users' ? 'highlighted' : 'unhighlighted'}`}
+					onClick={() => personSettingClick('')}
 				>Users</button>
 				<button
-					class={`generic-button ${personDisplaySetting.type == 'banned' ? 'highlighted' : 'unhighlighted'}`}
-					onClick={() => personSettingClick({ apiRoute: 'admin/users', type: 'banned' })}
+					class={`generic-button ${personDisplaySetting == 'banned' ? 'highlighted' : 'unhighlighted'}`}
+					onClick={() => personSettingClick('banned')}
 				>Banned</button>
 				{userData?.type === 'owner' && <div>
 					<button
-						class={`generic-button ${personDisplaySetting.type == 'admins' ? 'highlighted' : 'unhighlighted'}`}
-						onClick={() => personSettingClick({ apiRoute: 'owner', type: 'admins' })}
+						class={`generic-button ${personDisplaySetting == 'admins' ? 'highlighted' : 'unhighlighted'}`}
+						onClick={() => personSettingClick('admins')}
 					>Admins</button>
 					<button
-						class={`generic-button ${personDisplaySetting.type == 'owners' ? 'highlighted' : 'unhighlighted'}`}
-						onClick={() => personSettingClick({ apiRoute: 'owner', type: 'owners' })}
+						class={`generic-button ${personDisplaySetting == 'owners' ? 'highlighted' : 'unhighlighted'}`}
+						onClick={() => personSettingClick('owners')}
 					>Owners</button>
 				</div>}
 			</div>
