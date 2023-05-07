@@ -5,7 +5,7 @@ interface Ticket extends Document {
     title: string
     text: string
     status: 'closed' | 'open'
-    assignee: string | null
+    helperID: string | null
     response: string | null
 }
 
@@ -32,13 +32,15 @@ const TicketSchema: Schema = new Schema<Ticket>({
         default: 'open',
         enum: ['closed', 'open']
     },
-    assignee: {
+    helperID: {
         type: String,
         default: null
     },
     response: {
         type: String,
-        default: null
+        default: null,
+        max: 4096,
+        min: 1
     }
 });
 
