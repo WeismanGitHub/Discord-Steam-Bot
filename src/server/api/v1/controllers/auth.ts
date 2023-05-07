@@ -56,7 +56,7 @@ async function discordAuth(req: Request, res: Response): Promise<void> {
 }
 
 function logout(req: Request, res: Response): void {
-	res.status(200).clearCookie('userID').end()
+	res.status(200).clearCookie('user').end()
 }
 
 async function login(req: Request, res: Response): Promise<void> {
@@ -81,7 +81,7 @@ async function login(req: Request, res: Response): Promise<void> {
 
         userID = (await oauth.getUser(token)).id
     } catch(err) {
-        throw new InternalServerError()
+        throw new InternalServerError('Could not get user ID.')
     }
 
     if (!userID) {
@@ -97,8 +97,8 @@ async function login(req: Request, res: Response): Promise<void> {
         throw new UnauthorizedError("You need to register first.")
     }
 
-    const idJWT = jwt.sign(
-        { userID },
+    const userJWT = jwt.sign(
+        { userID, type: user.type },
         Config.jwtSecret!,
         { expiresIn: '14d' },
     )
@@ -106,7 +106,7 @@ async function login(req: Request, res: Response): Promise<void> {
     const expiration = new Date(Date.now() + (3600000 * 24 * 14)) // 14 days
 
 	res.status(200)
-	.cookie('userID', idJWT, {
+	.cookie('user', userJWT, {
 		httpOnly: true,
 		secure: true,
 		sameSite: 'strict',
