@@ -5,18 +5,24 @@ import jwt from 'jsonwebtoken'
 
 interface JwtPayload extends jwt.JwtPayload {
 	_id?: string;
-	role?: 'banned' | 'user' | 'admin' | 'owner'
+	role?: role
 }
 
-function userAuth(req: Request, res: Response, next: NextFunction): void {
+type role = 'banned' | 'user' | 'admin' | 'owner'
+
+function auth(req: Request, res: Response, next: NextFunction, allowedRoles: role[]): void {
 	if (!req.cookies.user) {
 		throw new UnauthorizedError("Please login.")
 	}
-	
+		
 	const userJWT: string | JwtPayload = jwt.verify(req.cookies.user, Config.jwtSecret!)
 
 	if (!userJWT || typeof userJWT === 'string' || !userJWT._id || !userJWT.role) {
 		throw new UnauthorizedError("Please login.")
+	}
+
+	if (!allowedRoles.includes(userJWT.role)) {
+		throw new ForbiddenError(`Allowed roles: ${allowedRoles.join(', ')}`)
 	}
 
 	req.user = {
@@ -25,56 +31,18 @@ function userAuth(req: Request, res: Response, next: NextFunction): void {
 	}
 
 	next()
+}
+
+function userAuth(req: Request, res: Response, next: NextFunction) {
+	auth(req, res, next, ['user', 'admin', 'owner', 'banned'])
 }
 
 async function adminAuth(req: Request, res: Response, next: NextFunction): Promise<void> {
-	if (!req.cookies.user) {
-		throw new UnauthorizedError("Please login.")
-	}
-	
-	const userJWT: string | JwtPayload = jwt.verify(req.cookies.user, Config.jwtSecret!)
-
-	if (!userJWT || typeof userJWT === 'string' || !userJWT._id || !userJWT.role) {
-		throw new UnauthorizedError("Please login.")
-	}
-
-	if (!['owner', 'admin'].includes(userJWT.role)) {
-		throw new ForbiddenError('You are not an admin or owner.')
-	}
-
-	req.user = {
-		_id: userJWT._id,
-		role: userJWT.role
-	}
-
-	next()
+	auth(req, res, next, ['admin', 'owner'])
 }
 
-async function ownerAuth(req: Request, res: Response, next: NextFunction): Promise<void> {
-	if (!req.cookies.user) {
-		throw new UnauthorizedError("Please login.")
-	}
-	
-	const userJWT: string | JwtPayload = jwt.verify(req.cookies.user, Config.jwtSecret!)
-
-	if (!userJWT || typeof userJWT === 'string' || !userJWT._id || !userJWT.role) {
-		throw new UnauthorizedError("Please login.")
-	}
-
-	if (!['owner', 'admin'].includes(userJWT.role)) {
-		throw new ForbiddenError('You are not an admin or owner.')
-	}
-
-	req.user = {
-		_id: userJWT._id,
-		role: userJWT.role
-	}
-	
-	if (userJWT.role !== 'owner') {
-		throw new ForbiddenError('You are not an owner.')
-	}
-	
-	next()
+function ownerAuth(req: Request, res: Response, next: NextFunction): void {
+	auth(req, res, next, ['owner'])
 }
 
 export {
