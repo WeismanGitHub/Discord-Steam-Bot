@@ -17,7 +17,7 @@ export default function Privileged() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!userData || userData.type == 'user') {
+		if (!userData || userData.role == 'user') {
 			errorToast('You must be an admin or owner.')
 			return navigate('/')
 		}
@@ -182,7 +182,7 @@ export default function Privileged() {
 					class={`generic-button ${personDisplaySetting == 'banned' ? 'highlighted' : 'unhighlighted'}`}
 					onClick={() => personSettingClick('banned')}
 				>Banned</button>
-				{userData?.type === 'owner' && <div>
+				{userData?.role === 'owner' && <div>
 					<button
 						class={`generic-button ${personDisplaySetting == 'admins' ? 'highlighted' : 'unhighlighted'}`}
 						onClick={() => personSettingClick('admins')}
@@ -230,7 +230,7 @@ export default function Privileged() {
 
 			<hr class="divider"/>
 
-			{userData?.type == 'owner' &&
+			{userData?.role == 'owner' &&
 				<div>
 					<button onClick={stopProcess} class='generic-button'>Stop Process</button>
 
@@ -270,7 +270,7 @@ export default function Privileged() {
 		</div>
 
 		{ /* User */ }
-		{userData?.type == 'owner' &&
+		{userData?.role == 'owner' &&
 			<div class='column' style={{ width: '20%' }}>
 				<div>
 					<input
@@ -310,7 +310,7 @@ export default function Privileged() {
 						<br/>
 
 						<div>
-							{userData?.type === 'owner' && <>
+							{userData?.role === 'owner' && <>
 								<button onClick={() => promote()} class='generic-button'>Promote</button>
 								<button onClick={() => demote()} class='generic-button'>Demote</button>
 							</>}

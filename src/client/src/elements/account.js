@@ -9,7 +9,7 @@ export default function Account() {
     const userData = JSON.parse(localStorage.getItem('userData'))
 	const [discordData, setDiscordData] = useState(null)
 	const [steamData, setSteamData] = useState(null)
-	const [type, setType] = useState(null)
+	const [role, setRole] = useState(null)
 	const navigate = useNavigate();
 	
 	useEffect(() => {
@@ -24,7 +24,7 @@ export default function Account() {
 		.then(([selfRes]) => {
 			setDiscordData(selfRes?.data.discord)
 			setSteamData(selfRes?.data.steam)
-			setType(selfRes?.data.type)
+			setRole(selfRes?.data.role)
 		})
 		.catch(err => {
 			errorToast(err?.response?.data?.error || err.message)
@@ -81,7 +81,7 @@ export default function Account() {
 
 			<hr class='divider' style={{ backGroundColor: '#41454b' }}/>
 
-			account type: {type}
+			role: {role}
 
 			<hr class='divider' style={{ backGroundColor: '#41454b' }}/>
 

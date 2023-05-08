@@ -51,7 +51,7 @@ async function getSelf(req: Request, res: Response): Promise<void> {
     }
 
     res.status(200).json({
-        type: req.user?.type,
+        role: req.user?.role,
         steam: {
             ID: steamID,
             level: steamLevel,
@@ -82,7 +82,7 @@ async function deleteSelf(req: Request, res: Response): Promise<void> {
         throw new NotFoundError('Could not find user in database.')
     }
 
-    if (userDoc.type == 'banned') {
+    if (userDoc.role == 'banned') {
         const res = await userDoc.updateOne({ steamID: null })
         console.log(res)
     } else {
@@ -100,7 +100,7 @@ async function getUsers(req: Request, res: Response): Promise<void> {
         throw new BadRequestError('Page is invalid.')
     }
     
-    const userIDs = (await UserModel.find({ type: 'user' }).skip(page * 10).limit(10).select('_id').lean()
+    const userIDs = (await UserModel.find({ role: 'user' }).skip(page * 10).limit(10).select('_id').lean()
     .catch(err => {
         throw new InternalServerError('Could not get user ids.')
     })).map(user => user._id)
@@ -182,7 +182,7 @@ async function getBannedUsers(req: Request, res: Response): Promise<void> {
         throw new BadRequestError('Page is invalid.')
     }
     
-    const userIDs = (await UserModel.find({ type: 'banned' }).skip(page * 10).limit(10).select('_id').lean()
+    const userIDs = (await UserModel.find({ role: 'banned' }).skip(page * 10).limit(10).select('_id').lean()
     .catch(err => {
         throw new InternalServerError('Could not get user ids.')
     })).map(user => user._id)
@@ -211,7 +211,7 @@ async function getAdmins(req: Request, res: Response): Promise<void> {
         throw new BadRequestError('Page is invalid.')
     }
 
-    const adminIDs = (await UserModel.find({ type: 'admin' }).skip(page * 10).limit(10).select('_id').lean()
+    const adminIDs = (await UserModel.find({ role: 'admin' }).skip(page * 10).limit(10).select('_id').lean()
     .catch(err => {
         throw new InternalServerError('Could not get admin ids.')
     })).map(admin => admin._id)
@@ -240,7 +240,7 @@ async function getOwners(req: Request, res: Response): Promise<void> {
         throw new BadRequestError('Page is invalid.')
     }
 
-    const ownerIDs = (await UserModel.find({ type: 'owner' }).skip(page * 10).limit(10).select('_id').lean()
+    const ownerIDs = (await UserModel.find({ role: 'owner' }).skip(page * 10).limit(10).select('_id').lean()
     .catch(err => {
         throw new InternalServerError('Could not get owner ids.')
     })).map(owner => owner._id)

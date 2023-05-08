@@ -98,7 +98,7 @@ async function login(req: Request, res: Response): Promise<void> {
     }
 
     const userJWT = jwt.sign(
-        { userID, type: user.type },
+        { _id: userID, role: user.role },
         Config.jwtSecret!,
         { expiresIn: '14d' },
     )
@@ -112,7 +112,7 @@ async function login(req: Request, res: Response): Promise<void> {
 		sameSite: 'strict',
 		expires: expiration
 	})
-	.json({ type: user.type }).end()
+	.json({ role: user.role }).end()
 }
 
 export {

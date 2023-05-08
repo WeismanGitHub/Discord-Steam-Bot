@@ -3,25 +3,25 @@ import { NextFunction, Request, Response } from 'express';
 import { Config } from '../../../../config'
 import jwt from 'jsonwebtoken'
 
+interface JwtPayload extends jwt.JwtPayload {
+	_id?: string;
+	role?: 'banned' | 'user' | 'admin' | 'owner'
+}
+
 function userAuth(req: Request, res: Response, next: NextFunction): void {
 	if (!req.cookies.user) {
 		throw new UnauthorizedError("Please login.")
 	}
-
-	interface JwtPayload extends jwt.JwtPayload {
-		userID?: string;
-		type?: 'banned' | 'user' | 'admin' | 'owner'
-	}
 	
 	const userJWT: string | JwtPayload = jwt.verify(req.cookies.user, Config.jwtSecret!)
 
-	if (!userJWT || typeof userJWT === 'string' || !userJWT.userID || !userJWT.type) {
+	if (!userJWT || typeof userJWT === 'string' || !userJWT._id || !userJWT.role) {
 		throw new UnauthorizedError("Please login.")
 	}
 
 	req.user = {
-		_id: userJWT.userID,
-		type: userJWT.type
+		_id: userJWT._id,
+		role: userJWT.role
 	}
 
 	next()
@@ -31,25 +31,20 @@ async function adminAuth(req: Request, res: Response, next: NextFunction): Promi
 	if (!req.cookies.user) {
 		throw new UnauthorizedError("Please login.")
 	}
-
-	interface JwtPayload extends jwt.JwtPayload {
-		_id?: string;
-		type?: 'banned' | 'user' | 'admin' | 'owner'
-	}
 	
 	const userJWT: string | JwtPayload = jwt.verify(req.cookies.user, Config.jwtSecret!)
 
-	if (!userJWT || typeof userJWT === 'string' || !userJWT.userID || !userJWT.type) {
+	if (!userJWT || typeof userJWT === 'string' || !userJWT._id || !userJWT.role) {
 		throw new UnauthorizedError("Please login.")
 	}
 
-	if (!['owner', 'admin'].includes(userJWT.type)) {
+	if (!['owner', 'admin'].includes(userJWT.role)) {
 		throw new ForbiddenError('You are not an admin or owner.')
 	}
 
 	req.user = {
-		_id: userJWT.userID,
-		type: userJWT.type
+		_id: userJWT._id,
+		role: userJWT.role
 	}
 
 	next()
@@ -59,28 +54,23 @@ async function ownerAuth(req: Request, res: Response, next: NextFunction): Promi
 	if (!req.cookies.user) {
 		throw new UnauthorizedError("Please login.")
 	}
-
-	interface JwtPayload extends jwt.JwtPayload {
-		_id?: string;
-		type?: 'banned' | 'user' | 'admin' | 'owner'
-	}
 	
 	const userJWT: string | JwtPayload = jwt.verify(req.cookies.user, Config.jwtSecret!)
 
-	if (!userJWT || typeof userJWT === 'string' || !userJWT.userID || !userJWT.type) {
+	if (!userJWT || typeof userJWT === 'string' || !userJWT._id || !userJWT.role) {
 		throw new UnauthorizedError("Please login.")
 	}
 
-	if (!['owner', 'admin'].includes(userJWT.type)) {
+	if (!['owner', 'admin'].includes(userJWT.role)) {
 		throw new ForbiddenError('You are not an admin or owner.')
 	}
 
 	req.user = {
-		_id: userJWT.userID,
-		type: userJWT.type
+		_id: userJWT._id,
+		role: userJWT.role
 	}
 	
-	if (userJWT.type !== 'owner') {
+	if (userJWT.role !== 'owner') {
 		throw new ForbiddenError('You are not an owner.')
 	}
 	

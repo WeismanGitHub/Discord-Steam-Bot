@@ -13,14 +13,14 @@ interface connection {
 interface User extends Document {
     _id: string
     steamID: string,
-    type: 'banned' | 'user' | 'admin' | 'owner'
+    role: 'banned' | 'user' | 'admin' | 'owner'
 }
 
 declare namespace Express {
     export interface Request {
         user?: {
             _id: string
-            type: 'banned' | 'user' | 'admin' | 'owner'
+            role: 'banned' | 'user' | 'admin' | 'owner'
         }
     }
 }

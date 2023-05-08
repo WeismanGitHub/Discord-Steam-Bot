@@ -29,7 +29,7 @@ export default {
             throw new BadRequestError('User is a bot.')
         }
         
-        const userDoc = await UserModel.findById(user.id).select('-_id steamID type').lean()
+        const userDoc = await UserModel.findById(user.id).select('-_id steamID role').lean()
         const steamID = userDoc?.steamID
 
         if (!userDoc || !steamID) {
@@ -39,7 +39,7 @@ export default {
             })
         }
 
-        if (userDoc.type === 'banned') {
+        if (userDoc.role === 'banned') {
             return interaction.reply({
                 embeds: [basicEmbed('User is banned.')],
                 ephemeral: true

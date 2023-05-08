@@ -4,7 +4,7 @@ import { BadRequestError } from '../../errors';
 interface User extends Document {
     _id: string
     steamID: string,
-    type: 'banned' | 'user' | 'admin' | 'owner'
+    role: 'banned' | 'user' | 'admin' | 'owner'
 }
 
 interface UserMethods {
@@ -25,7 +25,7 @@ const UserSchema: Schema = new Schema<User, UserModel, UserMethods>({
         type: String,
         required: true
     },
-    type: {
+    role: {
         type: String,
         required: true,
         default: 'user',
@@ -34,44 +34,44 @@ const UserSchema: Schema = new Schema<User, UserModel, UserMethods>({
 });
 
 UserSchema.method('ban', async function ban() {
-    if (this.type !== 'user') {
+    if (this.role !== 'user') {
         throw new BadRequestError('You can only ban users.')
     }
 
-    this.type = 'banned'
+    this.role = 'banned'
     await this.save()
 
     return this
 })
 
 UserSchema.method('unban', async function ban() {
-    if (this.type !== 'banned') {
+    if (this.role !== 'banned') {
         throw new BadRequestError('You can only unban banned users.')
     }
 
-    this.type = 'user'
+    this.role = 'user'
     await this.save()
 
     return this
 })
 
 UserSchema.method('promote', async function promote() {
-    if (this.type !== 'user') {
+    if (this.role !== 'user') {
         throw new BadRequestError('You can only promote users.')
     }
 
-    this.type = 'admin'
+    this.role = 'admin'
     await this.save()
 
     return this
 })
 
 UserSchema.method('demote', async function demote() {
-    if (this.type !== 'admin') {
+    if (this.role !== 'admin') {
         throw new BadRequestError('You can only demote admins.')
     }
 
-    this.type = 'user'
+    this.role = 'user'
     await this.save()
     
     return this
