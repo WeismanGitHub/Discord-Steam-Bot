@@ -1,6 +1,6 @@
 import { BadRequestError, InternalServerError } from '../errors';
 import { getOwnedGames } from '../utils/steam';
-import { basicEmbed } from '../utils/embeds';
+import { infoEmbed } from '../utils/embeds';
 import { UserModel } from '../db/models';
 import {
     SlashCommandBuilder,
@@ -36,14 +36,14 @@ export default {
 
         if (!userDoc) {
             return interaction.reply({
-                embeds: [basicEmbed('User is not in database.')],
+                embeds: [infoEmbed('User is not in database.')],
                 ephemeral: true
             })
         }
 
         if (userDoc.role === 'banned') {
             return interaction.reply({
-                embeds: [basicEmbed('User is banned.')],
+                embeds: [infoEmbed('User is banned.')],
                 ephemeral: true
             })
         }
@@ -58,7 +58,7 @@ export default {
 
         if (!ownedGames.length) {
             return interaction.reply({
-                embeds: [basicEmbed('No owned games.')],
+                embeds: [infoEmbed('No owned games.')],
                 ephemeral: true
             })
         }
@@ -101,7 +101,7 @@ export default {
         await Promise.all(embedGroups.slice(1).map((embedGroup) => interaction.followUp({ embeds: embedGroup, ephemeral: true })))
 
         interaction.followUp({
-            embeds: [basicEmbed(`Game Count: ${gameCount ?? 'unknown'}`)],
+            embeds: [infoEmbed(`Game Count: ${gameCount ?? 'unknown'}`)],
             ephemeral: true
         })
 	},

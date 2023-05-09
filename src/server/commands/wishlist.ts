@@ -1,4 +1,4 @@
-import { basicEmbed } from '../utils/embeds';
+import { infoEmbed } from '../utils/embeds';
 import { getWishlist } from '../utils/steam';
 import { BadRequestError } from '../errors';
 import { UserModel } from '../db/models';
@@ -55,14 +55,14 @@ export default {
 
         if (!userDoc || !steamID) {
             return interaction.reply({
-                embeds: [basicEmbed('User is not in database.')],
+                embeds: [infoEmbed('User is not in database.')],
                 ephemeral: true
             })
         }
 
         if (userDoc.role === 'banned') {
             return interaction.reply({
-                embeds: [basicEmbed('User is banned.')],
+                embeds: [infoEmbed('User is banned.')],
                 ephemeral: true
             })
         }
@@ -71,7 +71,7 @@ export default {
 
         if (!wishlistItems?.length) {
             return interaction.reply({
-                embeds: [basicEmbed('User has empty wishlist.')],
+                embeds: [infoEmbed('User has empty wishlist.')],
                 ephemeral: true
             })
         }

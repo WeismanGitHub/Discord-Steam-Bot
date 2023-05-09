@@ -1,6 +1,6 @@
 import { BadGatewayError, BadRequestError, InternalServerError } from '../errors';
 import { getPlayerSummaries, getSteamLevel } from '../utils/steam';
-import { playerProfileEmbed, basicEmbed } from '../utils/embeds';
+import { playerProfileEmbed, infoEmbed } from '../utils/embeds';
 import { UserModel } from '../db/models';
 import {
     SlashCommandBuilder,
@@ -34,14 +34,14 @@ export default {
 
         if (!userDoc || !steamID) {
             return interaction.reply({
-                embeds: [basicEmbed('User is not in database.')],
+                embeds: [infoEmbed('User is not in database.')],
                 ephemeral: true
             })
         }
 
         if (userDoc.role === 'banned') {
             return interaction.reply({
-                embeds: [basicEmbed('User is banned.')],
+                embeds: [infoEmbed('User is banned.')],
                 ephemeral: true
             })
         }

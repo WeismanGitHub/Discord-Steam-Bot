@@ -1,5 +1,5 @@
 import { Events, ModalSubmitInteraction } from "discord.js"
-import { basicEmbed } from "../../utils/embeds";
+import { infoEmbed } from "../../utils/embeds";
 import { TicketModel } from "../../db/models";
 
 export default {
@@ -22,7 +22,7 @@ export default {
         })
 
         interaction.reply({
-            embeds: [basicEmbed('A ticket has been created.', 'You will be notified once it has been resolved.')],
+            embeds: [infoEmbed('A ticket has been created.', 'You will be notified once it has been resolved.')],
             ephemeral: true
         })
     }

@@ -1,6 +1,6 @@
 import { getFriendsList, getPlayerSummaries } from '../utils/steam';
 import { BadRequestError, InternalServerError } from '../errors';
-import { basicEmbed } from '../utils/embeds';
+import { infoEmbed } from '../utils/embeds';
 import { UserModel } from '../db/models';
 import {
     SlashCommandBuilder,
@@ -31,14 +31,14 @@ export default {
         
         if (!userDoc) {
             return interaction.reply({
-                embeds: [basicEmbed('User is not in database.')],
+                embeds: [infoEmbed('User is not in database.')],
                 ephemeral: true
             })
         }
 
         if (userDoc.role === 'banned') {
             return interaction.reply({
-                embeds: [basicEmbed('User is banned.')],
+                embeds: [infoEmbed('User is banned.')],
                 ephemeral: true
             })
         }
@@ -53,7 +53,7 @@ export default {
 
         if (!friendsProfiles?.length) {
             return interaction.reply({
-                embeds: [basicEmbed('User has no friends.')],
+                embeds: [infoEmbed('User has no friends.')],
                 ephemeral: true
             })
         }
@@ -74,7 +74,7 @@ export default {
         await Promise.all(embedGroups.slice(1).map((embedGroup) => interaction.followUp({ embeds: embedGroup, ephemeral: true })))
 
         interaction.followUp({
-            embeds: [basicEmbed(`Friend Count: ${friends.length ?? 'unknown'}`)],
+            embeds: [infoEmbed(`Friend Count: ${friends.length ?? 'unknown'}`)],
             ephemeral: true
         })
     },

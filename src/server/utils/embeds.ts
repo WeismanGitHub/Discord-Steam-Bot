@@ -8,7 +8,7 @@ function errorEmbed(description: string | null = null): EmbedBuilder {
         .setColor('#FF0000') // Red
 }
 
-function basicEmbed(title: string, description: null | string = null): EmbedBuilder {
+function infoEmbed(title: string, description: null | string = null): EmbedBuilder {
     return new EmbedBuilder()
         .setTitle(title)
         .setColor('#8F00FF') // Purple
@@ -39,6 +39,6 @@ function playerProfileEmbed(player: player): EmbedBuilder {
 
 export {
     errorEmbed,
-    basicEmbed,
+    infoEmbed,
     playerProfileEmbed
 }
