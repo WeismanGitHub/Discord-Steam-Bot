@@ -46,7 +46,7 @@ async function createTicket(req: Request, res: Response): Promise<void> {
         text
     })
 
-    res.status(200).json(ticket)
+    res.status(200).json({ ticketID: ticket._id })
 }
 
 async function resolveTicket(req: Request, res: Response): Promise<void> {
