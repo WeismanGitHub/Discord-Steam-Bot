@@ -50,6 +50,22 @@ async function createTicket(req: Request, res: Response): Promise<void> {
 }
 
 async function resolveTicket(req: Request, res: Response): Promise<void> {
+    const { ticketID } = req.params
+    const { response } = req.body
+
+    if (!response) {
+        throw new BadRequestError('Missing response.')
+    }
+
+    const result = await TicketModel.updateOne(
+        { _id: ticketID, status: 'open' },
+        { response, resolverID: req.user?._id, status: 'closed' }
+    )
+
+    if (!result.acknowledged || !result.modifiedCount) {
+        throw new BadRequestError("Nothing was changed. Maybe this ticket has already been resolved.")
+    }
+
     res.status(200).end()
 }
 
