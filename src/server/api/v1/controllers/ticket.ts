@@ -33,7 +33,7 @@ async function getTicket(req: Request, res: Response): Promise<void> {
 }
 
 async function createTicket(req: Request, res: Response): Promise<void> {
-    const { title, text } = req.params
+    const { title, text } = req.body
     const userID = req.user?._id
 
     if (!userID || !title || !text) {
