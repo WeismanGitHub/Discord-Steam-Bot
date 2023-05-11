@@ -1,4 +1,4 @@
-import { BadGatewayError, BadRequestError, InternalServerError } from '../../../errors';
+import { BadRequestError, InternalServerError } from '../../../errors';
 import { TicketModel } from '../../../db/models';
 import { Request, Response } from 'express';
 require('express-async-errors')
@@ -12,7 +12,7 @@ async function getTickets(req: Request, res: Response): Promise<void> {
     }
 
     if (status && ['closed', 'open'].includes(String(status))) {
-        throw new BadGatewayError('Invalid status.')
+        throw new BadRequestError('Invalid status.')
     }
 
     const tickets = await TicketModel.find(status ? { status } : {})
