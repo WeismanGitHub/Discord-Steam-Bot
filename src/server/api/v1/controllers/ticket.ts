@@ -16,7 +16,7 @@ async function getTickets(req: Request, res: Response): Promise<void> {
     }
 
     const tickets = await TicketModel.find(status ? { status } : {})
-    .skip(page * 10).limit(10).select('-text').lean()
+    .skip(page * 10).limit(10).select('_id title status response').lean()
     .catch(err => {
         throw new InternalServerError('Could not get user ids.')
     })
