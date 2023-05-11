@@ -65,7 +65,24 @@ const TicketSchema: Schema = new Schema<Ticket>({
         type: String,
         default: null,
         max: 4096,
-        min: 1
+        min: 1,
+        // DOESNT WORK :(
+        // validate: {
+        //     validator: function(text: string) {
+        //         if (text === null) {
+        //             return
+        //         }
+
+        //         if (text.length > 4096) {
+        //             throw new BadRequestError('Maximum length is 4096.')
+        //         }
+
+        //         if (text.length < 1) {
+        //             throw new BadRequestError('Minimum length is 1.')
+        //         }
+        //     },
+        //     message: props => `Invalid Input: \`${props.value}\``
+        // },
     }
 });
 
