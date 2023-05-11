@@ -5,6 +5,7 @@ import { createRoot } from "react-dom/client";
 import React from 'react';
 import './css/index.css';
 
+import CreateTicket from './elements/create-ticket';
 import DiscordAuth from './elements/discord-auth';
 import Privileged from './elements/privileged';
 import NotFound from './elements/not-found';
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
     {
         path: '/tickets',
         element: <Tickets/>
+    },
+    {
+        path: '/tickets/create',
+        element: <CreateTicket/>
     },
     {
         path: '/tickets/:ticketID',
