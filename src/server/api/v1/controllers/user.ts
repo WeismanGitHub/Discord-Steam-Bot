@@ -20,7 +20,7 @@ async function getSelf(req: Request, res: Response): Promise<void> {
         throw new UnauthorizedError('Missing ID.')
     }
 
-    const userDoc = await UserModel.findById(discordID).select('steamID').lean()
+    const userDoc = await UserModel.findById(discordID).select('steamID role').lean()
 
     if (!userDoc) {
         throw new NotFoundError('Could not find user in database.')
@@ -57,7 +57,7 @@ async function getSelf(req: Request, res: Response): Promise<void> {
     }
 
     res.status(200).json({
-        role: req.user?.role,
+        role: userDoc.role,
         steam: {
             ID: steamID,
             level: steamLevel,
