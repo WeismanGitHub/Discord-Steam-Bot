@@ -5,13 +5,13 @@ import { createRoot } from "react-dom/client";
 import React from 'react';
 import './css/index.css';
 
-import CreateTicket from './elements/create-ticket';
+import CreateTicket from './elements/ticket/create-ticket';
 import DiscordAuth from './elements/discord-auth';
+import Tickets from './elements/ticket/tickets';
 import Privileged from './elements/privileged';
+import Ticket from './elements/ticket/ticket';
 import NotFound from './elements/not-found';
 import Account from './elements/account';
-import Tickets from './elements/tickets';
-import Ticket from './elements/ticket';
 import Login from './elements/login';
 import Main from './main';
 
