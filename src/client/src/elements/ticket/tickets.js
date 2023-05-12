@@ -1,10 +1,10 @@
-import { errorToast, successToast } from '../toasts'
+import { errorToast, successToast } from '../../toasts'
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
-import Navbar from '../elements/nav-bar';
+import Navbar from '../nav-bar';
 import axios, * as others from 'axios'
 
-export default function Privileged() {
+export default function Tickets() {
 	const userData = JSON.parse(localStorage.getItem('userData'))
 	const [tickets, setTickets] = useState([])
 	const navigate = useNavigate();
