@@ -4,6 +4,8 @@ import axios, * as others from 'axios'
 import NavBar from '../nav-bar';
 
 export default function Ticket() {
+    const userData = JSON.parse(localStorage.getItem('userData'))
+    const [response, setResponse] = useState('')
 	const [ticket, setTicket] = useState(null)
 
     useEffect(async () => {
@@ -12,6 +14,10 @@ export default function Ticket() {
 
         setTicket(data)
 	}, [])
+
+    function resolveTicket() {
+
+    }
 
     return (<>
         <NavBar/>
@@ -22,5 +28,21 @@ export default function Ticket() {
         <h3>{ticket?.text || 'text'}</h3>
 
         <h3>{ticket?.response}</h3>
+        
+        {(ticket?.status === 'open' && ['admin', 'owner'].includes(userData?.role)) && 
+            <input
+                type='text'
+                class=''
+                value={response}
+                onChange={(e)=> {
+                    if (e.target.value.length > 4096) {
+                        return errorToast('Must be less than 4096.')
+                    }
+
+                    setResponse(e.target.value)
+                }}
+                onKeyPress={ (e) => e.key === 'Enter' && resolveTicket()}
+            />
+        }
     </>)
 }
