@@ -28,6 +28,9 @@ async function getTicket(req: Request, res: Response): Promise<void> {
     const { ticketID } = req.params
 
     const ticket = await TicketModel.findById(ticketID).select('-_id title text status response').lean()
+    .catch(err => {
+        throw new InternalServerError("Error finding ticket.")
+    })
 
     res.status(200).json(ticket)
 }
