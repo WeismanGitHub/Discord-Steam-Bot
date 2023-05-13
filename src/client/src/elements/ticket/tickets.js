@@ -10,7 +10,7 @@ export default function Tickets() {
 	const navigate = useNavigate();
 
 	useEffect(async () => {
-		if (!userData || userData.role == 'user') {
+		if (!userData || !['admin', 'owner'].includes(userData.role)) {
 			errorToast('You must be an admin or owner.')
 			return navigate('/')
 		}

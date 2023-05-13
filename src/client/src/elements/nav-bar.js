@@ -24,7 +24,7 @@ export default function NavBar() {
         <div class='navbar'>
             <a class='navbar-button' href="/">home</a>
             {['owner', 'admin'].includes(userData?.role) && <a class='navbar-button' href="/privileged">dashboard</a>}
-            {loggedIn && <a class='navbar-button' href={userData?.role === 'user' ? '/tickets/create' : '/tickets'}>tickets</a>}
+            {loggedIn && <a class='navbar-button' href={['owner', 'admin'].includes(userData?.role) ? '/tickets' : '/tickets/create'}>tickets</a>}
             {loggedIn && <a class='navbar-button' href="/account">account</a>}
             {loggedIn ? <div class='navbar-button' onClick={logout}>logout</div> : <>
                 {window.location.pathname !== '/auth/login' && <a class='navbar-button' href="/auth/login">login</a>}

@@ -17,7 +17,7 @@ export default function Privileged() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!userData || userData.role == 'user') {
+		if (!userData || !['owner', 'admin'].includes(userData?.role)) {
 			errorToast('You must be an admin or owner.')
 			return navigate('/')
 		}
