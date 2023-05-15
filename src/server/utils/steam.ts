@@ -80,7 +80,7 @@ interface friend {
 }
 
 async function getOwnedGames(steamID: string, includeFreeGames: boolean | null): Promise<ownedGamesData | undefined> {
-    const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${Config.steamAPIKey}&steamid=${steamID}&include_appinfo=true${includeFreeGames !== null ? `&include_played_free_games=${includeFreeGames}` : ''}`)
+    const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v1?key=${Config.steamAPIKey}&steamid=${steamID}&include_appinfo=true${includeFreeGames !== null ? `&include_played_free_games=${includeFreeGames}` : ''}`)
     .catch((err: Error) => {
         throw new BadGatewayError('Error getting owned games.')
     })
@@ -98,16 +98,37 @@ async function getWishlist(steamID: string, page: number | string): Promise<wish
 }
 
 async function getFriendsList(steamID: string): Promise<friend[] | undefined> {
-    const res = await axios.get(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${Config.steamAPIKey}&steamid=${steamID}&relationship=friend&p=0`)
+    const res = await axios.get(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${Config.steamAPIKey}&steamid=${steamID}&relationship=friend`)
     .catch(err => {
-        throw new BadGatewayError('Error getting wishlist.')
+        throw new BadGatewayError('Error getting friends.')
     })
 
     return res.data?.friendslist?.friends
 }
 
 async function getPlayerSummaries(steamIDs: string | string[]): Promise<player[] | undefined> {
-    steamIDs = Array.isArray(steamIDs) ? steamIDs.join(',') : steamIDs
+    if (Array.isArray(steamIDs)) {
+        const steamIDGroups: string[] = []
+
+        while (steamIDs.length > 0) {
+            steamIDGroups.push(steamIDs.splice(0, 100).join(','))
+        }
+
+        const playersPromises = steamIDGroups.map(async (steamIDsGroup): Promise<player[]> => {
+            const { data } = await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${Config.steamAPIKey}&steamids=${steamIDsGroup}`)
+            .catch(err => {
+                throw new BadGatewayError('Error getting player(s) data.')
+            })
+
+            if (!data?.response?.players) {
+                throw new BadGatewayError('Error getting player(s) data.')
+            }
+
+            return data?.response?.players
+        })
+
+        return (await Promise.all(playersPromises)).flat()
+    }
 
     const res = await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${Config.steamAPIKey}&steamids=${steamIDs}`)
     .catch(err => {
