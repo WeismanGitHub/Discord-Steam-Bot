@@ -1,4 +1,5 @@
 import { EmbedBuilder } from "discord.js";
+import { formatSteamDate } from "./misc";
 import { player } from './steam'
 
 function errorEmbed(description: string | null = null): EmbedBuilder {
@@ -16,14 +17,6 @@ function infoEmbed(title: string, description: null | string = null): EmbedBuild
 }
 
 function playerProfileEmbed(player: player): EmbedBuilder {
-    const birthday = new Date(Number(`${player.timecreated}000`))
-    const formattedBirthday = birthday.toLocaleDateString("en-US", {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    })
-
     return new EmbedBuilder()
         .setImage(player.avatarfull || null)
         .addFields({
@@ -33,7 +26,7 @@ function playerProfileEmbed(player: player): EmbedBuilder {
         })
         .addFields({
             name: 'Account Birthday:',
-            value: formattedBirthday
+            value: formatSteamDate(player.timecreated)
         })
 }
 
