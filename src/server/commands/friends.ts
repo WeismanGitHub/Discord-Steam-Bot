@@ -1,6 +1,6 @@
 import { getFriendsList, getPlayerSummaries } from '../utils/steam';
 import { BadRequestError, InternalServerError } from '../errors';
-import { infoEmbed } from '../utils/embeds';
+import { infoEmbed, playerProfileEmbed } from '../utils/embeds';
 import { UserModel } from '../db/models';
 import {
     SlashCommandBuilder,
@@ -59,8 +59,7 @@ export default {
         }
 
         const friendsEmbeds = friendsProfiles.map((friend): EmbedBuilder => {
-            return new EmbedBuilder()
-            .setTitle(friend.personaname || 'Missing Name')
+            return playerProfileEmbed(friend)
         })
 
         const embedGroups = [];
