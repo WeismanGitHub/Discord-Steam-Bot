@@ -2,14 +2,16 @@ import { errorToast, successToast } from '../../toasts'
 import { useEffect, useState } from "react";
 import axios, * as others from 'axios'
 import NavBar from '../nav-bar';
+import { useParams } from 'react-router-dom';
 
 export default function Ticket() {
     const userData = JSON.parse(localStorage.getItem('userData'))
     const [response, setResponse] = useState('')
 	const [ticket, setTicket] = useState(null)
+    const { ticketID } = useParams()
 
     useEffect(async () => {
-		const { data } = await axios.get(`/api/v1/tickets/${'64577108d0e3625b2749e657'}`)
+		const { data } = await axios.get(`/api/v1/tickets/${ticketID}`)
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
 
         setTicket(data)
