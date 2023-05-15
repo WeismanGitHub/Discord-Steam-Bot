@@ -78,7 +78,7 @@ export class CustomClient extends Client {
             } catch (err) {
                 console.error(err);
 
-                const embed = err instanceof CustomError ? errorEmbed(err.message) : errorEmbed()
+                const embed = errorEmbed(err instanceof CustomError ? err.message : null)
                 
                 if (interaction.replied || interaction.deferred) {
                     interaction.followUp({ embeds: [embed], ephemeral: true });
