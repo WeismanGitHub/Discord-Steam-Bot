@@ -58,10 +58,7 @@ export default {
             })
         }
 
-        const friendsEmbeds = friendsProfiles.map((friend): EmbedBuilder => {
-            return playerProfileEmbed(friend)
-        })
-
+        const friendsEmbeds = friendsProfiles.map((friend): EmbedBuilder => playerProfileEmbed(friend))
         const embedGroups = [];
 
         while (friendsEmbeds.length > 0) {
