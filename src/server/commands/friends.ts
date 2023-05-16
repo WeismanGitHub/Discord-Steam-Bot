@@ -49,7 +49,13 @@ export default {
             throw new InternalServerError('Could not get friends.')
         }
         
-        const friendsProfiles = await getPlayerSummaries(friends.map(friend => friend.steamid))
+        const friendsProfiles = await getPlayerSummaries(friends.map(friend => {
+            if (!friend?.steamid) {
+                throw new InternalServerError('Could not get friend ids')
+            }
+            
+            return friend.steamid
+        }))
 
         if (!friendsProfiles?.length) {
             return interaction.reply({
