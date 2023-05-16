@@ -1,6 +1,6 @@
-import { player, recentlyPlayedGame } from './steam'
+import { ownedGame, player, recentlyPlayedGame } from './steam'
 import { EmbedBuilder } from "discord.js";
-import { formatSteamDate } from "./misc";
+import { formatSteamDate, formatSteamPlaytime } from "./misc";
 
 function errorEmbed(description: string | null = null): EmbedBuilder {
     return new EmbedBuilder()
@@ -45,9 +45,23 @@ function recentGameEmbed(game: recentlyPlayedGame): EmbedBuilder {
         // })
 }
 
+function ownedGameEmbed(game: ownedGame): EmbedBuilder {
+    return new EmbedBuilder()
+        .setTitle(game.name || 'unknown')
+        .setColor('#8F00FF') // Purple
+        .setImage(
+            game.appid && game.img_icon_url ? `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg` : null
+        )
+        .addFields({
+            name: 'Play Time:',
+            value: game.playtime_forever ? formatSteamPlaytime(game.playtime_forever) : 'unknown',
+        })
+}
+
 export {
     errorEmbed,
     infoEmbed,
     playerProfileEmbed,
     recentGameEmbed,
+    ownedGameEmbed,
 }
