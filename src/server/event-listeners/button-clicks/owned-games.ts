@@ -11,11 +11,7 @@ export default {
             return
         }
 
-        interface ownedGamesData {
-            steamID: string
-        }
-
-        const { type, data }: CustomID<ownedGamesData> = JSON.parse(interaction.customId)
+        const { type, data }: CustomID<{ steamID: string }> = JSON.parse(interaction.customId)
         const { steamID } = data
 
         if (type !== 'owned-games') {
