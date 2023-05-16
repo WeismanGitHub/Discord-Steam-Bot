@@ -100,6 +100,17 @@ export default {
             }))
 			.setStyle(ButtonStyle.Primary)
 		])
+		.addComponents([
+			new ButtonBuilder()
+			.setLabel('badges')
+            .setCustomId(JSON.stringify({
+                type: 'badges',
+                data: {
+                    steamID: steamID
+                }
+            }))
+			.setStyle(ButtonStyle.Primary)
+		])
 
 		interaction.reply({
 			embeds: [embed],
