@@ -102,9 +102,9 @@ export default {
 		])
 		.addComponents([
 			new ButtonBuilder()
-			.setLabel('badges')
+			.setLabel('recent games')
             .setCustomId(JSON.stringify({
-                type: 'badges',
+                type: 'recent-games',
                 data: {
                     steamID: steamID
                 }
