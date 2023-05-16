@@ -79,14 +79,6 @@ interface friend {
     friendSince: number
 }
 
-interface badge {
-    badgeid: number
-    level: number
-    completion_time: number
-    xp: number
-    scarcity: number
-}
-
 interface recentlyPlayedGamesData {
     total_count: number
     games: {
@@ -169,15 +161,6 @@ async function getSteamLevel(steamID: string): Promise<number | undefined> {
     return res.data?.response?.player_level
 }
 
-async function getBadges(steamID: string): Promise<badge[] | undefined> {
-    const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetBadges/v1/?key=${Config.steamAPIKey}&steamid=${steamID}`)
-    .catch(err => {
-        throw new BadGatewayError('Error getting steam badges.')
-    })
-
-    return res.data?.response?.badges
-}
-
 async function getRecentlyPlayedGames(steamID: string): Promise<recentlyPlayedGamesData | undefined> {
     const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v1/?key=${Config.steamAPIKey}&steamid=${steamID}`)
     .catch(err => {
@@ -193,8 +176,6 @@ export {
     getOwnedGames,
     getWishlist,
     getFriendsList,
-    getBadges,
     getRecentlyPlayedGames,
     player,
-    badge,
 }

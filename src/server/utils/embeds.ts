@@ -1,6 +1,6 @@
 import { EmbedBuilder } from "discord.js";
 import { formatSteamDate } from "./misc";
-import { badge, player } from './steam'
+import { player } from './steam'
 
 function errorEmbed(description: string | null = null): EmbedBuilder {
     return new EmbedBuilder()
@@ -29,24 +29,8 @@ function playerProfileEmbed(player: player): EmbedBuilder {
             value: formatSteamDate(player.timecreated)
         })
 }
-
-function badgeEmbed(badge: badge): EmbedBuilder {
-    return new EmbedBuilder()
-        // .setImage(player.avatarfull || null)
-        // .addFields({
-        //     inline: true,
-        //     name: 'Name:',
-        //     value: player.personaname || 'unknown'
-        // })
-        // .addFields({
-        //     name: 'Account Birthday:',
-        //     value: formatSteamDate(player.timecreated)
-        // })
-}
-
 export {
     errorEmbed,
     infoEmbed,
     playerProfileEmbed,
-    badgeEmbed,
 }
