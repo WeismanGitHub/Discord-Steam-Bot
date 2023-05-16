@@ -101,7 +101,7 @@ export class CustomClient extends Client {
                 this.on(event.default.name, (...args) => {
                     event.default.execute(...args)
                     .catch((err: Error) => {
-                        console.log(err)
+                        console.log(err.message)
 
                         if (event.default.name !== Events.InteractionCreate) {
                             return
