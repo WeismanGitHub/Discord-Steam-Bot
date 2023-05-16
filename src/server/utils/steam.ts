@@ -24,19 +24,21 @@ interface player {
     loccityid: number | undefined
 }
 
+interface ownedGame {
+    appid: number | undefined
+    name: string | undefined
+    playtime_forever: number | undefined
+    img_icon_url: string | undefined
+    has_community_visible_stats: boolean | undefined
+    playtime_windows_forever: number | undefined
+    playtime_mac_forever: number | undefined
+    playtime_linux_forever: number | undefined
+    rtime_last_played: number | undefined
+}
+
 interface ownedGamesData {
     game_count: number | undefined
-    games: undefined | {
-        appid: number | undefined
-        name: string | undefined
-        playtime_forever: number | undefined
-        img_icon_url: string | undefined
-        has_community_visible_stats: boolean | undefined
-        playtime_windows_forever: number | undefined
-        playtime_mac_forever: number | undefined
-        playtime_linux_forever: number | undefined
-        rtime_last_played: number | undefined
-    }[]
+    games: undefined | ownedGame[]
 }
 
 interface wishlistItem {
@@ -74,25 +76,25 @@ interface wishlistSub {
 }
 
 interface friend {
-    steamid: string
-    relationship: 'friend'
-    friendSince: number
+    steamid: string | undefined
+    relationship: 'friend' | undefined
+    friendSince: number | undefined
 }
 
 interface recentlyPlayedGame {
-    appid: number
-        name: string,
-        playtime_2weeks: number
-        playtime_forever: number
-        img_icon_url: string
-        playtime_windows_forever: number
-        playtime_mac_forever: number
-        playtime_linux_forever: number
+    appid: number | undefined
+    name: string | undefined
+    playtime_2weeks: number | undefined
+    playtime_forever: number | undefined
+    img_icon_url: string | undefined
+    playtime_windows_forever: number | undefined
+    playtime_mac_forever: number | undefined
+    playtime_linux_forever: number | undefined
 }
 
 interface recentlyPlayedGamesData {
-    total_count: number
-    games: recentlyPlayedGame[]
+    total_count: number | undefined
+    games: recentlyPlayedGame[] | undefined
 }
 
 async function getOwnedGames(steamID: string, includeFreeGames: boolean | null): Promise<ownedGamesData | undefined> {
@@ -181,4 +183,5 @@ export {
     getRecentlyPlayedGames,
     player,
     recentlyPlayedGame,
+    ownedGame,
 }
