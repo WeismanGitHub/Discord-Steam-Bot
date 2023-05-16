@@ -72,12 +72,11 @@ export class CustomClient extends Client {
             const command = this.commands.get(interaction.commandName);
         
             if (!command) return;
-        
-            try {
-                await command.execute(interaction);
-            } catch (err) {
-                console.error(err);
 
+            command.execute(interaction)
+            .catch((err: Error) => {
+                console.error(err.message)
+                
                 const embed = errorEmbed(err instanceof CustomError ? err.message : null)
                 
                 if (interaction.replied || interaction.deferred) {
@@ -85,7 +84,8 @@ export class CustomClient extends Client {
                 } else {
                     interaction.reply({ embeds: [embed], ephemeral: true });
                 }
-            }
+
+            })
         });
     }
 
@@ -101,11 +101,7 @@ export class CustomClient extends Client {
                 this.on(event.default.name, (...args) => {
                     event.default.execute(...args)
                     .catch((err: Error) => {
-                        console.log(err.message)
-
-                        if (event.default.name !== Events.InteractionCreate) {
-                            return
-                        }
+                        console.error(err.message)
 
                         const embed = err instanceof CustomError ? errorEmbed(err.message) : errorEmbed()
                         const interaction = args[0]
