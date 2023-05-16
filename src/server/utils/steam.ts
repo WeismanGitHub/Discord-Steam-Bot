@@ -87,6 +87,20 @@ interface badge {
     scarcity: number
 }
 
+interface recentlyPlayedGamesData {
+    total_count: number
+    games: {
+        appid: number
+        name: string,
+        playtime_2weeks: number
+        playtime_forever: number
+        img_icon_url: string
+        playtime_windows_forever: number
+        playtime_mac_forever: number
+        playtime_linux_forever: number
+    }[]
+}
+
 async function getOwnedGames(steamID: string, includeFreeGames: boolean | null): Promise<ownedGamesData | undefined> {
     const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v1?key=${Config.steamAPIKey}&steamid=${steamID}&include_appinfo=true${includeFreeGames !== null ? `&include_played_free_games=${includeFreeGames}` : ''}`)
     .catch((err: Error) => {
@@ -158,10 +172,19 @@ async function getSteamLevel(steamID: string): Promise<number | undefined> {
 async function getBadges(steamID: string): Promise<badge[] | undefined> {
     const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetBadges/v1/?key=${Config.steamAPIKey}&steamid=${steamID}`)
     .catch(err => {
-        throw new BadGatewayError('Error getting steam level.')
+        throw new BadGatewayError('Error getting steam badges.')
     })
 
     return res.data?.response?.badges
+}
+
+async function getRecentlyPlayedGames(steamID: string): Promise<recentlyPlayedGamesData | undefined> {
+    const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v1/?key=${Config.steamAPIKey}&steamid=${steamID}`)
+    .catch(err => {
+        throw new BadGatewayError('Error getting recently played games.')
+    })
+
+    return res.data?.response
 }
 
 export {
@@ -171,6 +194,7 @@ export {
     getWishlist,
     getFriendsList,
     getBadges,
+    getRecentlyPlayedGames,
     player,
     badge,
 }
