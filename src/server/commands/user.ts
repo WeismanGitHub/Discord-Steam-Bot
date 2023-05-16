@@ -91,7 +91,7 @@ export default {
 		])
 		.addComponents([
 			new ButtonBuilder()
-			.setLabel('games')
+			.setLabel('owned games')
             .setCustomId(JSON.stringify({
                 type: 'owned-games',
                 data: {
