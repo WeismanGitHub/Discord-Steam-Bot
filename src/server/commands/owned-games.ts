@@ -1,6 +1,6 @@
 import { BadRequestError, InternalServerError } from '../errors';
+import { infoEmbed, ownedGameEmbed } from '../utils/embeds';
 import { getOwnedGames } from '../utils/steam';
-import { infoEmbed } from '../utils/embeds';
 import { UserModel } from '../db/models';
 import {
     SlashCommandBuilder,
@@ -63,30 +63,7 @@ export default {
             })
         }
 
-        const ownedGamesEmbeds: EmbedBuilder[] = ownedGames.map((game): EmbedBuilder => {
-            return new EmbedBuilder()
-            .setTitle(game.name || 'unknown')
-            .setColor('#8F00FF') // Purple
-            .setImage(
-                game.appid && game.img_icon_url ? `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg` : null
-            )
-            .addFields({
-                name: 'Play Time:',
-                value: ((): string => {
-                    if (game.playtime_forever === undefined) return 'unknown'
-    
-                    const playTime = String(game.playtime_forever)
-                    
-                    if (playTime.length === 1) return `0.0${playTime} hours`
-                    if (playTime.length === 2) return `0.${playTime} hours`
-    
-                    const position = String(playTime).length - 2;
-                    const formattedPlaytime = [playTime.slice(0, position), '.', playTime.slice(position)].join('');
-                    return `${formattedPlaytime} hours`
-                })(),
-            })
-        })
-        
+        const ownedGamesEmbeds: EmbedBuilder[] = ownedGames.map((game): EmbedBuilder => ownedGameEmbed(game))
         const embedGroups = [];
 
         while (ownedGamesEmbeds.length > 0) {
