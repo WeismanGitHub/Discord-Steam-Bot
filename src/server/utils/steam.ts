@@ -79,6 +79,14 @@ interface friend {
     friendSince: number
 }
 
+interface badge {
+    badgeid: number
+    level: number
+    completion_time: number
+    xp: number
+    scarcity: number
+}
+
 async function getOwnedGames(steamID: string, includeFreeGames: boolean | null): Promise<ownedGamesData | undefined> {
     const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v1?key=${Config.steamAPIKey}&steamid=${steamID}&include_appinfo=true${includeFreeGames !== null ? `&include_played_free_games=${includeFreeGames}` : ''}`)
     .catch((err: Error) => {
@@ -147,11 +155,22 @@ async function getSteamLevel(steamID: string): Promise<number | undefined> {
     return res.data?.response?.player_level
 }
 
+async function getBadges(steamID: string): Promise<badge[] | undefined> {
+    const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetBadges/v1/?key=${Config.steamAPIKey}&steamid=${steamID}`)
+    .catch(err => {
+        throw new BadGatewayError('Error getting steam level.')
+    })
+
+    return res.data?.response?.badges
+}
+
 export {
     getPlayerSummaries,
     getSteamLevel,
     getOwnedGames,
     getWishlist,
     getFriendsList,
+    getBadges,
     player,
+    badge,
 }
