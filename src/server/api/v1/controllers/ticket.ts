@@ -43,13 +43,27 @@ async function createTicket(req: Request, res: Response): Promise<void> {
         throw new BadRequestError('Missing userID, title, or text.')
     }
 
+    if (title.length > 256) {
+        throw new BadRequestError('Maximum title length is 256.')
+    } else if (title.length < 1) {
+        throw new BadRequestError('Minimum title length is 1.')
+    }
+
+    if (text.length > 4096) {
+        throw new BadRequestError('Maximum text length is 4096.')
+    } else if (text.length < 1) {
+        throw new BadRequestError('Minimum text length is 1.')
+    }
+
     const ticket = await TicketModel.create({
         userID,
         title,
         text
+    }).catch(err => {
+        console.log(err.errors.response)
     })
 
-    res.status(200).json({ ticketID: ticket._id })
+    res.status(200).json({ ticketID: ticket?._id })
 }
 
 async function resolveTicket(req: Request, res: Response): Promise<void> {
@@ -58,6 +72,12 @@ async function resolveTicket(req: Request, res: Response): Promise<void> {
 
     if (!response) {
         throw new BadRequestError('Missing response.')
+    }
+
+    if (response.length > 4096) {
+        throw new BadRequestError('Maximum response length is 4096.')
+    } else if (response.length < 1) {
+        throw new BadRequestError('Minimum response length is 1.')
     }
 
     const result = await TicketModel.updateOne(
