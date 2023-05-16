@@ -10,6 +10,11 @@ function formatSteamDate(steamDate: number | undefined): string {
     return formattedDate
 }
 
+function formatSteamPlaytime(playtime: number): string {
+    return ''
+}
+
 export {
-    formatSteamDate
+    formatSteamDate,
+    formatSteamPlaytime,
 }
