@@ -31,18 +31,20 @@ function playerProfileEmbed(player: player): EmbedBuilder {
 }
 
 function recentGameEmbed(game: recentlyPlayedGame): EmbedBuilder {
-    console.log(game)
     return new EmbedBuilder()
-        // .setImage(player.avatarfull || null)
-        // .addFields({
-        //     inline: true,
-        //     name: 'Name:',
-        //     value: player.personaname || 'unknown'
-        // })
-        // .addFields({
-        //     name: 'Account Birthday:',
-        //     value: formatSteamDate(player.timecreated)
-        // })
+        .setTitle(game.name || 'unknown')
+        .setColor('#8F00FF') // Purple
+        .setImage(
+            game.appid && game.img_icon_url ? `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg` : null
+        )
+        .addFields({
+            name: 'Total Playtime:',
+            value: game.playtime_forever ? formatSteamPlaytime(game.playtime_forever) : 'unknown',
+        })
+        .addFields({
+            name: 'Past 2 Weeks Playtime:',
+            value: game.playtime_2weeks ? formatSteamPlaytime(game.playtime_2weeks) : 'unknown',
+        })
 }
 
 function ownedGameEmbed(game: ownedGame): EmbedBuilder {
