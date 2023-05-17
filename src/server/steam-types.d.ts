@@ -38,7 +38,7 @@ interface ownedGamesData {
     games: undefined | ownedGame[]
 }
 
-interface wishlistItem {
+interface wishlistGame {
     name: undefined | string
     capsule: undefined | string
     review_score: undefined | number
