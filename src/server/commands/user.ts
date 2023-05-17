@@ -111,6 +111,17 @@ export default {
             }))
 			.setStyle(ButtonStyle.Primary)
 		])
+		.addComponents([
+			new ButtonBuilder()
+			.setLabel('friends')
+            .setCustomId(JSON.stringify({
+                type: 'friends',
+                data: {
+                    steamID: steamID
+                }
+            }))
+			.setStyle(ButtonStyle.Primary)
+		])
 
 		interaction.reply({
 			embeds: [embed],
