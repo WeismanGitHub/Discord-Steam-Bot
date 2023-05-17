@@ -67,9 +67,9 @@ export default {
             })
         }
 
-        let wishlistItems = await getWishlist(steamID, 0)
+        let wishlistGames = await getWishlist(steamID, 0)
 
-        if (!wishlistItems?.length) {
+        if (!wishlistGames?.length) {
             return interaction.reply({
                 embeds: [infoEmbed('User has empty wishlist.')],
                 ephemeral: true
@@ -80,14 +80,14 @@ export default {
         const freeOption = interaction.options.getBoolean('free')
 
         if (freeOption !== null) {
-            wishlistItems = wishlistItems.filter((item): boolean => Boolean(item.is_free_game) === freeOption)
+            wishlistGames = wishlistGames.filter((item): boolean => Boolean(item.is_free_game) === freeOption)
         }
 
         if (reviewsOption) {
-            wishlistItems = wishlistItems.filter((item): boolean => item.review_desc === reviewsOption)
+            wishlistGames = wishlistGames.filter((item): boolean => item.review_desc === reviewsOption)
         }
 
-        const wishlistEmbeds = wishlistItems.map((item) => {
+        const wishlistEmbeds = wishlistGames.map((item) => {
             return new EmbedBuilder()
             .setTitle(item.name || 'Missing Title')
             .setImage(item.capsule || item.background || null)

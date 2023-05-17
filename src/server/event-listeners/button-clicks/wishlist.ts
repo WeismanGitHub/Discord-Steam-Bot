@@ -36,9 +36,9 @@ export default {
             throw new InternalServerError('The server messed up this button.')
         }
 
-        let wishlistItems = await getWishlist(steamID, page)
+        let wishlistGames = await getWishlist(steamID, page)
 
-        if (!wishlistItems?.length) {
+        if (!wishlistGames?.length) {
             return interaction.reply({
                 embeds: [infoEmbed('No more items in wishlist.')],
                 ephemeral: true
@@ -46,14 +46,14 @@ export default {
         }
 
         if (free !== null) {
-            wishlistItems = wishlistItems.filter((item): boolean => Boolean(item.is_free_game) === free)
+            wishlistGames = wishlistGames.filter((item): boolean => Boolean(item.is_free_game) === free)
         }
 
         if (reviews) {
-            wishlistItems = wishlistItems.filter((item): boolean => item.review_desc === reviews)
+            wishlistGames = wishlistGames.filter((item): boolean => item.review_desc === reviews)
         }
 
-        const wishlistEmbeds = wishlistItems.map((item): EmbedBuilder => {
+        const wishlistEmbeds = wishlistGames.map((item): EmbedBuilder => {
             return new EmbedBuilder()
             .setTitle(item.name || 'Missing Title')
             .setImage(item.capsule || item.background || null)
