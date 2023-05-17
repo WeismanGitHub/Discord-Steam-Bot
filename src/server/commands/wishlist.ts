@@ -1,4 +1,4 @@
-import { infoEmbed } from '../utils/embeds';
+import { infoEmbed, wishlistGameEmbed } from '../utils/embeds';
 import { getWishlist } from '../utils/steam';
 import { BadRequestError } from '../errors';
 import { UserModel } from '../db/models';
@@ -6,7 +6,6 @@ import {
     SlashCommandBuilder,
     ChatInputCommandInteraction,
     User,
-    EmbedBuilder,
     ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle,
@@ -87,29 +86,7 @@ export default {
             wishlistGames = wishlistGames.filter((item): boolean => item.review_desc === reviewsOption)
         }
 
-        const wishlistEmbeds = wishlistGames.map((item) => {
-            return new EmbedBuilder()
-            .setTitle(item.name || 'Missing Title')
-            .setImage(item.capsule || item.background || null)
-            .setFooter({ text: `Release: ${item.release_string || 'unknown'}` })
-            .setColor('#8F00FF') // Purple
-            .addFields({
-                name: 'Reviews:',
-                value: item.reviews_percent ? `${item.reviews_percent}% positive` : 'unknown',
-                inline: false
-            })
-            .addFields({
-                name: 'Free:',
-                value: String(Boolean(item.is_free_game)),
-                inline: false
-            })
-            .addFields({
-                name: 'Tags:',
-                value: item.tags ? item.tags.join(', ') : 'none',
-                inline: false
-            })
-        })
-
+        const wishlistEmbeds = wishlistGames.map((game) => wishlistGameEmbed(game))
         const embedGroups = [];
 
         while (wishlistEmbeds.length > 0) {
