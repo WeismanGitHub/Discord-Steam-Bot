@@ -53,7 +53,7 @@ export default {
             wishlistItems = wishlistItems.filter((item): boolean => item.review_desc === reviews)
         }
 
-        const wishlistEmbeds: EmbedBuilder[] = wishlistItems.map((item): EmbedBuilder => {
+        const wishlistEmbeds = wishlistItems.map((item): EmbedBuilder => {
             return new EmbedBuilder()
             .setTitle(item.name || 'Missing Title')
             .setImage(item.capsule || item.background || null)
@@ -78,11 +78,7 @@ export default {
 
         if (!wishlistEmbeds.length) {
             return interaction.reply({
-                embeds: [
-                    new EmbedBuilder()
-                    .setTitle('No more items in wishlist.')
-                    .setColor('#8F00FF') // Purple
-                ],
+                embeds: [infoEmbed('No more items in wishlist.')],
                 ephemeral: true
             })
         }

@@ -1,6 +1,6 @@
-import { ButtonInteraction, EmbedBuilder, Events } from "discord.js"
 import { infoEmbed, recentGameEmbed } from "../../utils/embeds"
 import { getRecentlyPlayedGames } from "../../utils/steam"
+import { ButtonInteraction, Events } from "discord.js"
 import { InternalServerError } from "../../errors"
 
 export default {
@@ -33,9 +33,8 @@ export default {
             })
         }
 
-        const recentGamesEmbeds: EmbedBuilder[] = recentGames.map((game) => recentGameEmbed(game))
-        
-        const embedGroups: EmbedBuilder[][] = [];
+        const recentGamesEmbeds = recentGames.map((game) => recentGameEmbed(game))
+        const embedGroups = [];
 
         while (recentGamesEmbeds.length > 0) {
             embedGroups.push(recentGamesEmbeds.splice(0, 10))

@@ -1,13 +1,8 @@
+import { SlashCommandBuilder, ChatInputCommandInteraction, User } from 'discord.js'
 import { getFriendsList, getPlayerSummaries } from '../utils/steam';
 import { BadRequestError, InternalServerError } from '../errors';
 import { infoEmbed, playerProfileEmbed } from '../utils/embeds';
 import { UserModel } from '../db/models';
-import {
-    SlashCommandBuilder,
-    ChatInputCommandInteraction,
-    User,
-    EmbedBuilder,
-} from 'discord.js'
 
 export default {
 	data: new SlashCommandBuilder()
@@ -64,7 +59,7 @@ export default {
             })
         }
 
-        const friendsEmbeds = friendsProfiles.map((friend): EmbedBuilder => playerProfileEmbed(friend))
+        const friendsEmbeds = friendsProfiles.map((friend) => playerProfileEmbed(friend))
         const embedGroups = [];
 
         while (friendsEmbeds.length > 0) {

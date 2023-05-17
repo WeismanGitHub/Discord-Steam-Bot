@@ -87,7 +87,7 @@ export default {
             wishlistItems = wishlistItems.filter((item): boolean => item.review_desc === reviewsOption)
         }
 
-        const wishlistEmbeds: EmbedBuilder[] = wishlistItems.map((item): EmbedBuilder => {
+        const wishlistEmbeds = wishlistItems.map((item) => {
             return new EmbedBuilder()
             .setTitle(item.name || 'Missing Title')
             .setImage(item.capsule || item.background || null)

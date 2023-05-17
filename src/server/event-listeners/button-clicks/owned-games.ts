@@ -1,7 +1,7 @@
-import { ButtonInteraction, EmbedBuilder, Events } from "discord.js"
 import { InternalServerError, BadRequestError } from "../../errors"
-import { getOwnedGames } from "../../utils/steam"
 import { infoEmbed, ownedGameEmbed } from "../../utils/embeds"
+import { ButtonInteraction, Events } from "discord.js"
+import { getOwnedGames } from "../../utils/steam"
 
 export default {
 	name: Events.InteractionCreate,
@@ -33,7 +33,7 @@ export default {
             })
         }
 
-        const ownedGamesEmbeds: EmbedBuilder[] = ownedGames.map((game) => ownedGameEmbed(game))
+        const ownedGamesEmbeds = ownedGames.map((game) => ownedGameEmbed(game))
 
         if (!ownedGamesEmbeds.length) {
             throw new BadRequestError('No owned games found.')

@@ -1,13 +1,8 @@
+import { SlashCommandBuilder, ChatInputCommandInteraction, User } from 'discord.js'
 import { BadRequestError, InternalServerError } from '../errors';
 import { infoEmbed, recentGameEmbed } from '../utils/embeds';
 import { getRecentlyPlayedGames } from '../utils/steam';
 import { UserModel } from '../db/models';
-import {
-    SlashCommandBuilder,
-    ChatInputCommandInteraction,
-    User,
-    EmbedBuilder,
-} from 'discord.js'
 
 export default {
 	data: new SlashCommandBuilder()
@@ -58,9 +53,8 @@ export default {
             })
         }
 
-        const recentGamesEmbeds: EmbedBuilder[] = recentGames.map((game) => recentGameEmbed(game))
-        
-        const embedGroups: EmbedBuilder[][] = [];
+        const recentGamesEmbeds = recentGames.map((game) => recentGameEmbed(game))
+        const embedGroups = [];
 
         while (recentGamesEmbeds.length > 0) {
             embedGroups.push(recentGamesEmbeds.splice(0, 10))

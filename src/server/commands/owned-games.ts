@@ -1,13 +1,8 @@
+import { SlashCommandBuilder, ChatInputCommandInteraction, User } from 'discord.js'
 import { BadRequestError, InternalServerError } from '../errors';
 import { infoEmbed, ownedGameEmbed } from '../utils/embeds';
 import { getOwnedGames } from '../utils/steam';
 import { UserModel } from '../db/models';
-import {
-    SlashCommandBuilder,
-    ChatInputCommandInteraction,
-    User,
-    EmbedBuilder
-} from 'discord.js'
 
 export default {
 	data: new SlashCommandBuilder()
@@ -63,7 +58,7 @@ export default {
             })
         }
 
-        const ownedGamesEmbeds: EmbedBuilder[] = ownedGames.map((game): EmbedBuilder => ownedGameEmbed(game))
+        const ownedGamesEmbeds = ownedGames.map((game) => ownedGameEmbed(game))
         const embedGroups = [];
 
         while (ownedGamesEmbeds.length > 0) {
