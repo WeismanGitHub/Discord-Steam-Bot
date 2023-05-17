@@ -21,7 +21,7 @@ async function getWishlist(steamID: string, page: number | string): Promise<wish
 }
 
 async function getFriendsList(steamID: string): Promise<friend[] | undefined> {
-    const res = await axios.get(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${Config.steamAPIKey}&steamid=${steamID}&relationship=friend`)
+    const res = await axios.get(`https://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${Config.steamAPIKey}&steamid=${steamID}&relationship=friend`)
     .catch(err => {
         throw new BadGatewayError('Error getting friends.')
     })

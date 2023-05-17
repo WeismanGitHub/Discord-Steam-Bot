@@ -34,7 +34,7 @@ function recentGameEmbed(game: recentlyPlayedGame): EmbedBuilder {
         .setTitle(game.name || 'unknown')
         .setColor('#8F00FF') // Purple
         .setImage(
-            game.appid && game.img_icon_url ? `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg` : null
+            game.appid && game.img_icon_url ? `https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg` : null
         )
         .addFields({
             name: 'Total Playtime:',
@@ -51,7 +51,7 @@ function ownedGameEmbed(game: ownedGame): EmbedBuilder {
         .setTitle(game.name || 'unknown')
         .setColor('#8F00FF') // Purple
         .setImage(
-            game.appid && game.img_icon_url ? `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg` : null
+            game.appid && game.img_icon_url ? `https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg` : null
         )
         .addFields({
             name: 'Play Time:',
