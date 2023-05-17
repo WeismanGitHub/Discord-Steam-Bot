@@ -11,7 +11,7 @@ async function getOwnedGames(steamID: string, includeFreeGames: boolean | null):
     return res.data?.response
 }
 
-async function getWishlist(steamID: string, page: number | string): Promise<wishlistItem[] | undefined> {
+async function getWishlist(steamID: string, page: number | string): Promise<wishlistGame[] | undefined> {
     const res = await axios.get(`https://store.steampowered.com/wishlist/profiles/${steamID}/wishlistdata/?p=${page}`)
     .catch(err => {
         throw new BadGatewayError('Error getting wishlist.')
