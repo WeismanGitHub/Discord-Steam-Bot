@@ -1,6 +1,5 @@
-import { ownedGame, player, recentlyPlayedGame } from './steam'
-import { EmbedBuilder } from "discord.js";
 import { formatSteamDate, formatSteamPlaytime } from "./misc";
+import { EmbedBuilder } from "discord.js";
 
 function errorEmbed(description: string | null = null): EmbedBuilder {
     return new EmbedBuilder()
