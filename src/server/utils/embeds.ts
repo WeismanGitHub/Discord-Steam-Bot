@@ -59,10 +59,34 @@ function ownedGameEmbed(game: ownedGame): EmbedBuilder {
         })
 }
 
+function wishlistGameEmbed(game: wishlistGame) {
+    return new EmbedBuilder()
+    .setTitle(game.name || 'Missing Title')
+    .setImage(game.capsule || game.background || null)
+    .setFooter({ text: `Release: ${game.release_string || 'unknown'}` })
+    .setColor('#8F00FF') // Purple
+    .addFields({
+        name: 'Reviews:',
+        value: game.reviews_percent ? `${game.reviews_percent}% positive` : 'unknown',
+        inline: false
+    })
+    .addFields({
+        name: 'Free:',
+        value: String(Boolean(game.is_free_game)),
+        inline: false
+    })
+    .addFields({
+        name: 'Tags:',
+        value: game.tags ? game.tags.join(', ') : 'none',
+        inline: false
+    })
+}
+
 export {
     errorEmbed,
     infoEmbed,
     playerProfileEmbed,
     recentGameEmbed,
     ownedGameEmbed,
+    wishlistGameEmbed,
 }
