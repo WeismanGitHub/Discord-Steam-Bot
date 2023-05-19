@@ -79,6 +79,15 @@ async function getRecentlyPlayedGames(steamID: string): Promise<recentlyPlayedGa
     return res.data?.response
 }
 
+async function getPlayerBans(steamID: string): Promise<playerBansData | undefined> {
+    const res = await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key=${Config.steamAPIKey}&steamids=${steamID}`)
+    .catch(err => {
+        throw new BadGatewayError('Error getting player bans.')
+    })
+
+    return res.data?.response?.players[0]
+}
+
 export {
     getPlayerSummaries,
     getSteamLevel,
@@ -86,4 +95,5 @@ export {
     getWishlist,
     getFriendsList,
     getRecentlyPlayedGames,
+    getPlayerBans,
 }
