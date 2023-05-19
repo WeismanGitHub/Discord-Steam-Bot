@@ -93,3 +93,13 @@ interface recentlyPlayedGamesData {
     total_count: number | undefined
     games: recentlyPlayedGame[] | undefined
 }
+
+interface playerBansData {
+    steamId: string | undefined
+    CommunityBanned: boolean | undefined
+    VACBanned: boolean | undefined
+    NumberOfVACBans: number | undefined
+    DaysSinceLastBan: number | undefined
+    NumberOfGameBans: number | undefined
+    EconomyBan: string | undefined
+}
