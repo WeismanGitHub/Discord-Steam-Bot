@@ -10,6 +10,10 @@ export default function NavBar() {
     const navigate = useNavigate();
 
     function logout() {
+        if (!window.confirm('Are you sure you want to logout?')) {
+            return
+        }
+
         axios.post('/api/v1/auth/logout')
         .then(res => {
             setLoggedIn(false)
