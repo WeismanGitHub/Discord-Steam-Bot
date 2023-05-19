@@ -68,26 +68,12 @@ export default {
             value: String(playerLevel)
         })
 
-        const row = new ActionRowBuilder<ButtonBuilder>()
+        const row1 = new ActionRowBuilder<ButtonBuilder>()
 		.addComponents([
 			new ButtonBuilder()
 			.setLabel('profile')
 			.setURL(playerData.profileurl)
 			.setStyle(ButtonStyle.Link)
-		])
-		.addComponents([
-			new ButtonBuilder()
-			.setLabel('wishlist')
-            .setCustomId(JSON.stringify({
-                type: 'wishlist',
-                data: {
-                    steamID: steamID,
-                    page: 0,
-                    free: null,
-                    reviews: null,
-                }
-            }))
-			.setStyle(ButtonStyle.Primary)
 		])
 		.addComponents([
 			new ButtonBuilder()
@@ -111,7 +97,20 @@ export default {
             }))
 			.setStyle(ButtonStyle.Primary)
 		])
+
+        const row2 = new ActionRowBuilder<ButtonBuilder>()
 		.addComponents([
+			new ButtonBuilder()
+			.setLabel('bans')
+            .setCustomId(JSON.stringify({
+                type: 'bans',
+                data: {
+                    steamID: steamID
+                }
+            }))
+			.setStyle(ButtonStyle.Primary)
+		])
+        .addComponents([
 			new ButtonBuilder()
 			.setLabel('friends')
             .setCustomId(JSON.stringify({
@@ -122,10 +121,24 @@ export default {
             }))
 			.setStyle(ButtonStyle.Primary)
 		])
-
+		.addComponents([
+			new ButtonBuilder()
+			.setLabel('wishlist')
+            .setCustomId(JSON.stringify({
+                type: 'wishlist',
+                data: {
+                    steamID: steamID,
+                    page: 0,
+                    free: null,
+                    reviews: null,
+                }
+            }))
+			.setStyle(ButtonStyle.Primary)
+		])
+        
 		interaction.reply({
 			embeds: [embed],
-			components: [row],
+			components: [row1, row2],
 			ephemeral: true
 		})
 	},
