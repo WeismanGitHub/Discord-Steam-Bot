@@ -85,7 +85,7 @@ async function getPlayerBans(steamID: string): Promise<playerBansData | undefine
         throw new BadGatewayError('Error getting player bans.')
     })
 
-    return res.data?.response?.players[0]
+    return res.data.players?.[0]
 }
 
 export {
