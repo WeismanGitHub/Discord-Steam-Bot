@@ -82,6 +82,36 @@ function wishlistGameEmbed(game: wishlistGame) {
     })
 }
 
+function playerBansEmbed(bansData: playerBansData) {
+    return new EmbedBuilder()
+    .setTitle('Bans Data')
+    .addFields({
+        name: 'Community Banned:',
+        value: bansData.CommunityBanned === undefined ? 'unkown' : String(bansData.CommunityBanned),
+        inline: false
+    })
+    .addFields({
+        name: 'Days Since Last Ban:',
+        value: String(bansData.DaysSinceLastBan ?? 'unknown'),
+        inline: false
+    })
+    .addFields({
+        name: 'VAC Bans:',
+        value: String(bansData.NumberOfVACBans ?? 'unknown'),
+        inline: false
+    })
+    .addFields({
+        name: 'Economy Ban:',
+        value: String(bansData.EconomyBan ?? 'unknown'),
+        inline: false
+    })
+    .addFields({
+        name: 'Number of Game Bans:',
+        value: String(bansData.NumberOfGameBans ?? 'unknown'),
+        inline: false
+    })
+}
+
 export {
     errorEmbed,
     infoEmbed,
@@ -89,4 +119,5 @@ export {
     recentGameEmbed,
     ownedGameEmbed,
     wishlistGameEmbed,
+    playerBansEmbed,
 }
