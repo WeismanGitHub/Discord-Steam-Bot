@@ -121,11 +121,11 @@ a, a:hover, a:focus, a:active {
   border: #a4a7aa 1px solid;
 }
 
-.generic-button,.large-button:hover{
+.generic-button:hover, .large-button:hover{
   filter: brightness(90%);
 }
 
-.generic-button,.large-button:active {
+.generic-button:active, .large-button:active {
   filter: brightness(80%);
 }
 
