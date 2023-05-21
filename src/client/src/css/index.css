@@ -7,7 +7,7 @@ body {
   font-size: x-large;
 }
 
-.gray-button {
+.large-button {
   padding: 20px;
   margin: 20px;
   border-radius: 5px;
@@ -16,14 +16,6 @@ body {
   cursor: pointer;
   border: black 1px solid;
   display: inline-block;
-}
-
-.gray-button:hover{
-  filter: brightness(90%);
-}
-
-.gray-button:active {
-  filter: brightness(80%);
 }
 
 a, a:hover, a:focus, a:active {
@@ -129,11 +121,11 @@ a, a:hover, a:focus, a:active {
   border: #a4a7aa 1px solid;
 }
 
-.generic-button:hover{
+.generic-button,.large-button:hover{
   filter: brightness(90%);
 }
 
-.generic-button:active {
+.generic-button,.large-button:active {
   filter: brightness(80%);
 }
 
