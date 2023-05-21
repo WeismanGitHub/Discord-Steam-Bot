@@ -146,3 +146,11 @@ a, a:hover, a:focus, a:active {
   text-align: center;
   border: #a4a7aa 1px solid;
 }
+
+.account-area {
+  width: 18%;
+  margin-left: 41%;
+  align-content: center;
+  height: 92.5vh;
+  float: left;
+}
