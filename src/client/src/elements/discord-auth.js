@@ -44,7 +44,7 @@ export default function DiscordAuth() {
 	} else {
 		return <>
 			<NavBar/>
-			<a href={process.env.REACT_APP_AUTH_OAUTH_URL + `&state=${btoa(randomString)}`} class='gray-button'>
+			<a href={process.env.REACT_APP_AUTH_OAUTH_URL + `&state=${btoa(randomString)}`} class='large-button'>
 				Register
 			</a>
 		</>

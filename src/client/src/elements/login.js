@@ -41,7 +41,7 @@ export default function Login() {
     
 	return <>
 		<NavBar/>
-		<a href={process.env.REACT_APP_LOGIN_OAUTH_URL + `&state=${btoa(randomString)}`} class='gray-button'>
+		<a href={process.env.REACT_APP_LOGIN_OAUTH_URL + `&state=${btoa(randomString)}`} class='large-button'>
 			Login
 		</a>
 	</>
