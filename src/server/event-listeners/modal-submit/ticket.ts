@@ -19,8 +19,8 @@ export default {
 
         if (type !== 'ticket') return
 
-        const title = interaction.fields.getTextInputValue('text')
-        const text = interaction.fields.getTextInputValue('title')
+        const title = interaction.fields.getTextInputValue('title')
+        const text = interaction.fields.getTextInputValue('text')
 
         const ticket = await TicketModel.create({
             title,
