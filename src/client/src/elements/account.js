@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import axios, * as others from 'axios'
 import NavBar from './nav-bar';
-import '../css/account.css';
+import '../css/index.css';
 
 export default function Account() {
     const userData = JSON.parse(localStorage.getItem('userData'))
