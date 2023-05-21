@@ -1,10 +1,10 @@
 import { formatSteamDate, formatSteamPlaytime } from "./misc";
 import { EmbedBuilder } from "discord.js";
 
-function errorEmbed(description: string | null = null): EmbedBuilder {
+function errorEmbed(description: string | null = null, statusCode: number | null = null): EmbedBuilder {
     return new EmbedBuilder()
         .setTitle("There's been an error!")
-        .setDescription(description)
+        .setDescription(`${description ?? ''}\nStatus Code: ${statusCode ?? 'Unknown'}`)
         .setColor('#FF0000') // Red
 }
 

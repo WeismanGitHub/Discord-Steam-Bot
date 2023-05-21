@@ -103,7 +103,7 @@ export class CustomClient extends Client {
                     .catch((err: Error) => {
                         console.error(err.message)
 
-                        const embed = err instanceof CustomError ? errorEmbed(err.message) : errorEmbed()
+                        const embed = err instanceof CustomError ? errorEmbed(err.message, err.statusCode) : errorEmbed()
                         const interaction = args[0]
                         
                         if (interaction.replied || interaction.deferred) {
