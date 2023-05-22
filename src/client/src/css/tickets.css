@@ -10,7 +10,7 @@
   align-content: center;
   display: inline-block;
   width: 50%;
-  font-size: x-large;
+  font-size: xx-large;
 }
 
 .ticket-status {
@@ -32,4 +32,12 @@
   color: #a4a7aa;
   text-align: center;
   border: #a4a7aa 1px solid;
+}
+
+.ticket-section {
+  margin: 5px;
+  background-color: #40444b;
+  border: #a4a7aa 1px solid;
+  border-radius: 5px;
+  padding: 5px;
 }
