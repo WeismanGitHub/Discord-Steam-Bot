@@ -1,8 +1,9 @@
 import { errorToast, successToast } from '../../toasts'
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import axios, * as others from 'axios'
 import NavBar from '../nav-bar';
-import { useParams } from 'react-router-dom';
+import '../../css/tickets.css';
 
 export default function Ticket() {
     const userData = JSON.parse(localStorage.getItem('userData'))
@@ -24,27 +25,31 @@ export default function Ticket() {
     return (<>
         <NavBar/>
 
-        <h2>{ticket?.title || 'title'}</h2>
-        <h6>status: {ticket?.status || 'unknown'}</h6>
+        <div class='ticket-area'>
+            <div class='ticket-title'> {ticket?.title}</div>
+            <br/>
+            <div class='ticket-status'>status: {ticket?.status || 'unknown'}</div>
+            <br/>
 
-        <h3>{ticket?.text || 'text'}</h3>
+            <div style={{fontSize: 'medium' }}>{ticket?.text}</div>
 
-        <h3>{ticket?.response}</h3>
-        
-        {(ticket?.status === 'open' && ['admin', 'owner'].includes(userData?.role)) && 
-            <input
-                type='text'
-                class=''
-                value={response}
-                onChange={(e)=> {
-                    if (e.target.value.length > 4096) {
-                        return errorToast('Must be less than 4096.')
-                    }
+            <div>{ticket?.response}</div>
+            
+            {(ticket?.status === 'open' && ['admin', 'owner'].includes(userData?.role)) && 
+                <textarea
+                    style={{ width: '50%', height: '50%' }}
+                    class='ticket-response-input'
+                    value={response}
+                    onChange={(e)=> {
+                        if (e.target.value.length > 4096) {
+                            return errorToast('Must be less than 4096.')
+                        }
 
-                    setResponse(e.target.value)
-                }}
-                onKeyPress={ (e) => e.key === 'Enter' && resolveTicket()}
-            />
-        }
+                        setResponse(e.target.value)
+                    }}
+                    onKeyPress={ (e) => e.key === 'Enter' && resolveTicket()}
+                />
+            }
+        </div>
     </>)
 }
