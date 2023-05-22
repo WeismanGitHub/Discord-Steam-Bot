@@ -19,7 +19,9 @@ export default function Ticket() {
 	}, [])
 
     function resolveTicket() {
-        console.log(response)
+        axios.post(`/api/v1/tickets/${ticketID}`, { response })
+		.then(res => successToast('Responded and closed ticket!'))
+		.catch(err => errorToast(err?.response?.data?.error || err.message))
     }
 
     return (<>
@@ -31,9 +33,9 @@ export default function Ticket() {
             <div class='ticket-status'>status: {ticket?.status || 'unknown'}</div>
             <br/>
 
-            <div style={{fontSize: 'medium' }}>{ticket?.text}</div>
+            <div style={{fontSize: 'medium' }} class='ticket-section'>{ticket?.text}</div>
 
-            <div>{ticket?.response}</div>
+            { ticket?.response && <div class='ticket-section'>{ticket?.response}</div>}
             
             {(ticket?.status === 'open' && ['admin', 'owner'].includes(userData?.role)) && 
                 <>
