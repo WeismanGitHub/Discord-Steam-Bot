@@ -146,3 +146,39 @@ a, a:hover, a:focus, a:active {
   height: 92.5vh;
   float: left;
 }
+
+.ticket-area {
+  width: 75%;
+  align-content: center;
+  height: 92.5vh;
+  word-break: break-all;
+  display: inline-block;
+}
+
+.ticket-title {
+  align-content: center;
+  display: inline-block;
+  width: 50%;
+  font-size: x-large;
+}
+
+.ticket-status {
+  border: #1a1b1e;
+  background-color: #2b2d31;
+  border-radius: 5px;
+  font-size: small;
+  width: fit-content;
+  display: inline-block;
+  align-content: center;
+  padding: 5px;
+}
+
+.ticket-response-input {
+  font-size: large;
+  margin-top: 5px;
+  border-radius: 5px;
+  background-color: #40444b;
+  color: #a4a7aa;
+  text-align: center;
+  border: #a4a7aa 1px solid;
+}
