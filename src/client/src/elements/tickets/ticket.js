@@ -19,7 +19,7 @@ export default function Ticket() {
 	}, [])
 
     function resolveTicket() {
-
+        console.log(response)
     }
 
     return (<>
@@ -36,19 +36,22 @@ export default function Ticket() {
             <div>{ticket?.response}</div>
             
             {(ticket?.status === 'open' && ['admin', 'owner'].includes(userData?.role)) && 
-                <textarea
-                    style={{ width: '50%', height: '50%' }}
-                    class='ticket-response-input'
-                    value={response}
-                    onChange={(e)=> {
-                        if (e.target.value.length > 4096) {
-                            return errorToast('Must be less than 4096.')
-                        }
+                <>
+                    <textarea
+                        style={{ width: '50%', height: '50%' }}
+                        class='ticket-response-input'
+                        value={response}
+                        onChange={(e)=> {
+                            if (e.target.value.length > 4096) {
+                                return errorToast('Must be less than 4096.')
+                            }
 
-                        setResponse(e.target.value)
-                    }}
-                    onKeyPress={ (e) => e.key === 'Enter' && resolveTicket()}
-                />
+                            setResponse(e.target.value)
+                        }}
+                    />
+                    <br/>
+                    <button class='generic-button' onClick={resolveTicket}>Respond</button>
+                </>
             }
         </div>
     </>)
