@@ -2,7 +2,7 @@
   width: 75%;
   align-content: center;
   height: 92.5vh;
-  word-break: break-all;
+  word-wrap: break-word;
   display: inline-block;
 }
 
