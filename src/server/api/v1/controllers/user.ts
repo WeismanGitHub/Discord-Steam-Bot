@@ -82,18 +82,11 @@ async function deleteSelf(req: Request, res: Response): Promise<void> {
         throw new UnauthorizedError('Missing ID.')
     }
 
-    const userDoc = await UserModel.findById(discordID)
+    const result = await UserModel.deleteOne({ _id: discordID, role: { $ne: 'banned' } })
+    .catch(err => { throw new InternalServerError('Could not delete your data.') })
 
-    if (!userDoc) {
-        throw new NotFoundError('Could not find user in database.')
-    }
-
-    if (userDoc.role == 'banned') {
-        const res = await userDoc.updateOne({ steamID: null })
-        console.log(res)
-    } else {
-        const res = await userDoc.deleteOne()
-        console.log(res)
+    if (!result.deletedCount) {
+        throw new BadRequestError("Nothing was deleted. If you have been banned, your data will be stored.")
     }
 
     res.status(200).end()
