@@ -26,5 +26,7 @@
   
   `npm run app` to run the bot and website.
 
+  `npm run commands` to reload the commands.
+
   `jest` to run tests.
 </div>
