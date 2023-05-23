@@ -1,6 +1,10 @@
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { BadRequestError, InternalServerError } from '../../../errors';
+import { CustomClient } from '../../../custom-client';
+import { infoEmbed } from '../../../utils/embeds';
 import { TicketModel } from '../../../db/models';
 import { Request, Response } from 'express';
+import { Config } from '../../../../config';
 require('express-async-errors')
 
 async function getTickets(req: Request, res: Response): Promise<void> {
@@ -67,6 +71,7 @@ async function createTicket(req: Request, res: Response): Promise<void> {
 }
 
 async function resolveTicket(req: Request, res: Response): Promise<void> {
+    const client: CustomClient = req.app.get('discordClient')
     const { ticketID } = req.params
     const { response } = req.body
 
@@ -80,14 +85,35 @@ async function resolveTicket(req: Request, res: Response): Promise<void> {
         throw new BadRequestError('Minimum response length is 1.')
     }
 
-    const result = await TicketModel.updateOne(
+    const ticket = await TicketModel.findOneAndUpdate(
         { _id: ticketID, status: 'open' },
         { response, resolverID: req.user?._id, status: 'closed' }
     )
 
-    if (!result.acknowledged || !result.modifiedCount) {
-        throw new BadRequestError("Nothing was changed. Maybe this ticket has already been resolved.")
+    if (!ticket) {
+        throw new BadRequestError("Could not resolve ticket.")
     }
+
+    const ticketCreator = await client.users.fetch(ticket.userID)
+    .catch(err => {
+        throw new InternalServerError('Could not get ticket creator.')
+    })
+
+    const row = new ActionRowBuilder<ButtonBuilder>()
+    .addComponents([
+        new ButtonBuilder()
+        .setLabel('View Your Ticket')
+        .setURL(`${Config.websiteLink}tickets/${ticket.id}`)
+        .setStyle(ButtonStyle.Link)
+    ])
+
+    await ticketCreator.send({
+        embeds: [infoEmbed('Your ticket has been resolved.')],
+        components: [row],
+    })
+    .catch(err => {
+        throw new InternalServerError('Could not respond to ticket creator.')
+    })
 
     res.status(200).end()
 }
