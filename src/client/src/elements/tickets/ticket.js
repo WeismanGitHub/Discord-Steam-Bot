@@ -20,7 +20,10 @@ export default function Ticket() {
 
     function resolveTicket() {
         axios.post(`/api/v1/tickets/${ticketID}`, { response })
-		.then(res => successToast('Responded and closed ticket!'))
+		.then(res => {
+            successToast('Responded and closed ticket!')
+            setTicket({ ...ticket, response, status: 'closed' })
+        })
 		.catch(err => errorToast(err?.response?.data?.error || err.message))
     }
 
@@ -33,7 +36,7 @@ export default function Ticket() {
             <div class='ticket-status'>status: {ticket?.status || 'unknown'}</div>
             <br/>
 
-            <div style={{fontSize: 'medium' }} class='ticket-section'>{ticket?.text}</div>
+            <div class='ticket-section'>{ticket?.text}</div>
 
             { ticket?.response && <div class='ticket-section'>{ticket?.response}</div>}
             
