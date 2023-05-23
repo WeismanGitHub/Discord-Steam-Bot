@@ -10,7 +10,7 @@ export default {
 	,
 	async execute(interaction: CommandInteraction): Promise<void> {
 		const res = await UserModel.deleteOne({ _id: interaction.user.id, role: { $ne: 'banned' } })
-		.catch(err => { console.log(err);throw new InternalServerError('Could not delete your data.') })
+		.catch(err => { throw new InternalServerError('Could not delete your data.') })
 
 		if (!res.deletedCount) {
 			throw new BadRequestError("Nothing was deleted. If you have been banned, your data will be stored.")
