@@ -1,11 +1,11 @@
 import { Document, Schema, model } from 'mongoose';
 
-interface Notification extends Document {
+interface Post extends Document {
     title: string
     text: string
 }
 
-const NotificationSchema: Schema = new Schema<Notification>({
+const PostSchema: Schema = new Schema<Post>({
     title: {
         type: String,
         required: true,
@@ -20,4 +20,4 @@ const NotificationSchema: Schema = new Schema<Notification>({
     },
 }, { timestamps: { createdAt: true, updatedAt: false } });
 
-export default model<Notification>('notifications', NotificationSchema)
+export default model<Post>('Posts', PostSchema)
