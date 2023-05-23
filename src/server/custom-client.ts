@@ -84,7 +84,6 @@ export class CustomClient extends Client {
                 } else {
                     interaction.reply({ embeds: [embed], ephemeral: true });
                 }
-
             })
         });
     }
