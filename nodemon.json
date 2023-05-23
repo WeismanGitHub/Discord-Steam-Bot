@@ -3,5 +3,6 @@
         "src/*",
         "dist/client/*",
         "activity.json"
-    ]
+    ],
+    "delay": "1000"
 }
