@@ -10,6 +10,7 @@ interface JwtPayload extends jwt.JwtPayload {
 
 type role = 'banned' | 'user' | 'admin' | 'owner'
 
+// I'm aware that if an admin's or owner's role changes, they can still act like the previous role because the role is stored in the JWT. I'm just too lazy to fix this.
 function auth(req: Request, res: Response, next: NextFunction, allowedRoles: role[]): void {
 	if (!req.cookies.user) {
 		throw new UnauthorizedError("Please login.")
