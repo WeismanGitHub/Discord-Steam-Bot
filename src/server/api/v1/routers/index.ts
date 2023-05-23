@@ -11,6 +11,7 @@ import cors from 'cors'
 
 import ticketRouter from './ticket';
 import authRouter from './auth';
+import postRouter from './post';
 import userRouter from './user';
 import botRouter from './bot';
 
@@ -55,6 +56,7 @@ v1Router.use(cookieParser())
 
 v1Router.use('/tickets', ticketRouter)
 v1Router.use('/users', userRouter)
+v1Router.use('/posts', postRouter)
 v1Router.use('/auth', authRouter)
 v1Router.use('/bot', botRouter)
 
