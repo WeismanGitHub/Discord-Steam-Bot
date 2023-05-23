@@ -9,11 +9,11 @@ export default {
 		.setDescription('Delete all your stored data.')
 	,
 	async execute(interaction: CommandInteraction): Promise<void> {
-		const res = await UserModel.deleteOne({ _id: interaction.user.id })
-		.catch(err => { throw new InternalServerError('Could not delete your data.') })
+		const res = await UserModel.deleteOne({ _id: interaction.user.id, role: { $ne: 'banned' } })
+		.catch(err => { console.log(err);throw new InternalServerError('Could not delete your data.') })
 
 		if (!res.deletedCount) {
-			throw new BadRequestError("Nothing was changed. Maybe this bot already wasn't authorized?")
+			throw new BadRequestError("Nothing was deleted. If you have been banned, your data will be stored.")
 		}
 
 		interaction.reply({
