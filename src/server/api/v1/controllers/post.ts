@@ -40,13 +40,25 @@ async function createPost(req: Request, res: Response): Promise<void> {
 
     await PostModel.create({ title, text })
     .catch(err => {
-        console.log(err.errors.response)
+        throw new InternalServerError('Could not create post.')
     })
 
     res.status(200).end()
 }
 
 async function deletePost(req: Request, res: Response): Promise<void> {
+    const { postID } = req.params
+
+    const response = await PostModel.deleteOne({ _id: postID })
+    .catch(err => {
+        throw new InternalServerError('Could not delete post.')
+    })
+
+    if (!response.deletedCount || !response.acknowledged) {
+        throw new InternalServerError("Could not delete post.")
+    }
+
+    res.status(200).end()
 }
 
 export {
