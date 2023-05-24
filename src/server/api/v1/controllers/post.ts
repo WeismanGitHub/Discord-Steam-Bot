@@ -19,6 +19,31 @@ async function getPosts(req: Request, res: Response): Promise<void> {
 }
 
 async function createPost(req: Request, res: Response): Promise<void> {
+    const { title, text } = req.body
+    const userID = req.user?._id
+
+    if (!userID || !title || !text) {
+        throw new BadRequestError('Missing userID, title, or text.')
+    }
+
+    if (title.length > 256) {
+        throw new BadRequestError('Maximum title length is 256.')
+    } else if (title.length < 1) {
+        throw new BadRequestError('Minimum title length is 1.')
+    }
+
+    if (text.length > 4096) {
+        throw new BadRequestError('Maximum text length is 4096.')
+    } else if (text.length < 1) {
+        throw new BadRequestError('Minimum text length is 1.')
+    }
+
+    await PostModel.create({ title, text })
+    .catch(err => {
+        console.log(err.errors.response)
+    })
+
+    res.status(200).end()
 }
 
 async function deletePost(req: Request, res: Response): Promise<void> {
