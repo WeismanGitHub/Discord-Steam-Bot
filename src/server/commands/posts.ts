@@ -27,7 +27,7 @@ export default {
 		.addComponents([
 			new ButtonBuilder()
 			.setLabel('Next Page ⏩')
-            .setCustomId(JSON.stringify({ type: 'post', data: {} }))
+            .setCustomId(JSON.stringify({ type: 'post', data: { page: 0 } }))
 			.setStyle(ButtonStyle.Primary)
 		])
 
