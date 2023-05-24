@@ -112,10 +112,6 @@ function playerBansEmbed(bansData: playerBansData) {
     })
 }
 
-function postEmbed() {
-    return new EmbedBuilder()
-}
-
 export {
     errorEmbed,
     infoEmbed,
@@ -124,5 +120,4 @@ export {
     ownedGameEmbed,
     wishlistGameEmbed,
     playerBansEmbed,
-    postEmbed,
 }
