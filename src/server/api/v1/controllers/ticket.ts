@@ -64,7 +64,7 @@ async function createTicket(req: Request, res: Response): Promise<void> {
         title,
         text
     }).catch(err => {
-        console.log(err.errors.response)
+        throw new InternalServerError('Could not create ticket.')
     })
 
     res.status(200).json({ ticketID: ticket?._id })
