@@ -5,14 +5,9 @@ require('express-async-errors')
 
 async function getPosts(req: Request, res: Response): Promise<void> {
     const page = Number(req.query.page) || 0
-    const status = req.query.status
 
     if (!Number.isSafeInteger(page) || page < 0) {
         throw new BadRequestError('Page is invalid.')
-    }
-
-    if (status && ['closed', 'open'].includes(String(status))) {
-        throw new BadRequestError('Invalid status.')
     }
 
     const posts = await PostModel.find().skip(page * 10).limit(10).lean()
