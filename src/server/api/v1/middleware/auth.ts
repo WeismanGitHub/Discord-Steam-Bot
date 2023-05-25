@@ -16,7 +16,7 @@ function auth(req: Request, res: Response, next: NextFunction, allowedRoles: rol
 		throw new UnauthorizedError("Please login.")
 	}
 		
-	const userJWT: string | JwtPayload = jwt.verify(req.cookies.user, Config.jwtSecret!)
+	const userJWT: string | JwtPayload = jwt.verify(req.cookies.user, Config.jwtSecret)
 
 	if (!userJWT || typeof userJWT === 'string' || !userJWT._id || !userJWT.role) {
 		throw new UnauthorizedError("Please login.")

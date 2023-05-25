@@ -23,7 +23,7 @@ export default {
 		.addComponents([
 			new ButtonBuilder()
 			.setLabel('Authorization')
-			.setURL(Config.authRedirectURI!)
+			.setURL(Config.authRedirectURI)
 			.setStyle(ButtonStyle.Link),
 			new ButtonBuilder()
 			.setLabel('Website')
@@ -31,11 +31,11 @@ export default {
 			.setStyle(ButtonStyle.Link),
 			new ButtonBuilder()
 			.setLabel('Source Code')
-			.setURL(Config.sourceCodeLink!)
+			.setURL(Config.sourceCodeLink)
 			.setStyle(ButtonStyle.Link),
 			new ButtonBuilder()
 			.setLabel('Buy Me a Coffee')
-			.setURL(Config.buyMeACofeeLink!)
+			.setURL(Config.buyMeACofeeLink)
 			.setStyle(ButtonStyle.Link),
 		])
 

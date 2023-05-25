@@ -99,7 +99,7 @@ async function login(req: Request, res: Response): Promise<void> {
 
     const userJWT = jwt.sign(
         { _id: userID, role: user.role },
-        Config.jwtSecret!,
+        Config.jwtSecret,
         { expiresIn: '14d' },
     )
 
