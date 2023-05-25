@@ -29,6 +29,13 @@ export default {
             throw new InternalServerError('Could not get posts.')
         })
 
+        if (!posts.length) {
+            return interaction.reply({
+                embeds: [infoEmbed('No posts.')],
+                ephemeral: true
+            })
+        }
+
         // add date footer
         const postEmbeds = posts.map((post) => infoEmbed(post.title, post.text))
 
@@ -42,7 +49,7 @@ export default {
 
         interaction.reply({
             embeds: postEmbeds,
-            components: [row],
+            components: posts.length === 10 ? [row] : [],
             ephemeral: true,
         })
     }
