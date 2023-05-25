@@ -49,7 +49,7 @@ export default function Privileged() {
 			return errorToast('Cannot go below 1.')
 		}
 
-		if (people.length < 10) {
+		if (people.length < 10 && peoplePage <= page) {
 			return errorToast('No more people left.')
 		}
 
