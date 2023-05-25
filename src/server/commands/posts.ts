@@ -28,8 +28,6 @@ export default {
             })
         }
 
-        console.log(posts)
-
         const postEmbeds = posts.map((post) => infoEmbed(post.title, post.text, formatDate(post.createdAt)))
 
         const row = new ActionRowBuilder<ButtonBuilder>()
