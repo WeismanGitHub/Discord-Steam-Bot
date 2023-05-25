@@ -57,12 +57,14 @@ export default function Tickets() {
 			<button class='generic-button' onClick={cycleStatus}>{`Status: ${status ?? 'any'}`}</button>
 		</div>
 
-		<div class=''>
-			{tickets?.map(ticket => {
-				return <div class='ticket' title='ticket'>
-					<a href={`/tickets/${ticket._id}`}>{ticket.title}</a>
+		{tickets?.map(ticket => {
+			return <a href={`/tickets/${ticket._id}`}>
+				<div class='ticket-section' title='ticket' style={{ width: "50%" }}>
+					{ticket.title}
+					<br/>
+					<div class='ticket-status'>Status: {ticket.status}</div>
 				</div>
-			})}
-		</div>
+			</a>
+		})}
 	</>
 }
