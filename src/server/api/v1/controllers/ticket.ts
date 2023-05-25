@@ -15,7 +15,7 @@ async function getTickets(req: Request, res: Response): Promise<void> {
         throw new BadRequestError('Page is invalid.')
     }
 
-    if (status && ['closed', 'open'].includes(String(status))) {
+    if (status && !['closed', 'open'].includes(String(status))) {
         throw new BadRequestError('Invalid status.')
     }
 
