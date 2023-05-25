@@ -20,6 +20,7 @@ body {
 
 a, a:hover, a:focus, a:active {
   text-decoration: none;
+  color: #0090d7;
 }
 
 .break {
