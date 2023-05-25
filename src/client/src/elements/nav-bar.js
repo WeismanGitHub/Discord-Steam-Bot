@@ -32,8 +32,8 @@ export default function NavBar() {
             {userIsPrivileged && <a class='navbar-button' href='/tickets'>tickets</a>}
             {loggedIn && <a class='navbar-button' href="/account">account</a>}
             {loggedIn ? <div class='navbar-button' onClick={logout}>logout</div> : <>
-                {window.location.pathname !== '/auth/login' && <a class='navbar-button' href="/auth/login">login</a>}
-                {window.location.pathname !== '/auth/discord' && <a class='navbar-button' href="/auth/discord">register</a>}
+                <a class='navbar-button' href="/auth/login">login</a>
+                <a class='navbar-button' href="/auth/discord">register</a>
             </>}
         </div>
     </>)
