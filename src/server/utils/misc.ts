@@ -21,7 +21,19 @@ function formatSteamPlaytime(playtime: number): string {
     return `${formattedPlaytime} hours`
 }
 
+function formatDate(date: Date): string {
+    const formattedDate = date.toLocaleDateString("en-US", {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    })
+
+    return formattedDate
+}
+
 export {
     formatSteamDate,
     formatSteamPlaytime,
+    formatDate,
 }
