@@ -1,5 +1,6 @@
 import { InternalServerError } from "../../errors"
 import { infoEmbed } from "../../utils/embeds"
+import { formatDate } from "../../utils/misc"
 import { PostModel } from "../../db/models"
 import {
     ActionRowBuilder,
@@ -36,8 +37,7 @@ export default {
             })
         }
 
-        // add date footer
-        const postEmbeds = posts.map((post) => infoEmbed(post.title, post.text))
+        const postEmbeds = posts.map((post) => infoEmbed(post.title, post.text, formatDate(post.createdAt)))
 
         const row = new ActionRowBuilder<ButtonBuilder>()
 		.addComponents([
