@@ -40,6 +40,7 @@
   border: #a4a7aa 1px solid;
   border-radius: 5px;
   padding: 5px;
+  width: 75%;
   word-wrap: break-word;
   display: inline-block;
 }
