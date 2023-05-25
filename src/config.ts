@@ -47,16 +47,13 @@ class Configuration {
         this.activityType = Number(activity.type)
         this.activityName = activity.name
         this.botInviteLink = process.env.REACT_APP_BOT_INVITE_LINK!
-        this.websiteLink = process.env.WEBSITE_LINK!
 
         // App
         this.appPort = 5000
         this.jwtSecret = process.env.JWT_SECRET!
         this.authRedirectURI = process.env.AUTH_REDIRECT_URI!
         this.loginRedirectURI = process.env.LOGIN_REDIRECT_URI!
-        this.buyMeACoffeeLink = process.env.REACT_APP_BUY_ME_A_COFFEE_LINK!
-        this.sourceCodeLink = process.env.REACT_APP_SOURCE_CODE_LINK!
-        this.steamAPIKey = process.env.STEAM_API_KEY!
+        this.websiteLink = process.env.WEBSITE_LINK!
 
         // Mongodb
         this.mongoURI = process.env.MONGO_URI!
@@ -69,6 +66,11 @@ class Configuration {
         this.limiterMessage = 'Rate Limit = 30 requests per two seconds.'
         this.limiterStandardHeaders = true
         this.limiterLegacyHeaders = false
+
+        // Misc
+        this.buyMeACoffeeLink = process.env.REACT_APP_BUY_ME_A_COFFEE_LINK!
+        this.sourceCodeLink = process.env.REACT_APP_SOURCE_CODE_LINK!
+        this.steamAPIKey = process.env.STEAM_API_KEY!
 
         for (const entry of Object.entries(this)) {
             const [key, value] = entry
