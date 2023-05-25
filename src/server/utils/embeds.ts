@@ -18,6 +18,7 @@ function infoEmbed(title: string, description: null | string = null, footer: nul
 
 function playerProfileEmbed(player: player): EmbedBuilder {
     return new EmbedBuilder()
+        .setColor('#000EFF') // Blue
         .setImage(player.avatarfull || null)
         .addFields({
             inline: true,
@@ -32,8 +33,8 @@ function playerProfileEmbed(player: player): EmbedBuilder {
 
 function recentGameEmbed(game: recentlyPlayedGame): EmbedBuilder {
     return new EmbedBuilder()
+        .setColor('#000EFF') // Blue
         .setTitle(game.name || 'unknown')
-        .setColor('#8F00FF') // Purple
         .setImage(
             game.appid && game.img_icon_url ? `https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg` : null
         )
@@ -50,7 +51,7 @@ function recentGameEmbed(game: recentlyPlayedGame): EmbedBuilder {
 function ownedGameEmbed(game: ownedGame): EmbedBuilder {
     return new EmbedBuilder()
         .setTitle(game.name || 'unknown')
-        .setColor('#8F00FF') // Purple
+        .setColor('#000EFF') // Blue
         .setImage(
             game.appid && game.img_icon_url ? `https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg` : null
         )
@@ -62,55 +63,56 @@ function ownedGameEmbed(game: ownedGame): EmbedBuilder {
 
 function wishlistGameEmbed(game: wishlistGame) {
     return new EmbedBuilder()
-    .setTitle(game.name || 'Missing Title')
-    .setImage(game.capsule || game.background || null)
-    .setFooter({ text: `Release: ${game.release_string || 'unknown'}` })
-    .setColor('#8F00FF') // Purple
-    .addFields({
-        name: 'Reviews:',
-        value: game.reviews_percent ? `${game.reviews_percent}% positive` : 'unknown',
-        inline: false
-    })
-    .addFields({
-        name: 'Free:',
-        value: String(Boolean(game.is_free_game)),
-        inline: false
-    })
-    .addFields({
-        name: 'Tags:',
-        value: game.tags ? game.tags.join(', ') : 'none',
-        inline: false
-    })
+        .setTitle(game.name || 'Missing Title')
+        .setImage(game.capsule || game.background || null)
+        .setFooter({ text: `Release: ${game.release_string || 'unknown'}` })
+        .setColor('#000EFF') // Blue
+        .addFields({
+            name: 'Reviews:',
+            value: game.reviews_percent ? `${game.reviews_percent}% positive` : 'unknown',
+            inline: false
+        })
+        .addFields({
+            name: 'Free:',
+            value: String(Boolean(game.is_free_game)),
+            inline: false
+        })
+        .addFields({
+            name: 'Tags:',
+            value: game.tags ? game.tags.join(', ') : 'none',
+            inline: false
+        })
 }
 
 function playerBansEmbed(bansData: playerBansData) {
     return new EmbedBuilder()
-    .setTitle('Bans Data')
-    .addFields({
-        name: 'Community Banned:',
-        value: bansData.CommunityBanned === undefined ? 'unkown' : String(bansData.CommunityBanned),
-        inline: false
-    })
-    .addFields({
-        name: 'Days Since Last Ban:',
-        value: String(bansData.DaysSinceLastBan ?? 'unknown'),
-        inline: false
-    })
-    .addFields({
-        name: 'VAC Bans:',
-        value: String(bansData.NumberOfVACBans ?? 'unknown'),
-        inline: false
-    })
-    .addFields({
-        name: 'Economy Ban:',
-        value: String(bansData.EconomyBan ?? 'unknown'),
-        inline: false
-    })
-    .addFields({
-        name: 'Number of Game Bans:',
-        value: String(bansData.NumberOfGameBans ?? 'unknown'),
-        inline: false
-    })
+        .setColor('#000EFF') // Blue
+        .setTitle('Bans Data')
+        .addFields({
+            name: 'Community Banned:',
+            value: bansData.CommunityBanned === undefined ? 'unkown' : String(bansData.CommunityBanned),
+            inline: false
+        })
+        .addFields({
+            name: 'Days Since Last Ban:',
+            value: String(bansData.DaysSinceLastBan ?? 'unknown'),
+            inline: false
+        })
+        .addFields({
+            name: 'VAC Bans:',
+            value: String(bansData.NumberOfVACBans ?? 'unknown'),
+            inline: false
+        })
+        .addFields({
+            name: 'Economy Ban:',
+            value: String(bansData.EconomyBan ?? 'unknown'),
+            inline: false
+        })
+        .addFields({
+            name: 'Number of Game Bans:',
+            value: String(bansData.NumberOfGameBans ?? 'unknown'),
+            inline: false
+        })
 }
 
 export {
