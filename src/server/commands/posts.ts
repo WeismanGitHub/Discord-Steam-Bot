@@ -28,7 +28,7 @@ export default {
             })
         }
 
-        const postEmbeds = posts.map((post) => infoEmbed(post.title, post.text, formatDate(post.createdAt)))
+        const postEmbeds = posts.map((post) => infoEmbed(post.title, post.text, formatDate(post.createdAt, interaction.guildLocale)))
 
         const row = new ActionRowBuilder<ButtonBuilder>()
 		.addComponents([
