@@ -35,7 +35,7 @@ export default {
 			.setStyle(ButtonStyle.Link),
 			new ButtonBuilder()
 			.setLabel('Buy Me a Coffee')
-			.setURL(Config.buyMeACofeeLink)
+			.setURL(Config.buyMeACoffeeLink)
 			.setStyle(ButtonStyle.Link),
 		])
 
