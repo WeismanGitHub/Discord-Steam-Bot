@@ -21,7 +21,7 @@ export default function Tickets() {
         setTickets(data)
     }, [])
 
-	function getTickets(page, status = null) {
+	function getTickets(page, status) {
 		if (page < 0) {
 			return
 		}
@@ -50,9 +50,9 @@ export default function Tickets() {
 		<Navbar/>
 
 		<div style={{ 'font-size': 'medium' }}>
-			<button class='generic-button' onClick={() => getTickets(ticketPage - 1)}>{`<`}</button>
+			<button class='generic-button' onClick={() => getTickets(ticketPage - 1, status)}>{`<`}</button>
 			{ticketPage + 1}
-			<button class='generic-button' onClick={() => getTickets(ticketPage + 1)}>{`>`}</button>
+			<button class='generic-button' onClick={() => getTickets(ticketPage + 1, status)}>{`>`}</button>
 			<br/>
 			<button class='generic-button' onClick={cycleStatus}>{`Status: ${status ?? 'any'}`}</button>
 		</div>
