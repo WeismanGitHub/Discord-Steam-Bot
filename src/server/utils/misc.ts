@@ -1,3 +1,5 @@
+import { Locale } from "discord.js"
+
 function formatSteamDate(steamDate: number | undefined): string {
     const date = new Date(Number(`${steamDate}000`))
     const formattedDate = date.toLocaleDateString("en-US", {
@@ -21,8 +23,8 @@ function formatSteamPlaytime(playtime: number): string {
     return `${formattedPlaytime} hours`
 }
 
-function formatDate(date: Date): string {
-    const formattedDate = date.toLocaleDateString("en-US", {
+function formatDate(date: Date, locale: Locale | null = null): string {
+    const formattedDate = date.toLocaleDateString(locale ?? "en-US", {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
