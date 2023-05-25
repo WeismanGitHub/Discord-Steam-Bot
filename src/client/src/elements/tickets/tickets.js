@@ -6,6 +6,7 @@ import axios, * as others from 'axios'
 
 export default function Tickets() {
 	const userData = JSON.parse(localStorage.getItem('userData'))
+	const [status, setStatus] = useState(null)
 	const [tickets, setTickets] = useState([])
 	const [ticketPage, setPage] = useState(0)
 	const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function Tickets() {
         setTickets(data)
     }, [])
 
-	function getTickets(page) {
+	function getTickets(page, status = null) {
 		if (page < 0) {
 			return
 		}
@@ -29,7 +30,7 @@ export default function Tickets() {
 			return errorToast('No more tickets left.')
 		}
 
-		axios.get(`/api/v1/tickets?page=${page}`)
+		axios.get(`/api/v1/tickets?page=${page}${status ? `&status=${status}` : ''}`)
 		.then(({ data }) => {
 			setTickets(data)
 			setPage(page)
@@ -37,18 +38,29 @@ export default function Tickets() {
 		.catch(err => errorToast('Could not get tickets.'))
 	}
 
+	function cycleStatus() {
+		const statuses = [null, 'open', 'closed']
+		const index = statuses.indexOf(status) + 1
+
+		setStatus(index >= statuses.length ? statuses[0] : statuses[index])
+		getTickets(0, index >= statuses.length ? statuses[0] : statuses[index])
+	}
+
 	return <>
 		<Navbar/>
 
-		<div>
-			<button class='generic-button' style={{ 'font-size': 'medium' }} onClick={() => getTickets(ticketPage - 1)}>{`<`}</button>
+		<div style={{ 'font-size': 'medium' }}>
+			<button class='generic-button' onClick={() => getTickets(ticketPage - 1)}>{`<`}</button>
 			{ticketPage + 1}
-			<button class='generic-button' style={{ 'font-size': 'medium' }} onClick={() => getTickets(ticketPage + 1)}>{`>`}</button>
+			<button class='generic-button' onClick={() => getTickets(ticketPage + 1)}>{`>`}</button>
+			<br/>
+			<button class='generic-button' onClick={cycleStatus}>{`Status: ${status ?? 'any'}`}</button>
 		</div>
 
 		<div class=''>
 			{tickets?.map(ticket => {
 				return <div class='ticket' title='ticket'>
+					<a href={`/tickets/${ticket._id}`}>{ticket.title}</a>
 				</div>
 			})}
 		</div>
