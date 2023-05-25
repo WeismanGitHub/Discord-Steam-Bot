@@ -10,7 +10,7 @@ async function getPosts(req: Request, res: Response): Promise<void> {
         throw new BadRequestError('Page is invalid.')
     }
 
-    const posts = await PostModel.find().skip(page * 10).limit(10).lean()
+    const posts = await PostModel.find({}).sort({ createdAt: -1 }).skip(page * 10).limit(10).lean()
     .catch(err => {
         throw new InternalServerError('Could not get posts.')
     })

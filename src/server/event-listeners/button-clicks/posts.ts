@@ -25,7 +25,7 @@ export default {
             return
         }
 
-        const posts = await PostModel.find({}).lean().skip(page * 10).limit(10)
+        const posts = await PostModel.find({}).sort({ createdAt: -1 }).lean().skip(page * 10).limit(10)
         .catch(err => {
             throw new InternalServerError('Could not get posts.')
         })

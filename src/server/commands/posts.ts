@@ -16,7 +16,7 @@ export default {
 		.setDescription("Get all posts.")
 	,
 	async execute(interaction: ChatInputCommandInteraction) {
-        const posts = await PostModel.find({}).lean().limit(10)
+        const posts = await PostModel.find({}).sort({ createdAt: -1 }).lean().limit(10)
         .catch(err => {
             throw new InternalServerError('Could not get posts.')
         })
@@ -27,6 +27,8 @@ export default {
                 ephemeral: true
             })
         }
+
+        console.log(posts)
 
         const postEmbeds = posts.map((post) => infoEmbed(post.title, post.text, formatDate(post.createdAt)))
 
