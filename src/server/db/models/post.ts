@@ -3,6 +3,7 @@ import { Document, Schema, model } from 'mongoose';
 interface Post extends Document {
     title: string
     text: string
+    createdAt: Date
 }
 
 const PostSchema: Schema = new Schema<Post>({
