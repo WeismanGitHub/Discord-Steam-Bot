@@ -1,6 +1,6 @@
 export default function About() {
     return (<>
-        <h1>Discord Steam App</h1>
+        <h1>Discord Steam Bot</h1>
         <div style={{ width: '50%', margin: 'auto' }}>
             Use slash commands to conveniently view other users' public Steam information. Allow access to view your connected Steam account through <a href='/auth/discord'>this link</a> so others can use commands on you. Use <i>/unauthorize</i> to delete all data stored by the bot or visit <a href='/account'>the account page</a>.
         </div>
