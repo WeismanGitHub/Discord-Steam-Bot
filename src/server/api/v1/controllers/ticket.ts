@@ -39,37 +39,6 @@ async function getTicket(req: Request, res: Response): Promise<void> {
     res.status(200).json(ticket)
 }
 
-async function createTicket(req: Request, res: Response): Promise<void> {
-    const { title, text } = req.body
-    const userID = req.user?._id
-
-    if (!userID || !title || !text) {
-        throw new BadRequestError('Missing userID, title, or text.')
-    }
-
-    if (title.length > 256) {
-        throw new BadRequestError('Maximum title length is 256.')
-    } else if (title.length < 1) {
-        throw new BadRequestError('Minimum title length is 1.')
-    }
-
-    if (text.length > 4096) {
-        throw new BadRequestError('Maximum text length is 4096.')
-    } else if (text.length < 1) {
-        throw new BadRequestError('Minimum text length is 1.')
-    }
-
-    const ticket = await TicketModel.create({
-        userID,
-        title,
-        text
-    }).catch(err => {
-        throw new InternalServerError('Could not create ticket.')
-    })
-
-    res.status(200).json({ ticketID: ticket?._id })
-}
-
 async function resolveTicket(req: Request, res: Response): Promise<void> {
     const client: CustomClient = req.app.get('discordClient')
     const { ticketID } = req.params
@@ -121,6 +90,5 @@ async function resolveTicket(req: Request, res: Response): Promise<void> {
 export {
     getTickets,
     getTicket,
-    createTicket,
     resolveTicket,
 }
