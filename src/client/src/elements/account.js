@@ -42,6 +42,10 @@ export default function Account() {
 	}
 
 	function deleteAccount() {
+		if (!window.confirm('Are you sure you want to delete your account?')) {
+            return
+        }
+
 		axios.delete('/api/v1/users/self')
 		.then((res) => {
 			localStorage.removeItem('userData')
