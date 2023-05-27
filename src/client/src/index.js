@@ -6,6 +6,7 @@ import React from 'react';
 import './css/index.css';
 
 import DiscordAuth from './elements/discord-auth';
+import Privileged from './elements/privileged';
 import NotFound from './elements/not-found';
 import Account from './elements/account';
 import Tickets from './elements/tickets';
