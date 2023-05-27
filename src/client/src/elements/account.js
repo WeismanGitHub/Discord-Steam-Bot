@@ -42,7 +42,14 @@ export default function Account() {
 	}
 
 	function deleteAccount() {
-
+		axios.delete('/api/v1/users/self')
+		.then((res) => {
+			localStorage.removeItem('userData')
+			navigate('/')
+		})
+		.catch(err => {
+			errorToast(err?.response?.data?.error || err.message)
+		});
 	}
 	
 	return (<>
