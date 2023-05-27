@@ -1,6 +1,6 @@
 import { getPlayerSummaries, getSteamLevel } from '../../../utils/steam';
 import { CustomClient } from '../../../custom-client';
-import { TicketModel, UserModel } from '../../../db/models';
+import { UserModel } from '../../../db/models';
 import { Request, Response } from 'express';
 import { DiscordAPIError } from 'discord.js';
 require('express-async-errors')
@@ -289,31 +289,6 @@ async function demoteUser(req: Request, res: Response): Promise<void> {
     res.status(200).end()
 }
 
-async function getSelfTickets(req: Request, res: Response): Promise<void> {
-    const page = Number(req.query.page) || 0
-    const status = req.query.status
-    const userID = req.user?._id
-
-    if (!userID) {
-        throw new UnauthorizedError('Missing ID.')
-    }
-
-    if (!Number.isSafeInteger(page) || page < 0) {
-        throw new BadRequestError('Page is invalid.')
-    }
-
-    if (status && ['closed', 'open'].includes(String(status))) {
-        throw new BadRequestError('Invalid status.')
-    }
-
-    const tickets = await TicketModel.find(status ? { status, userID } : { userID })
-    .skip(page * 10).limit(10).select('_id title status response').lean()
-    .catch(err => {
-        throw new InternalServerError('Could not get user ids.')
-    })
-
-    res.status(200).json(tickets)
-}
 export {
     getSelf,
     deleteSelf,
@@ -326,5 +301,4 @@ export {
     getOwners,
     demoteUser,
     promoteUser,
-    getSelfTickets,
 }

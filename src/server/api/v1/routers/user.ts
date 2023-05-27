@@ -12,14 +12,12 @@ import {
     getOwners,
     promoteUser,
     demoteUser,
-    getSelfTickets,
 } from '../controllers/user'
 
 const userRouter: Router = Router();
 
 userRouter.get('/self', userAuth, getSelf)
 userRouter.delete('/self', userAuth, deleteSelf)
-userRouter.get('/self/tickets', userAuth, getSelfTickets)
 
 userRouter.get('/', adminAuth, getUsers)
 userRouter.get('/admins', getAdmins)
