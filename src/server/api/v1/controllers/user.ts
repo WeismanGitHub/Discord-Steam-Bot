@@ -89,7 +89,7 @@ async function deleteSelf(req: Request, res: Response): Promise<void> {
         throw new BadRequestError("Nothing was deleted. If you have been banned, your data will be stored.")
     }
 
-    res.status(200).end()
+    res.status(200).clearCookie('user').end()
 }
 
 async function getUsers(req: Request, res: Response): Promise<void> {
