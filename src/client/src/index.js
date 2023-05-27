@@ -6,10 +6,10 @@ import React from 'react';
 import './css/index.css';
 
 import DiscordAuth from './elements/discord-auth';
-import Tickets from './elements/tickets/tickets';
-import Ticket from './elements/tickets/ticket';
 import NotFound from './elements/not-found';
 import Account from './elements/account';
+import Tickets from './elements/tickets';
+import Ticket from './elements/ticket';
 import Posts from './elements/posts';
 import Login from './elements/login';
 import Main from './main';
