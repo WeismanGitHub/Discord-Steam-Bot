@@ -7,10 +7,10 @@ import './css/index.css';
 
 import DiscordAuth from './elements/discord-auth';
 import Tickets from './elements/tickets/tickets';
-import Privileged from './elements/privileged';
 import Ticket from './elements/tickets/ticket';
 import NotFound from './elements/not-found';
 import Account from './elements/account';
+import Posts from './elements/posts';
 import Login from './elements/login';
 import Main from './main';
 
@@ -22,6 +22,10 @@ const router = createBrowserRouter([
     {
         path: '/privileged',
         element: <Privileged/>
+    },
+    {
+        path: '/posts',
+        element: <Posts/>
     },
     {
         path: '/account',
