@@ -36,10 +36,9 @@ export default {
 			.setStyle(ButtonStyle.Link)
 		])
 
-        interaction.reply({
+        interaction.user.send({
             embeds: [infoEmbed('A ticket has been created.', 'You will be notified once it has been resolved.')],
             components: [row],
-            ephemeral: true
         })
     }
 }
