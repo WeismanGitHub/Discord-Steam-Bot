@@ -3,18 +3,19 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import axios, * as others from 'axios'
 import NavBar from './nav-bar';
-import '../../css/tickets.css';
+import '../css/tickets.css';
 
 export default function Ticket() {
     const userData = JSON.parse(localStorage.getItem('userData'))
     const [response, setResponse] = useState('')
-	const [posts, setPosts] = useState([])
+	const [ticket, setTicket] = useState(null)
     const { ticketID } = useParams()
 
     useEffect(async () => {
-		axios.get(`/api/v1/posts`)
-        .then(res => setPosts(res.data))
+		const { data } = await axios.get(`/api/v1/tickets/${ticketID}`)
 		.catch(err => errorToast(err?.response?.data?.error || err.message));
+
+        setTicket(data)
 	}, [])
 
     function resolveTicket() {

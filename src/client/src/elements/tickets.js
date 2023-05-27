@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
-import axios, * as others from 'axios'
 import { errorToast } from '../toasts'
+import axios, * as others from 'axios'
 import Navbar from './nav-bar';
 
 export default function Tickets() {
