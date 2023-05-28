@@ -6,7 +6,7 @@ import Navbar from './nav-bar';
 export default function Posts() {
 	const userData = JSON.parse(localStorage.getItem('userData'))
 	const [posts, setPosts] = useState([])
-    const [page, setPage] = 0
+    const [page, setPage] = useState(0)
 
 	useEffect(async () => {
 		axios.get(`/api/v1/posts`)
@@ -24,8 +24,8 @@ export default function Posts() {
 		}
 
 		axios.get(`/api/v1/posts?page=${p}`)
-		.then(({ data }) => {
-			setPosts(data)
+		.then(res => {
+			setPosts(res.data)
 			setPage(p)
 		})
 		.catch(err => errorToast('Could not get posts.'))
