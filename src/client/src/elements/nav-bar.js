@@ -30,6 +30,7 @@ export default function NavBar() {
             <a class='navbar-button' href="/">home</a>
             {userIsPrivileged && <a class='navbar-button' href="/privileged">dashboard</a>}
             {userIsPrivileged && <a class='navbar-button' href='/tickets'>tickets</a>}
+            <a class='navbar-button' href='/posts'>posts</a>
             {loggedIn && <a class='navbar-button' href="/account">account</a>}
             {loggedIn ? <div class='navbar-button' onClick={logout}>logout</div> : <>
                 <a class='navbar-button' href="/auth/login">login</a>
