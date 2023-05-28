@@ -68,7 +68,7 @@ export default function Posts() {
                 <div style={{ fontSize: 'xx-large' }}>{post.title}</div>
                 <div class='ticket-status'>{formatTimestamp(post.createdAt)}</div>
                 <div style={{ fontSize: 'large' }}>{post.text}</div>
-				{userData.role === 'owner' && <button class='generic-button' onClick={() => deletePost(post._id)}>{'Delete'}</button>}
+				{userData.role === 'owner' && <button class='generic-button' style={{ border: '1px solid #202225'}} onClick={() => deletePost(post._id)}>{'Delete'}</button>}
             </div>
 		})}
 	</>
