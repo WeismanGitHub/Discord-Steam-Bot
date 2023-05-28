@@ -19,7 +19,7 @@ export default function Posts() {
 			return
 		}
 
-		if ((page + 1) * 10 === posts.length) {
+		if (posts.length < 10 && page <= p) {
 			return errorToast('No more posts left.')
 		}
 
