@@ -32,6 +32,10 @@ export default function Posts() {
 	}
 
 	function deletePost(id) {
+		if (!window.confirm('Are you sure you want to delete this post?')) {
+            return
+        }
+
 		axios.delete(`/api/v1/posts/${id}`)
 		.then(res => {
 			successToast('Deleted post')
@@ -64,7 +68,7 @@ export default function Posts() {
                 <div style={{ fontSize: 'xx-large' }}>{post.title}</div>
                 <div class='ticket-status'>{formatTimestamp(post.createdAt)}</div>
                 <div style={{ fontSize: 'large' }}>{post.text}</div>
-				{userData.role === 'owner' && <button class='generic-button' onClick={() => deletePost(post._id)}>{`>`}</button>}
+				{userData.role === 'owner' && <button class='generic-button' onClick={() => deletePost(post._id)}>{'Delete'}</button>}
             </div>
 		})}
 	</>
