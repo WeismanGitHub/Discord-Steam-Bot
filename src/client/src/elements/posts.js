@@ -19,7 +19,7 @@ export default function Posts() {
 			return
 		}
 
-		if (page * 10 === posts.length) {
+		if ((page + 1) * 10 === posts.length) {
 			return errorToast('No more posts left.')
 		}
 
@@ -40,6 +40,16 @@ export default function Posts() {
 		.catch(err => errorToast(err?.response?.data?.error || err.message))
 	}
 
+	function formatTimestamp(timestamp) {
+		const date = new Date(timestamp)
+
+		return date.toLocaleDateString("en-US", {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		})
+	}
+
 	return <>
 		<Navbar/>
 
@@ -51,8 +61,9 @@ export default function Posts() {
 
 		{posts?.map(post => {
 			return <div class='ticket-section' title='ticket' style={{ width: "50%" }}>
-                {post.title}
-				{post.text}
+                <div style={{ fontSize: 'xx-large' }}>{post.title}</div>
+                <div class='ticket-status'>{formatTimestamp(post.createdAt)}</div>
+                <div style={{ fontSize: 'large' }}>{post.text}</div>
 				{userData.role === 'owner' && <button class='generic-button' onClick={() => deletePost(post._id)}>{`>`}</button>}
             </div>
 		})}
