@@ -6,6 +6,6 @@ const postRouter: Router = Router();
 
 postRouter.get('/', getPosts)
 postRouter.post('/', ownerAuth, createPost)
-postRouter.delete('/:ticketID', ownerAuth, deletePost)
+postRouter.delete('/:postID', ownerAuth, deletePost)
 
 export default postRouter
