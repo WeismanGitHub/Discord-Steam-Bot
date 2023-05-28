@@ -265,6 +265,8 @@ export default function Privileged() {
 					</div>
 
 					<hr class="divider"/>
+
+					<a class='navbar-button' href="/posts/create">Create Post</a>
 				</div>
 			}
 		</div>
