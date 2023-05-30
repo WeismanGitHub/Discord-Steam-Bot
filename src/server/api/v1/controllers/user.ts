@@ -5,7 +5,6 @@ import { Request, Response } from 'express';
 import { DiscordAPIError } from 'discord.js';
 require('express-async-errors')
 import {
-    BadGatewayError,
     BadRequestError,
     InternalServerError,
     NotFoundError,
@@ -42,7 +41,7 @@ async function getSelf(req: Request, res: Response): Promise<void> {
         getSteamLevel(steamID)
     ])
     .catch((err: Error): void => {
-        throw new BadGatewayError('Could not get user data.')
+        throw new InternalServerError('Could not get user data.')
     })
 
     if (!steamRes) {

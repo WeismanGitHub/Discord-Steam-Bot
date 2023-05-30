@@ -1,11 +1,11 @@
-import { BadGatewayError } from '../errors'
+import { InternalServerError } from '../errors'
 import { Config } from '../../config'
 import axios, * as _ from 'axios'
 
 async function getOwnedGames(steamID: string, includeFreeGames: boolean | null): Promise<ownedGamesData | undefined> {
     const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v1?key=${Config.steamAPIKey}&steamid=${steamID}&include_appinfo=true${includeFreeGames !== null ? `&include_played_free_games=${includeFreeGames}` : ''}`)
     .catch((err: Error) => {
-        throw new BadGatewayError('Error getting owned games.')
+        throw new InternalServerError('Error getting owned games.')
     })
 
     return res.data?.response
@@ -14,7 +14,7 @@ async function getOwnedGames(steamID: string, includeFreeGames: boolean | null):
 async function getWishlist(steamID: string, page: number | string): Promise<wishlistGame[] | undefined> {
     const res = await axios.get(`https://store.steampowered.com/wishlist/profiles/${steamID}/wishlistdata/?p=${page}`)
     .catch(err => {
-        throw new BadGatewayError('Error getting wishlist.')
+        throw new InternalServerError('Error getting wishlist.')
     })
 
     return Object.values(res.data)
@@ -23,7 +23,7 @@ async function getWishlist(steamID: string, page: number | string): Promise<wish
 async function getFriendsList(steamID: string): Promise<friend[] | undefined> {
     const res = await axios.get(`https://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${Config.steamAPIKey}&steamid=${steamID}&relationship=friend`)
     .catch(err => {
-        throw new BadGatewayError('Error getting friends.')
+        throw new InternalServerError('Error getting friends.')
     })
 
     return res.data?.friendslist?.friends
@@ -40,11 +40,11 @@ async function getPlayerSummaries(steamIDs: string | string[]): Promise<player[]
         const playersPromises = steamIDGroups.map(async (steamIDsGroup): Promise<player[]> => {
             const { data } = await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${Config.steamAPIKey}&steamids=${steamIDsGroup}`)
             .catch(err => {
-                throw new BadGatewayError('Error getting player(s) data.')
+                throw new InternalServerError('Error getting player(s) data.')
             })
 
             if (!data?.response?.players) {
-                throw new BadGatewayError('Error getting player(s) data.')
+                throw new InternalServerError('Error getting player(s) data.')
             }
 
             return data?.response?.players
@@ -55,7 +55,7 @@ async function getPlayerSummaries(steamIDs: string | string[]): Promise<player[]
 
     const res = await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${Config.steamAPIKey}&steamids=${steamIDs}`)
     .catch(err => {
-        throw new BadGatewayError('Error getting player(s) data.')
+        throw new InternalServerError('Error getting player(s) data.')
     })
 
     return res.data?.response?.players
@@ -64,7 +64,7 @@ async function getPlayerSummaries(steamIDs: string | string[]): Promise<player[]
 async function getSteamLevel(steamID: string): Promise<number | undefined> {
     const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetSteamLevel/v1/?key=${Config.steamAPIKey}&steamid=${steamID}`)
     .catch(err => {
-        throw new BadGatewayError('Error getting steam level.')
+        throw new InternalServerError('Error getting steam level.')
     })
 
     return res.data?.response?.player_level
@@ -73,7 +73,7 @@ async function getSteamLevel(steamID: string): Promise<number | undefined> {
 async function getRecentlyPlayedGames(steamID: string): Promise<recentlyPlayedGamesData | undefined> {
     const res = await axios.get(`https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v1/?key=${Config.steamAPIKey}&steamid=${steamID}`)
     .catch(err => {
-        throw new BadGatewayError('Error getting recently played games.')
+        throw new InternalServerError('Error getting recently played games.')
     })
 
     return res.data?.response
@@ -82,7 +82,7 @@ async function getRecentlyPlayedGames(steamID: string): Promise<recentlyPlayedGa
 async function getPlayerBans(steamID: string): Promise<playerBansData | undefined> {
     const res = await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key=${Config.steamAPIKey}&steamids=${steamID}`)
     .catch(err => {
-        throw new BadGatewayError('Error getting player bans.')
+        throw new InternalServerError('Error getting player bans.')
     })
 
     return res.data.players?.[0]

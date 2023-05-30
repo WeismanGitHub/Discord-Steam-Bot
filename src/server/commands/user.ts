@@ -1,5 +1,5 @@
-import { BadGatewayError, BadRequestError, InternalServerError } from '../errors';
 import { getPlayerSummaries, getSteamLevel } from '../utils/steam';
+import { BadRequestError, InternalServerError } from '../errors';
 import { playerProfileEmbed, infoEmbed } from '../utils/embeds';
 import { UserModel } from '../db/models';
 import {
@@ -51,7 +51,7 @@ export default {
             getSteamLevel(steamID)
         ])
         .catch((err: Error): void => {
-            throw new BadGatewayError('Could not get user data.')
+            throw new InternalServerError('Could not get user data.')
         })
 
         const playerData = results?.[0]?.[0]
