@@ -4,7 +4,6 @@ import ForbiddenError from "./forbidden";
 import NotFoundError from "./not-found";
 import UnauthorizedError from "./unauthorized";
 import InternalServerError from "./internal-server";
-import BadGatewayError from "./bad-gateway";
 import TooManyRequestsError from "./too-many-requests";
 
 export {
@@ -14,6 +13,5 @@ export {
     NotFoundError,
     UnauthorizedError,
     InternalServerError,
-    BadGatewayError,
     TooManyRequestsError,
 }
