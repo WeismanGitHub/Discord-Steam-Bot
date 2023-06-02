@@ -24,11 +24,12 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
+    "build-client": "react-app-rewired build",
+    "build-server": "tsc",
+    "test": "jest --coverage",
     "eject": "react-scripts eject",
     "push": "git push -u origin master",
-    "app": "nodemon dist/server/index.js",
+    "dev": "nodemon dist/server/index.js",
     "commands": "node reload-commands.js"
   },
   "eslintConfig": {
