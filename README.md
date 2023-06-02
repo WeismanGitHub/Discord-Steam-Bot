@@ -18,15 +18,15 @@
 
   `npm i` to install dependencies.
 
-  `npm run build` to build the client.
+  `npm run build-client` to build the client.
+
+  `npm run build-server` to build the server.
 
   `npm run push` to push to Github.
   
-  `tsc` to build the server.
-  
-  `npm run app` to run the bot and website.
+  `npm run dev` to run the bot with Nodemon.
 
   `npm run commands` to reload the commands.
 
-  `jest` to run tests.
+  `npm run test` to run tests.
 </div>
