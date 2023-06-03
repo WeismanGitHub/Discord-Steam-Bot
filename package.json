@@ -26,7 +26,7 @@
     "start": "react-app-rewired start",
     "build-client": "react-app-rewired build",
     "build-server": "tsc",
-    "test": "jest --coverage",
+    "test": "jest",
     "eject": "react-scripts eject",
     "push": "git push -u origin master",
     "dev": "nodemon dist/server/index.js",
