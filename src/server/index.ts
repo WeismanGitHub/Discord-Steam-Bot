@@ -45,3 +45,5 @@ app.use((err: Error | CustomError, req: Request, res: Response, next: NextFuncti
 
 connectDB()
 app.listen(Config.appPort, (): void => console.log(`listening on port ${Config.appPort}...`));
+
+export default app
