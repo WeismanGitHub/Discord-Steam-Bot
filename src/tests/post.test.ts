@@ -17,7 +17,7 @@ describe("Posts API Tests", () => {
             }
         });
 
-        it("should return status code 400", async () => {
+        it("should return status code 400 when getting posts with invalid page number", async () => {
             const res = await request(app).get("/api/v1/posts")
             .query({ page: -1 })
             
