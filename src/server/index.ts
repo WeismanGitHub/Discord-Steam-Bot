@@ -34,8 +34,6 @@ app.get('/*', (req: Request, res: Response): void => {
 })
 
 app.use((err: Error | CustomError, req: Request, res: Response, next: NextFunction): void => {
-    console.error(err.message)
-
 	if (err instanceof CustomError) {
 		res.status(err.statusCode).json({ error: err.message })
 	} else {
