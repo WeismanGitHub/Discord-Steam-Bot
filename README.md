@@ -7,7 +7,7 @@
   ## [Invite Link]()
 
   ### Description
-  Use slash commands to conveniently view other users' public Steam information. Allow access to view your connected Steam account through [this link]() so others can use commands on you. Use `/unauthorize` to delete all data stored by the bot.
+  In the course of this endeavor, I developed a web application/Discord bot that provides users with a convenient way to view the public Steam information of other users. The application allows users to grant access to their connected Steam account through a secure OAuth2 process, permitting others to use commands on their account as well. Use `/help` for further information.
 
   ### Usage
   Create a `.env` file.
