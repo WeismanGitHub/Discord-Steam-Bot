@@ -2,9 +2,9 @@
   
   # Discord-Steam-Bot
 
-  ## [Website]()
+  ## [Website](https://discord-steam-bot.fly.dev/)
 
-  ## [Invite Link]()
+  ## [Invite Link](https://discord.com/api/oauth2/authorize?client_id=1085317954532540456&permissions=277025642560&scope=bot)
 
   ### Description
   In the course of this endeavor, I developed a web application/Discord bot that provides users with a convenient way to view the public Steam information of other users. The application allows users to grant access to their connected Steam account through a secure OAuth2 process, permitting others to use commands on their account as well. Use `/help` for further information.
