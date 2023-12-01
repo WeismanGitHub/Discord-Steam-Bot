@@ -16,7 +16,7 @@ class Configuration {
     jwtSecret: string
     authRedirectURI: string
     loginRedirectURI: string
-    buyMeACoffeeLink: string
+    // buyMeACoffeeLink: string
     sourceCodeLink: string
     steamAPIKey: string
     mongoURI: string
@@ -68,7 +68,7 @@ class Configuration {
         this.limiterLegacyHeaders = false
 
         // Misc
-        this.buyMeACoffeeLink = process.env.REACT_APP_BUY_ME_A_COFFEE_LINK!
+        // this.buyMeACoffeeLink = process.env.REACT_APP_BUY_ME_A_COFFEE_LINK!
         this.sourceCodeLink = process.env.REACT_APP_SOURCE_CODE_LINK!
         this.steamAPIKey = process.env.STEAM_API_KEY!
 

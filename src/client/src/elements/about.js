@@ -7,6 +7,6 @@ export default function About() {
 
         <h4><a href={process.env.REACT_APP_BOT_INVITE_LINK}>Bot Invite</a></h4>
         <h4><a href={process.env.REACT_APP_SOURCE_CODE_LINK}>Source Code</a></h4>
-        <h4><a href={process.env.REACT_APP_BUY_ME_A_COFFEE_LINK}>Buy Me a Coffee</a></h4>
+        {/* <h4><a href={process.env.REACT_APP_BUY_ME_A_COFFEE_LINK}>Buy Me a Coffee</a></h4> */}
     </>)
 }

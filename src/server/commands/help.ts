@@ -33,10 +33,10 @@ export default {
 			.setLabel('Source Code')
 			.setURL(Config.sourceCodeLink)
 			.setStyle(ButtonStyle.Link),
-			new ButtonBuilder()
-			.setLabel('Buy Me a Coffee')
-			.setURL(Config.buyMeACoffeeLink)
-			.setStyle(ButtonStyle.Link),
+			// new ButtonBuilder()
+			// .setLabel('Buy Me a Coffee')
+			// .setURL(Config.buyMeACoffeeLink)
+			// .setStyle(ButtonStyle.Link),
 		])
 
 		interaction.reply({
